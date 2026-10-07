@@ -45,8 +45,6 @@ in §3, otherwise solver commands run outside the task's conda environment.
   to the solver or proposer.
 - Do not edit `runs/<...>/code_snapshot` or the configuration of an active run. Resume only
   after the previous controller has stopped.
-- The SWE verifier counts a task as solved when the test command exits successfully. This
-  is not the official per-test SWE-bench metric, so say so when you compare numbers.
 - When reporting, include valid-task counts, timeouts, exact model versions and any config
   overrides.
 

@@ -72,9 +72,7 @@ It refuses to overwrite an existing task directory. To rebuild, move the generat
 `datasets/terminal_bench_2_1/tasks/` directory aside and rerun the command.
 
 Terminal Bench runs through Harbor with the same workflow/plugin interfaces as
-SWE-bench. Historical experiments used an internal sandbox adapter; container
-startup and resource behavior may differ. Use the same model, resources and task
-versions when comparing reruns.
+SWE-bench. Use the same model, resources and task versions when comparing reruns.
 
 ### QA transfer
 

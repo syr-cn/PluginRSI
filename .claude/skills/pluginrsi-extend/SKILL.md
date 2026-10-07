@@ -74,8 +74,7 @@ called. Point `seed:` in the config at the new directory.
   `PHASES` everywhere else.
 - **Selection or retention rule:** mutation retention is `mutation.paired`; incumbent
   replacement is `Search.admit` plus `selection.top_w`.
-- **Minibatch sampling:** `mutation.balanced_batch` and `create_branches`. Note that
-  branches are assigned plugins round-robin over the incumbent's aliases.
+- **Minibatch sampling and branch setup:** `mutation.balanced_batch` and `create_branches`.
 - **Proposer behaviour:** edit the markdown files in `prompts/`. Keep `fitness_contract.md`
   truthful about how candidates are actually scored.
 - Expose new hyperparameters as fields on `SearchOptions` and annotate them with the
