@@ -1,0 +1,19 @@
+id: T09
+name: git_status
+category: version-control
+description: Inspect tracked, modified and untracked repository state.
+input_schema:
+  repository_root: path
+  porcelain: boolean?
+output_schema:
+  branch: string?
+  modified: array
+  untracked: array
+  staged: array
+side_effect: none
+guards:
+- Read-only.
+- Use before and after edits.
+source_ids:
+- mini-swe-agent
+- aider

@@ -1,0 +1,17 @@
+schema_version: 1
+kind: tool
+name: terminal
+version: v0001
+entrypoint: implementation:Terminal
+description: Execute a shell command in the benchmark environment.
+provenance:
+  label: PluginRSI-Baseline-Terminal
+  sources: []
+  upstream_assets: []
+  adaptation: Environment-command wrapper for this project.
+config_schema:
+  type: object
+  properties:
+    max_output_bytes: {type: integer, minimum: 1, default: 30000}
+    timeout_seconds: {type: number, exclusiveMinimum: 0, default: 180}
+  additionalProperties: false

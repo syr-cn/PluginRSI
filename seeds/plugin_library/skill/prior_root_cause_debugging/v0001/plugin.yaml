@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_root_cause_debugging
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Infer and test the smallest causal explanation instead of stacking speculative
+  fixes.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S13 root-cause-debugging (Superpowers / Addy Osmani Agent Skills / SWE-agent)
+  sources:
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  upstream_assets:
+  - id: S13
+    path: skills/root-cause-debugging/SKILL.md
+  - id: S13
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

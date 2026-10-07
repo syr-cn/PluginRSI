@@ -1,0 +1,24 @@
+id: S27
+name: completion-evidence-gate
+title: Completion Evidence Gate
+category: verification
+tier: core
+description: Prevent submission until acceptance criteria and scope are backed by
+  fresh evidence.
+applicable_roles:
+- Finalizer
+- Termination Controller
+required_inputs:
+- issue_profile
+- verification_result
+- diff_inspection
+- budget
+output_type: CompletionDecision
+allowed_tools:
+- read_file
+source_ids:
+- mini-swe-agent
+- superpowers
+optional_inputs:
+- known_blockers
+path: skills/completion-evidence-gate/SKILL.md

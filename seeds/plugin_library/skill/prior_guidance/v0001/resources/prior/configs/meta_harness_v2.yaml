@@ -1,0 +1,44 @@
+schema_version: "1.0"
+name: "Meta-Lego typed-prior treatment v2"
+extends: "swebench_v1.yaml"
+
+treatment_contract:
+  proposer_input: "full snapshotted prior library"
+  candidate_output: "standalone candidate.py"
+  runtime_prior_mount: false
+  attribution: "required"
+
+enabled_asset_families:
+  - scaffold
+  - prompts
+  - skills
+  - tools
+  - policies
+  - mappings
+  - schemas
+  - experience
+
+iteration_policy:
+  scheduler: "feedback-guided"
+  max_coherent_changes: 1
+  allowed_dimensions:
+    - control_flow
+    - context_assembly
+    - prompt_behavior
+    - skill_routing
+    - skill_procedure
+    - tool_guard
+    - scope_policy
+    - typed_state
+    - experience_normalization
+    - component_credit
+  required_outputs:
+    - "executable candidate.py behavior"
+    - "proposal.json prior_assets"
+    - "proposal.json prior_application"
+
+forbidden_shortcuts:
+  - "citation without executable integration"
+  - "prompt-only transcription of an asset"
+  - "WorkflowSpec or YAML-only candidate output"
+  - "runtime import or file access under PRIOR/"

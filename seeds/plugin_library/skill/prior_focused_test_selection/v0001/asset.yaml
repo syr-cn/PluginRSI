@@ -1,0 +1,25 @@
+id: S24
+name: focused-test-selection
+title: Focused Test Selection
+category: verification
+tier: core
+description: Choose an ordered, budget-aware test ladder from reproduction to targeted
+  regressions.
+applicable_roles:
+- Verifier
+- Planner
+required_inputs:
+- issue_profile
+- candidate_patch
+- relevant_tests
+- budget
+output_type: TestPlan
+allowed_tools:
+- test_discovery
+- read_file
+source_ids:
+- agentless
+- mini-swe-agent
+optional_inputs:
+- historical_test_times
+path: skills/focused-test-selection/SKILL.md

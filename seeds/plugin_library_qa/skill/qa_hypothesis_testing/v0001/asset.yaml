@@ -1,0 +1,12 @@
+name: qa_hypothesis_testing
+purpose: 'When candidate answers or interpretations compete, identify an observation
+  or calculation that distinguishes them. Prefer the cheapest useful check: substitute
+  a value, test a limiting case, compare units, or check an option against the given
+  evidence. Update the conclusion when a check contradicts it. Do not fabricate tool
+  results or force tool use when the answer is already clear.'
+inputs:
+- question
+- answer_mode
+- choices
+- task_local_evidence
+source_plugin: skill/prior_hypothesis_testing/v0001

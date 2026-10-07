@@ -1,0 +1,17 @@
+schema_version: 1
+kind: role
+name: qa_solver
+version: v0001
+entrypoint: implementation:Coder
+description: Render evidence-based QA and classification instructions.
+provenance:
+  label: QA adaptation of PluginRSI-Baseline-Coder
+  sources: []
+  upstream_assets: []
+  adaptation: Adapted from the local SWE plugin for QA/classification; implementation
+    lineage and upstream attribution retained.
+  parent_refs:
+  - role/coder/v0001
+config_schema:
+  type: object
+  additionalProperties: false

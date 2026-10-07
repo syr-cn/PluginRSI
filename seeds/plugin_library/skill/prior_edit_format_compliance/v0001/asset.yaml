@@ -1,0 +1,23 @@
+id: S21
+name: edit-format-compliance
+title: Edit-format Compliance
+category: patching
+tier: optional
+description: Produce syntactically valid edit blocks or unified diffs that apply cleanly.
+applicable_roles:
+- Editor
+- Solver
+required_inputs:
+- planned_edits
+- target_file_contents
+- edit_format
+output_type: ValidatedEdits
+allowed_tools:
+- apply_patch
+- git_diff
+- read_range
+source_ids:
+- aider
+- swe-agent
+optional_inputs: []
+path: skills/edit-format-compliance/SKILL.md

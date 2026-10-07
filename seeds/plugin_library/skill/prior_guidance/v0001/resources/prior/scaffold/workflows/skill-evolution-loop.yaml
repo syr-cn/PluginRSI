@@ -1,0 +1,108 @@
+id: W08
+name: skill-evolution-loop
+title: Skill Library Evolution Loop
+tier: meta
+purpose: Convert repeated failures or review feedback into evaluated skill changes.
+source_ids:
+- openhands-extensions
+- anthropic-skills
+- superpowers
+- swe-smith
+nodes:
+- id: collect
+  role: Reflection Agent
+  prompt: lesson-extractor
+  skills:
+  - trajectory-to-lesson
+  - review-feedback-distillation
+  consumes:
+  - trajectories
+  - outcomes
+  - review_feedback
+  produces:
+  - failure_clusters
+  - lesson_candidates
+  visibility:
+  - traces
+  - outcomes
+- id: propose
+  role: Skill Compiler
+  prompt: skill-editor
+  skills:
+  - skill-change-proposal
+  consumes:
+  - failure_clusters
+  - lesson_candidates
+  - skill_library
+  produces:
+  - skill_change_proposals
+  visibility:
+  - skill_library
+  - evidence
+- id: validate
+  role: Skill Validator
+  prompt: verifier
+  skills: []
+  consumes:
+  - skill_change_proposals
+  - skill_schema
+  - scope_policy
+  produces:
+  - schema_validation
+  visibility:
+  - proposals
+  - schemas
+- id: evaluate
+  role: Skill Evaluator
+  prompt: verifier
+  skills:
+  - skill-evaluation
+  consumes:
+  - validated_skill_candidates
+  - matched_evaluation_tasks
+  - budget
+  produces:
+  - skill_evaluation_records
+  visibility:
+  - candidates
+  - tasks
+  - results
+- id: curate
+  role: Skill Curator
+  prompt: skill-editor
+  skills: []
+  consumes:
+  - skill_evaluation_records
+  - skill_library
+  produces:
+  - skill_library_patch
+  visibility:
+  - library
+  - evaluations
+edges:
+- from: collect
+  to: propose
+- from: propose
+  to: validate
+- from: validate
+  to: evaluate
+  when: schema_validation == 'pass'
+- from: evaluate
+  to: curate
+control_flow:
+  entry: collect
+  termination:
+    success: all proposals are promoted, revised, rejected, or kept provisional with evidence
+    failure: evaluation budget exhausted without a valid candidate
+budget:
+  matched_budget: true
+  max_skill_edits_per_cycle: 3
+  held_out_required: true
+invariants:
+- Never activate an unevaluated skill in the same batch that generated it.
+- Keep upstream text as provenance, not copied runtime instructions.
+- Preserve negative-trigger cases and rollback versions.
+allowed_mutations:
+- skill_prompt_content
+- skill_split_merge
+- skill_activation_metadata

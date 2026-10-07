@@ -1,0 +1,27 @@
+id: E01
+name: trajectory-record
+category: episodic
+purpose: Replayable typed event stream for one agent run.
+required_fields:
+- task_id
+- workflow_id
+- events
+- final_outcome
+- budget
+- source_commit_manifest
+event_fields:
+- step
+- role
+- active_skills
+- input_refs
+- output_type
+- output_ref
+- tool_calls
+- cost
+- timestamp
+retention: Keep full trace only in experiment storage; long-term memory receives a
+  distilled record.
+sources:
+- mini-swe-agent
+- swe-agent
+- swe-bench-experiments

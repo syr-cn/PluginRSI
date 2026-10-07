@@ -1,0 +1,1089 @@
+schema_version: 1
+origin: meta-lego/prior
+provenance_status: normalized synthesized adaptations
+plugins:
+- asset_id: P01
+  plugin_ref: role/prior_base_coding_boundary/v0001
+  upstream_paths:
+  - prompts/base-coding-boundary.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - addy-agent-skills
+  representation: role
+- asset_id: P04
+  plugin_ref: role/prior_context_selector/v0001
+  upstream_paths:
+  - prompts/context-selector.yaml
+  source_ids:
+  - aider
+  - swe-agent
+  - deepseek-harness
+  representation: role
+- asset_id: P20
+  plugin_ref: role/prior_credit_assigner/v0001
+  upstream_paths:
+  - prompts/credit-assigner.yaml
+  source_ids:
+  - swe-bench-experiments
+  - swe-smith-trajectories
+  - deepseek-harness
+  representation: role
+- asset_id: P06
+  plugin_ref: role/prior_fault_localizer/v0001
+  upstream_paths:
+  - prompts/fault-localizer.yaml
+  source_ids:
+  - agentless
+  - aider
+  representation: role
+- asset_id: P13
+  plugin_ref: role/prior_finalizer/v0001
+  upstream_paths:
+  - prompts/finalizer.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  representation: role
+- asset_id: P15
+  plugin_ref: role/prior_lesson_extractor/v0001
+  upstream_paths:
+  - prompts/lesson-extractor.yaml
+  source_ids:
+  - swe-bench-experiments
+  - swe-smith-trajectories
+  - openhands-extensions
+  representation: role
+- asset_id: P10
+  plugin_ref: role/prior_patch_generator/v0001
+  upstream_paths:
+  - prompts/patch-generator.yaml
+  source_ids:
+  - mini-swe-agent
+  - aider
+  - agentless
+  representation: role
+- asset_id: P09
+  plugin_ref: role/prior_patch_planner/v0001
+  upstream_paths:
+  - prompts/patch-planner.yaml
+  source_ids:
+  - aider
+  - agentless
+  - mini-swe-agent
+  representation: role
+- asset_id: P12
+  plugin_ref: role/prior_patch_ranker/v0001
+  upstream_paths:
+  - prompts/patch-ranker.yaml
+  source_ids:
+  - agentless
+  representation: role
+- asset_id: P21
+  plugin_ref: role/prior_prompt_editor/v0001
+  upstream_paths:
+  - prompts/prompt-editor.yaml
+  source_ids:
+  - deepseek-harness
+  - swe-bench-experiments
+  representation: role
+- asset_id: P05
+  plugin_ref: role/prior_repository_orienter/v0001
+  upstream_paths:
+  - prompts/repository-orienter.yaml
+  source_ids:
+  - aider
+  - mini-swe-agent
+  - agentless
+  representation: role
+- asset_id: P07
+  plugin_ref: role/prior_reproduction_planner/v0001
+  upstream_paths:
+  - prompts/reproduction-planner.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - agentless
+  representation: role
+- asset_id: P08
+  plugin_ref: role/prior_root_cause_diagnoser/v0001
+  upstream_paths:
+  - prompts/root-cause-diagnoser.yaml
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - swe-agent
+  representation: role
+- asset_id: P17
+  plugin_ref: role/prior_skill_editor/v0001
+  upstream_paths:
+  - prompts/skill-editor.yaml
+  source_ids:
+  - anthropic-skills
+  - superpowers
+  - openhands-extensions
+  - agentskills-spec
+  representation: role
+- asset_id: P03
+  plugin_ref: role/prior_skill_router/v0001
+  upstream_paths:
+  - prompts/skill-router.yaml
+  source_ids:
+  - agentskills-spec
+  - deepseek-harness
+  - openhands-extensions
+  representation: role
+- asset_id: P02
+  plugin_ref: role/prior_task_analyzer/v0001
+  upstream_paths:
+  - prompts/task-analyzer.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  representation: role
+- asset_id: P19
+  plugin_ref: role/prior_topology_editor/v0001
+  upstream_paths:
+  - prompts/topology-editor.yaml
+  source_ids:
+  - deepseek-harness
+  - swe-bench-experiments
+  representation: role
+- asset_id: P11
+  plugin_ref: role/prior_verifier/v0001
+  upstream_paths:
+  - prompts/verifier.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - openhands-extensions
+  representation: role
+- asset_id: P18
+  plugin_ref: role/prior_workflow_designer/v0001
+  upstream_paths:
+  - prompts/workflow-designer.yaml
+  source_ids:
+  - deepseek-harness
+  - agentless
+  - mini-swe-agent
+  representation: role
+- asset_id: S01
+  plugin_ref: skill/prior_skill_routing/v0001
+  upstream_paths:
+  - skills/skill-routing/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentskills-spec
+  - deepseek-harness
+  - openhands-extensions
+  - addy-agent-skills
+  representation: skill
+- asset_id: S02
+  plugin_ref: skill/prior_issue_analysis/v0001
+  upstream_paths:
+  - skills/issue-analysis/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  representation: skill
+- asset_id: S03
+  plugin_ref: skill/prior_repository_instruction_loading/v0001
+  upstream_paths:
+  - skills/repository-instruction-loading/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - openhands-extensions
+  - deepseek-harness
+  representation: skill
+- asset_id: S05
+  plugin_ref: skill/prior_repository_orientation/v0001
+  upstream_paths:
+  - skills/repository-orientation/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - aider
+  - agentless
+  representation: skill
+- asset_id: S06
+  plugin_ref: skill/prior_repository_map_reading/v0001
+  upstream_paths:
+  - skills/repository-map-reading/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - aider
+  representation: skill
+- asset_id: S07
+  plugin_ref: skill/prior_file_localization/v0001
+  upstream_paths:
+  - skills/file-localization/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  - aider
+  representation: skill
+- asset_id: S08
+  plugin_ref: skill/prior_symbol_localization/v0001
+  upstream_paths:
+  - skills/symbol-localization/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  - aider
+  representation: skill
+- asset_id: S09
+  plugin_ref: skill/prior_edit_location_localization/v0001
+  upstream_paths:
+  - skills/edit-location-localization/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  representation: skill
+- asset_id: S10
+  plugin_ref: skill/prior_call_chain_tracing/v0001
+  upstream_paths:
+  - skills/call-chain-tracing/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - aider
+  - superpowers
+  representation: skill
+- asset_id: S11
+  plugin_ref: skill/prior_reproduction_script_design/v0001
+  upstream_paths:
+  - skills/reproduction-script-design/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - superpowers
+  representation: skill
+- asset_id: S12
+  plugin_ref: skill/prior_focused_failure_reproduction/v0001
+  upstream_paths:
+  - skills/focused-failure-reproduction/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  representation: skill
+- asset_id: S13
+  plugin_ref: skill/prior_root_cause_debugging/v0001
+  upstream_paths:
+  - skills/root-cause-debugging/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - swe-agent
+  representation: skill
+- asset_id: S14
+  plugin_ref: skill/prior_hypothesis_testing/v0001
+  upstream_paths:
+  - skills/hypothesis-testing/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  representation: skill
+- asset_id: S15
+  plugin_ref: skill/prior_test_output_interpretation/v0001
+  upstream_paths:
+  - skills/test-output-interpretation/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - swe-agent
+  - agentless
+  - superpowers
+  representation: skill
+- asset_id: S16
+  plugin_ref: skill/prior_minimal_patch/v0001
+  upstream_paths:
+  - skills/minimal-patch/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - superpowers
+  representation: skill
+- asset_id: S18
+  plugin_ref: skill/prior_preserve_api_contract/v0001
+  upstream_paths:
+  - skills/preserve-api-contract/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - aider
+  - openhands-agent-sdk
+  representation: skill
+- asset_id: S19
+  plugin_ref: skill/prior_scope_guard/v0001
+  upstream_paths:
+  - skills/scope-guard/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - addy-agent-skills
+  representation: skill
+- asset_id: S21
+  plugin_ref: skill/prior_edit_format_compliance/v0001
+  upstream_paths:
+  - skills/edit-format-compliance/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - aider
+  - swe-agent
+  representation: skill
+- asset_id: S23
+  plugin_ref: skill/prior_existing_test_discovery/v0001
+  upstream_paths:
+  - skills/existing-test-discovery/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  - aider
+  representation: skill
+- asset_id: S24
+  plugin_ref: skill/prior_focused_test_selection/v0001
+  upstream_paths:
+  - skills/focused-test-selection/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  representation: skill
+- asset_id: S25
+  plugin_ref: skill/prior_regression_check/v0001
+  upstream_paths:
+  - skills/regression-check/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  - superpowers
+  representation: skill
+- asset_id: S26
+  plugin_ref: skill/prior_final_diff_inspection/v0001
+  upstream_paths:
+  - skills/final-diff-inspection/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - openhands-extensions
+  representation: skill
+- asset_id: S27
+  plugin_ref: skill/prior_completion_evidence_gate/v0001
+  upstream_paths:
+  - skills/completion-evidence-gate/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  representation: skill
+- asset_id: S29
+  plugin_ref: skill/prior_environment_blocker_diagnosis/v0001
+  upstream_paths:
+  - skills/environment-blocker-diagnosis/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - mini-swe-agent
+  - swe-agent
+  - superpowers
+  representation: skill
+- asset_id: S30
+  plugin_ref: skill/prior_backtrack_after_failed_fixes/v0001
+  upstream_paths:
+  - skills/backtrack-after-failed-fixes/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - deepseek-harness
+  representation: skill
+- asset_id: S31
+  plugin_ref: skill/prior_trajectory_to_lesson/v0001
+  upstream_paths:
+  - skills/trajectory-to-lesson/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - swe-bench-experiments
+  - swe-smith-trajectories
+  - openhands-extensions
+  representation: skill
+- asset_id: S32
+  plugin_ref: skill/prior_review_feedback_distillation/v0001
+  upstream_paths:
+  - skills/review-feedback-distillation/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - openhands-extensions
+  - anthropic-skills
+  representation: skill
+- asset_id: S35
+  plugin_ref: skill/prior_skill_change_proposal/v0001
+  upstream_paths:
+  - skills/skill-change-proposal/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - agentskills-spec
+  - anthropic-skills
+  - openhands-extensions
+  - superpowers
+  representation: skill
+- asset_id: S36
+  plugin_ref: skill/prior_skill_evaluation/v0001
+  upstream_paths:
+  - skills/skill-evaluation/SKILL.md
+  - skills/catalog.yaml
+  source_ids:
+  - anthropic-skills
+  - openhands-extensions
+  - swe-smith
+  representation: skill
+- asset_id: T01
+  plugin_ref: tool/prior_shell_exec/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - swe-agent
+  - deepseek-harness
+  representation: tool
+- asset_id: T02
+  plugin_ref: tool/prior_list_tree/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - openhands-agent-sdk
+  representation: tool
+- asset_id: T03
+  plugin_ref: tool/prior_read_file/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - swe-agent
+  - openhands-agent-sdk
+  - deepseek-harness
+  representation: tool
+- asset_id: T04
+  plugin_ref: tool/prior_read_range/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - aider
+  - agentless
+  representation: tool
+- asset_id: T05
+  plugin_ref: tool/prior_text_search/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - aider
+  representation: tool
+- asset_id: T06
+  plugin_ref: tool/prior_symbol_search/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - aider
+  - agentless
+  - openhands-agent-sdk
+  representation: tool
+- asset_id: T07
+  plugin_ref: tool/prior_repo_map/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - aider
+  representation: tool
+- asset_id: T08
+  plugin_ref: tool/prior_apply_patch/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - aider
+  - swe-agent
+  - openhands-agent-sdk
+  representation: tool
+- asset_id: T09
+  plugin_ref: tool/prior_git_status/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - aider
+  representation: tool
+- asset_id: T10
+  plugin_ref: tool/prior_git_diff/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - aider
+  - openhands-agent-sdk
+  representation: tool
+- asset_id: T11
+  plugin_ref: tool/prior_run_test/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - swe-bench
+  representation: tool
+- asset_id: T12
+  plugin_ref: tool/prior_run_lint/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - aider
+  - openhands-agent-sdk
+  representation: tool
+- asset_id: T13
+  plugin_ref: tool/prior_inspect_failure/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - swe-agent
+  - agentless
+  representation: tool
+- asset_id: T14
+  plugin_ref: tool/prior_test_discovery/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - agentless
+  - aider
+  representation: tool
+- asset_id: T15
+  plugin_ref: tool/prior_submit_patch/v0001
+  upstream_paths:
+  - tools/tool_registry.yaml
+  source_ids:
+  - swe-bench
+  - mini-swe-agent
+  representation: tool
+- asset_id: E01
+  plugin_ref: memory/prior_trajectory_record/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - mini-swe-agent
+  - swe-agent
+  - swe-bench-experiments
+  representation: memory
+- asset_id: E03
+  plugin_ref: memory/prior_task_outcome/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - swe-bench
+  - swe-bench-experiments
+  representation: memory
+- asset_id: E04
+  plugin_ref: memory/prior_failure_signature/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - swe-bench-experiments
+  representation: memory
+- asset_id: E05
+  plugin_ref: memory/prior_lesson_candidate/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - openhands-extensions
+  - swe-smith-trajectories
+  representation: memory
+- asset_id: E08
+  plugin_ref: memory/prior_counterexample_record/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - anthropic-skills
+  - superpowers
+  representation: memory
+- asset_id: E09
+  plugin_ref: memory/prior_component_credit/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - deepseek-harness
+  - swe-bench-experiments
+  representation: memory
+- asset_id: E10
+  plugin_ref: memory/prior_skill_evaluation_record/v0001
+  upstream_paths:
+  - experience/record_types.yaml
+  - experience/PROTOCOL.md
+  source_ids:
+  - anthropic-skills
+  - openhands-extensions
+  - agentskills-spec
+  representation: memory
+- asset_id: PRIOR_GUIDANCE
+  plugin_ref: skill/prior_guidance/v0001
+  upstream_paths:
+  - ASSET_MANIFEST.yaml
+  source_ids:
+  - addy-agent-skills
+  - agentless
+  - agentskills-spec
+  - aider
+  - anthropic-skills
+  - deepseek-harness
+  - mini-swe-agent
+  - openhands-agent-sdk
+  - openhands-extensions
+  - superpowers
+  - swe-agent
+  - swe-bench
+  - swe-bench-experiments
+  - swe-smith
+  - swe-smith-trajectories
+  representation: skill
+files:
+- upstream_path: ASSET_MANIFEST.yaml
+  resource: resources/prior/ASSET_MANIFEST.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: configs/meta_harness_v2.yaml
+  resource: resources/prior/configs/meta_harness_v2.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: configs/swebench_v1.yaml
+  resource: resources/prior/configs/swebench_v1.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: experience/PROTOCOL.md
+  resource: resources/prior/experience/PROTOCOL.md
+  plugin_refs:
+  - memory/prior_trajectory_record/v0001
+  - memory/prior_task_outcome/v0001
+  - memory/prior_failure_signature/v0001
+  - memory/prior_lesson_candidate/v0001
+  - memory/prior_counterexample_record/v0001
+  - memory/prior_component_credit/v0001
+  - memory/prior_skill_evaluation_record/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: experience/record_types.yaml
+  resource: resources/prior/experience/record_types.yaml
+  plugin_refs:
+  - memory/prior_trajectory_record/v0001
+  - memory/prior_task_outcome/v0001
+  - memory/prior_failure_signature/v0001
+  - memory/prior_lesson_candidate/v0001
+  - memory/prior_counterexample_record/v0001
+  - memory/prior_component_credit/v0001
+  - memory/prior_skill_evaluation_record/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: mappings/role_asset_map.yaml
+  resource: resources/prior/mappings/role_asset_map.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: mappings/three_dimension_map.yaml
+  resource: resources/prior/mappings/three_dimension_map.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: policies/CONTAMINATION_POLICY.md
+  resource: resources/prior/policies/CONTAMINATION_POLICY.md
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: policies/MUTATION_POLICY.md
+  resource: resources/prior/policies/MUTATION_POLICY.md
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: policies/SCOPE_GUARD.md
+  resource: resources/prior/policies/SCOPE_GUARD.md
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: prompts/base-coding-boundary.yaml
+  resource: resources/prior/prompts/base-coding-boundary.yaml
+  plugin_refs:
+  - role/prior_base_coding_boundary/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/context-selector.yaml
+  resource: resources/prior/prompts/context-selector.yaml
+  plugin_refs:
+  - role/prior_context_selector/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/credit-assigner.yaml
+  resource: resources/prior/prompts/credit-assigner.yaml
+  plugin_refs:
+  - role/prior_credit_assigner/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/fault-localizer.yaml
+  resource: resources/prior/prompts/fault-localizer.yaml
+  plugin_refs:
+  - role/prior_fault_localizer/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/finalizer.yaml
+  resource: resources/prior/prompts/finalizer.yaml
+  plugin_refs:
+  - role/prior_finalizer/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/lesson-extractor.yaml
+  resource: resources/prior/prompts/lesson-extractor.yaml
+  plugin_refs:
+  - role/prior_lesson_extractor/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/patch-generator.yaml
+  resource: resources/prior/prompts/patch-generator.yaml
+  plugin_refs:
+  - role/prior_patch_generator/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/patch-planner.yaml
+  resource: resources/prior/prompts/patch-planner.yaml
+  plugin_refs:
+  - role/prior_patch_planner/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/patch-ranker.yaml
+  resource: resources/prior/prompts/patch-ranker.yaml
+  plugin_refs:
+  - role/prior_patch_ranker/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/prompt-editor.yaml
+  resource: resources/prior/prompts/prompt-editor.yaml
+  plugin_refs:
+  - role/prior_prompt_editor/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/repository-orienter.yaml
+  resource: resources/prior/prompts/repository-orienter.yaml
+  plugin_refs:
+  - role/prior_repository_orienter/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/reproduction-planner.yaml
+  resource: resources/prior/prompts/reproduction-planner.yaml
+  plugin_refs:
+  - role/prior_reproduction_planner/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/root-cause-diagnoser.yaml
+  resource: resources/prior/prompts/root-cause-diagnoser.yaml
+  plugin_refs:
+  - role/prior_root_cause_diagnoser/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/skill-editor.yaml
+  resource: resources/prior/prompts/skill-editor.yaml
+  plugin_refs:
+  - role/prior_skill_editor/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/skill-router.yaml
+  resource: resources/prior/prompts/skill-router.yaml
+  plugin_refs:
+  - role/prior_skill_router/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/task-analyzer.yaml
+  resource: resources/prior/prompts/task-analyzer.yaml
+  plugin_refs:
+  - role/prior_task_analyzer/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/topology-editor.yaml
+  resource: resources/prior/prompts/topology-editor.yaml
+  plugin_refs:
+  - role/prior_topology_editor/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/verifier.yaml
+  resource: resources/prior/prompts/verifier.yaml
+  plugin_refs:
+  - role/prior_verifier/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: prompts/workflow-designer.yaml
+  resource: resources/prior/prompts/workflow-designer.yaml
+  plugin_refs:
+  - role/prior_workflow_designer/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: scaffold/components.yaml
+  resource: resources/prior/scaffold/components.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/localization-repair-validation.yaml
+  resource: resources/prior/scaffold/workflows/localization-repair-validation.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/minimal-linear-swe.yaml
+  resource: resources/prior/scaffold/workflows/minimal-linear-swe.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/planner-solver-verifier-reviser.yaml
+  resource: resources/prior/scaffold/workflows/planner-solver-verifier-reviser.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/prompt-evolution-loop.yaml
+  resource: resources/prior/scaffold/workflows/prompt-evolution-loop.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/reproduce-debug-patch-verify.yaml
+  resource: resources/prior/scaffold/workflows/reproduce-debug-patch-verify.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/skill-evolution-loop.yaml
+  resource: resources/prior/scaffold/workflows/skill-evolution-loop.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: scaffold/workflows/workflow-evolution-loop.yaml
+  resource: resources/prior/scaffold/workflows/workflow-evolution-loop.yaml
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/experience_record.schema.json
+  resource: resources/prior/schemas/experience_record.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/prompt_spec.schema.json
+  resource: resources/prior/schemas/prompt_spec.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/scaffold_component.schema.json
+  resource: resources/prior/schemas/scaffold_component.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/skill_spec.schema.json
+  resource: resources/prior/schemas/skill_spec.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/tool_spec.schema.json
+  resource: resources/prior/schemas/tool_spec.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: schemas/workflow_spec.schema.json
+  resource: resources/prior/schemas/workflow_spec.schema.json
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only
+- upstream_path: skills/backtrack-after-failed-fixes/SKILL.md
+  resource: resources/prior/skills/backtrack-after-failed-fixes/SKILL.md
+  plugin_refs:
+  - skill/prior_backtrack_after_failed_fixes/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/call-chain-tracing/SKILL.md
+  resource: resources/prior/skills/call-chain-tracing/SKILL.md
+  plugin_refs:
+  - skill/prior_call_chain_tracing/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/catalog.yaml
+  resource: resources/prior/skills/catalog.yaml
+  plugin_refs:
+  - skill/prior_skill_routing/v0001
+  - skill/prior_issue_analysis/v0001
+  - skill/prior_repository_instruction_loading/v0001
+  - skill/prior_repository_orientation/v0001
+  - skill/prior_repository_map_reading/v0001
+  - skill/prior_file_localization/v0001
+  - skill/prior_symbol_localization/v0001
+  - skill/prior_edit_location_localization/v0001
+  - skill/prior_call_chain_tracing/v0001
+  - skill/prior_reproduction_script_design/v0001
+  - skill/prior_focused_failure_reproduction/v0001
+  - skill/prior_root_cause_debugging/v0001
+  - skill/prior_hypothesis_testing/v0001
+  - skill/prior_test_output_interpretation/v0001
+  - skill/prior_minimal_patch/v0001
+  - skill/prior_preserve_api_contract/v0001
+  - skill/prior_scope_guard/v0001
+  - skill/prior_edit_format_compliance/v0001
+  - skill/prior_existing_test_discovery/v0001
+  - skill/prior_focused_test_selection/v0001
+  - skill/prior_regression_check/v0001
+  - skill/prior_final_diff_inspection/v0001
+  - skill/prior_completion_evidence_gate/v0001
+  - skill/prior_environment_blocker_diagnosis/v0001
+  - skill/prior_backtrack_after_failed_fixes/v0001
+  - skill/prior_trajectory_to_lesson/v0001
+  - skill/prior_review_feedback_distillation/v0001
+  - skill/prior_skill_change_proposal/v0001
+  - skill/prior_skill_evaluation/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/completion-evidence-gate/SKILL.md
+  resource: resources/prior/skills/completion-evidence-gate/SKILL.md
+  plugin_refs:
+  - skill/prior_completion_evidence_gate/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/edit-format-compliance/SKILL.md
+  resource: resources/prior/skills/edit-format-compliance/SKILL.md
+  plugin_refs:
+  - skill/prior_edit_format_compliance/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/edit-location-localization/SKILL.md
+  resource: resources/prior/skills/edit-location-localization/SKILL.md
+  plugin_refs:
+  - skill/prior_edit_location_localization/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/environment-blocker-diagnosis/SKILL.md
+  resource: resources/prior/skills/environment-blocker-diagnosis/SKILL.md
+  plugin_refs:
+  - skill/prior_environment_blocker_diagnosis/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/existing-test-discovery/SKILL.md
+  resource: resources/prior/skills/existing-test-discovery/SKILL.md
+  plugin_refs:
+  - skill/prior_existing_test_discovery/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/file-localization/SKILL.md
+  resource: resources/prior/skills/file-localization/SKILL.md
+  plugin_refs:
+  - skill/prior_file_localization/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/final-diff-inspection/SKILL.md
+  resource: resources/prior/skills/final-diff-inspection/SKILL.md
+  plugin_refs:
+  - skill/prior_final_diff_inspection/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/focused-failure-reproduction/SKILL.md
+  resource: resources/prior/skills/focused-failure-reproduction/SKILL.md
+  plugin_refs:
+  - skill/prior_focused_failure_reproduction/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/focused-test-selection/SKILL.md
+  resource: resources/prior/skills/focused-test-selection/SKILL.md
+  plugin_refs:
+  - skill/prior_focused_test_selection/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/hypothesis-testing/SKILL.md
+  resource: resources/prior/skills/hypothesis-testing/SKILL.md
+  plugin_refs:
+  - skill/prior_hypothesis_testing/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/issue-analysis/SKILL.md
+  resource: resources/prior/skills/issue-analysis/SKILL.md
+  plugin_refs:
+  - skill/prior_issue_analysis/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/minimal-patch/SKILL.md
+  resource: resources/prior/skills/minimal-patch/SKILL.md
+  plugin_refs:
+  - skill/prior_minimal_patch/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/preserve-api-contract/SKILL.md
+  resource: resources/prior/skills/preserve-api-contract/SKILL.md
+  plugin_refs:
+  - skill/prior_preserve_api_contract/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/regression-check/SKILL.md
+  resource: resources/prior/skills/regression-check/SKILL.md
+  plugin_refs:
+  - skill/prior_regression_check/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/repository-instruction-loading/SKILL.md
+  resource: resources/prior/skills/repository-instruction-loading/SKILL.md
+  plugin_refs:
+  - skill/prior_repository_instruction_loading/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/repository-map-reading/SKILL.md
+  resource: resources/prior/skills/repository-map-reading/SKILL.md
+  plugin_refs:
+  - skill/prior_repository_map_reading/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/repository-orientation/SKILL.md
+  resource: resources/prior/skills/repository-orientation/SKILL.md
+  plugin_refs:
+  - skill/prior_repository_orientation/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/reproduction-script-design/SKILL.md
+  resource: resources/prior/skills/reproduction-script-design/SKILL.md
+  plugin_refs:
+  - skill/prior_reproduction_script_design/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/review-feedback-distillation/SKILL.md
+  resource: resources/prior/skills/review-feedback-distillation/SKILL.md
+  plugin_refs:
+  - skill/prior_review_feedback_distillation/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/root-cause-debugging/SKILL.md
+  resource: resources/prior/skills/root-cause-debugging/SKILL.md
+  plugin_refs:
+  - skill/prior_root_cause_debugging/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/scope-guard/SKILL.md
+  resource: resources/prior/skills/scope-guard/SKILL.md
+  plugin_refs:
+  - skill/prior_scope_guard/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/skill-change-proposal/SKILL.md
+  resource: resources/prior/skills/skill-change-proposal/SKILL.md
+  plugin_refs:
+  - skill/prior_skill_change_proposal/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/skill-evaluation/SKILL.md
+  resource: resources/prior/skills/skill-evaluation/SKILL.md
+  plugin_refs:
+  - skill/prior_skill_evaluation/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/skill-routing/SKILL.md
+  resource: resources/prior/skills/skill-routing/SKILL.md
+  plugin_refs:
+  - skill/prior_skill_routing/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/symbol-localization/SKILL.md
+  resource: resources/prior/skills/symbol-localization/SKILL.md
+  plugin_refs:
+  - skill/prior_symbol_localization/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/test-output-interpretation/SKILL.md
+  resource: resources/prior/skills/test-output-interpretation/SKILL.md
+  plugin_refs:
+  - skill/prior_test_output_interpretation/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: skills/trajectory-to-lesson/SKILL.md
+  resource: resources/prior/skills/trajectory-to-lesson/SKILL.md
+  plugin_refs:
+  - skill/prior_trajectory_to_lesson/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: tools/tool_registry.yaml
+  resource: resources/prior/tools/tool_registry.yaml
+  plugin_refs:
+  - tool/prior_shell_exec/v0001
+  - tool/prior_list_tree/v0001
+  - tool/prior_read_file/v0001
+  - tool/prior_read_range/v0001
+  - tool/prior_text_search/v0001
+  - tool/prior_symbol_search/v0001
+  - tool/prior_repo_map/v0001
+  - tool/prior_apply_patch/v0001
+  - tool/prior_git_status/v0001
+  - tool/prior_git_diff/v0001
+  - tool/prior_run_test/v0001
+  - tool/prior_run_lint/v0001
+  - tool/prior_inspect_failure/v0001
+  - tool/prior_test_discovery/v0001
+  - tool/prior_submit_patch/v0001
+  representation: executable adaptation plus original resource
+- upstream_path: validate_assets.py
+  resource: resources/prior/validate_assets.py
+  plugin_refs:
+  - skill/prior_guidance/v0001
+  representation: reference guidance only

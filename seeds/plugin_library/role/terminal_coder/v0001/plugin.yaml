@@ -1,0 +1,18 @@
+schema_version: 1
+kind: role
+name: terminal_coder
+version: v0001
+entrypoint: implementation:Coder
+description: Render terminal task instructions with explicit completion and environment
+  verification.
+provenance:
+  label: PluginRSI-Terminal-Coder
+  sources: []
+  upstream_assets:
+  - seeds/plugin_library/role/coder/v0001
+  adaptation: Adapt the SWE role to general terminal tasks and explicit finish submission.
+  parent_refs:
+  - role/coder/v0001
+config_schema:
+  type: object
+  additionalProperties: false

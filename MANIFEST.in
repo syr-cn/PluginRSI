@@ -1,0 +1,15 @@
+include README.md LICENSE .env.example
+recursive-include seeds *.py *.yaml *.json *.md
+recursive-include configs *.yaml
+recursive-include scripts *.py *.sh
+include datasets/swe/heldin400.jsonl datasets/swe/heldout.jsonl
+include datasets/terminal_bench_2_1/heldin59.jsonl datasets/terminal_bench_2_1/heldout30.jsonl
+include datasets/qa_transfer_v1/heldin.jsonl datasets/qa_transfer_v1/heldout.jsonl
+include datasets/qa_transfer_v1/schema.json datasets/qa_transfer_v1/judge.yaml
+recursive-include tests *.py
+global-exclude *.py[cod]
+prune runs
+prune logs
+prune data_raw
+prune .work
+exclude .env

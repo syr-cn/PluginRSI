@@ -1,0 +1,16 @@
+id: E05
+name: lesson-candidate
+category: procedural
+purpose: One bounded transferable lesson proposed from a trajectory.
+required_fields:
+- trigger
+- lesson
+- scope
+- evidence
+- counterexample
+- confidence
+- provenance
+retention: Curator accepts, merges, rejects, or keeps provisional.
+sources:
+- openhands-extensions
+- swe-smith-trajectories

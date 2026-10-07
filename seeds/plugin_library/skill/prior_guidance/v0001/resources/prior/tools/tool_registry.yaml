@@ -1,0 +1,307 @@
+schema_version: '1.0'
+generated_date: '2026-08-25'
+description: Primitive tool schemas and guards for a minimal coding-agent sandbox.
+tools:
+- id: T01
+  name: shell_exec
+  category: execution
+  description: Execute one bounded shell command inside the task sandbox.
+  input_schema:
+    command: string
+    cwd: path
+    timeout_seconds: integer
+    env_overrides: object?
+  output_schema:
+    exit_code: integer
+    stdout: string
+    stderr: string
+    duration_seconds: number
+    truncated: boolean
+  side_effect: process and filesystem effects of command
+  guards:
+  - Require explicit cwd and timeout.
+  - Capture command and output in trajectory.
+  - Disallow host access and uncontrolled background jobs.
+  source_ids:
+  - mini-swe-agent
+  - swe-agent
+  - deepseek-harness
+- id: T02
+  name: list_tree
+  category: inspection
+  description: List a bounded repository subtree with depth and ignore controls.
+  input_schema:
+    root: path
+    max_depth: integer
+    include_hidden: boolean?
+    max_entries: integer
+  output_schema:
+    entries: array
+    truncated: boolean
+  side_effect: none
+  guards:
+  - Do not recursively enumerate the full repository by default.
+  - Respect ignore patterns.
+  source_ids:
+  - mini-swe-agent
+  - openhands-agent-sdk
+- id: T03
+  name: read_file
+  category: inspection
+  description: Read a text file with size and binary guards.
+  input_schema:
+    path: path
+    max_bytes: integer
+    encoding: string?
+  output_schema:
+    content: string
+    truncated: boolean
+  side_effect: none
+  guards:
+  - Reject binary/oversized files unless explicitly allowed.
+  source_ids:
+  - swe-agent
+  - openhands-agent-sdk
+  - deepseek-harness
+- id: T04
+  name: read_range
+  category: inspection
+  description: Read a bounded line range with line numbers.
+  input_schema:
+    path: path
+    start_line: integer
+    end_line: integer
+  output_schema:
+    content: string
+    actual_start: integer
+    actual_end: integer
+  side_effect: none
+  guards:
+  - Require a bounded line interval.
+  - Preserve line numbers.
+  source_ids:
+  - aider
+  - agentless
+- id: T05
+  name: text_search
+  category: search
+  description: Search text or regex within a bounded path set.
+  input_schema:
+    query: string
+    paths: array
+    regex: boolean?
+    max_results: integer
+  output_schema:
+    matches: array
+    truncated: boolean
+  side_effect: none
+  guards:
+  - Bound paths and result count.
+  - Return path, line and context.
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - aider
+- id: T06
+  name: symbol_search
+  category: search
+  description: Search definitions and references using language-aware or indexed metadata.
+  input_schema:
+    symbol_or_query: string
+    paths: array?
+    kind: definition|reference|both
+    max_results: integer
+  output_schema:
+    symbols: array
+    references: array
+    confidence: number?
+  side_effect: none
+  guards:
+  - Fall back to text search when language support is unavailable.
+  - Do not treat approximate matches as exact.
+  source_ids:
+  - aider
+  - agentless
+  - openhands-agent-sdk
+- id: T07
+  name: repo_map
+  category: context
+  description: Produce a compact structural map of important files, symbols and references.
+  input_schema:
+    repository_root: path
+    query: string?
+    token_budget: integer
+  output_schema:
+    map: string
+    ranked_symbols: array
+    token_estimate: integer
+  side_effect: cache write only
+  guards:
+  - Keep within token budget.
+  - Expose signatures and structure, not full file contents.
+  source_ids:
+  - aider
+- id: T08
+  name: apply_patch
+  category: editing
+  description: Apply a unified diff or typed edit operations to tracked source files.
+  input_schema:
+    patch: string|array
+    dry_run: boolean?
+  output_schema:
+    applied: boolean
+    changed_files: array
+    errors: array
+    diff: string
+  side_effect: repository modification
+  guards:
+  - Default to dry-run validation.
+  - Reject path traversal and edits outside repository.
+  - Record post-edit diff.
+  source_ids:
+  - aider
+  - swe-agent
+  - openhands-agent-sdk
+- id: T09
+  name: git_status
+  category: version-control
+  description: Inspect tracked, modified and untracked repository state.
+  input_schema:
+    repository_root: path
+    porcelain: boolean?
+  output_schema:
+    branch: string?
+    modified: array
+    untracked: array
+    staged: array
+  side_effect: none
+  guards:
+  - Read-only.
+  - Use before and after edits.
+  source_ids:
+  - mini-swe-agent
+  - aider
+- id: T10
+  name: git_diff
+  category: version-control
+  description: Return a bounded unified diff for current or selected paths.
+  input_schema:
+    paths: array?
+    staged: boolean?
+    max_bytes: integer
+  output_schema:
+    diff: string
+    changed_files: array
+    truncated: boolean
+  side_effect: none
+  guards:
+  - Do not omit changed-file list when diff is truncated.
+  - Read-only.
+  source_ids:
+  - mini-swe-agent
+  - aider
+  - openhands-agent-sdk
+- id: T11
+  name: run_test
+  category: verification
+  description: Run a focused test command under an explicit timeout.
+  input_schema:
+    command: string
+    cwd: path
+    timeout_seconds: integer
+    test_scope: string
+  output_schema:
+    status: pass|fail|timeout|error
+    exit_code: integer
+    stdout: string
+    stderr: string
+    duration_seconds: number
+  side_effect: process effects and test artifacts
+  guards:
+  - Record exact command and current revision.
+  - Do not mutate tests during execution.
+  - Bound output.
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - swe-bench
+- id: T12
+  name: run_lint
+  category: verification
+  description: Run a targeted linter, type checker or formatter check without broad source rewrites.
+  input_schema:
+    command: string
+    cwd: path
+    timeout_seconds: integer
+    paths: array?
+  output_schema:
+    status: pass|fail|timeout|error
+    diagnostics: array
+    stdout: string
+    stderr: string
+  side_effect: process effects; no auto-fix unless explicit
+  guards:
+  - Prefer check mode.
+  - Do not auto-format unrelated files.
+  source_ids:
+  - aider
+  - openhands-agent-sdk
+- id: T13
+  name: inspect_failure
+  category: analysis
+  description: Parse command/test output into structured frames, messages and failure class.
+  input_schema:
+    command: string
+    stdout: string
+    stderr: string
+    exit_code: integer
+  output_schema:
+    failure_class: string
+    primary_error: string
+    frames: array
+    candidate_symbols: array
+  side_effect: none
+  guards:
+  - Preserve raw output references.
+  - Return unknown when parsing is ambiguous.
+  source_ids:
+  - swe-agent
+  - agentless
+- id: T14
+  name: test_discovery
+  category: search
+  description: Find tests, fixtures and exact repository-native commands relevant to selected symbols.
+  input_schema:
+    symbols: array
+    repository_root: path
+    max_results: integer
+  output_schema:
+    tests: array
+    commands: array
+    evidence: array
+  side_effect: none
+  guards:
+  - Use repository instructions.
+  - Rank by behavioral relevance.
+  source_ids:
+  - agentless
+  - aider
+- id: T15
+  name: submit_patch
+  category: delivery
+  description: Produce the benchmark prediction artifact after the completion gate passes.
+  input_schema:
+    task_id: string
+    patch: string
+    evidence_summary: object
+    workflow_version: string
+  output_schema:
+    prediction_record: object
+    artifact_path: path
+  side_effect: writes prediction artifact
+  guards:
+  - Require completion_decision=submit.
+  - Never include hidden-test or evaluator internals.
+  source_ids:
+  - swe-bench
+  - mini-swe-agent

@@ -1,0 +1,27 @@
+id: S30
+name: backtrack-after-failed-fixes
+title: Backtrack After Failed Fixes
+category: recovery
+tier: core
+description: Recover from repeated ineffective edits by reverting unsupported changes
+  and reopening diagnosis.
+applicable_roles:
+- Termination Controller
+- Critic
+- Solver
+required_inputs:
+- trajectory
+- candidate_patch
+- verification_failures
+output_type: BacktrackPlan
+allowed_tools:
+- git_diff
+- apply_patch
+- shell_exec
+source_ids:
+- superpowers
+- addy-agent-skills
+- deepseek-harness
+optional_inputs:
+- component_credit
+path: skills/backtrack-after-failed-fixes/SKILL.md

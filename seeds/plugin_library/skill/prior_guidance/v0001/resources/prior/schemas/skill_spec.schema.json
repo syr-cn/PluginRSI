@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillSpec",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "title",
+    "category",
+    "tier",
+    "description",
+    "applicable_roles",
+    "required_inputs",
+    "output_type",
+    "procedure",
+    "verification",
+    "stop_conditions",
+    "constraints",
+    "allowed_tools",
+    "source_ids"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^S[0-9]{2}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "tier": {
+      "enum": [
+        "core",
+        "optional",
+        "meta"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20
+    },
+    "applicable_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "optional_inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_type": {
+      "type": "string"
+    },
+    "use_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "not_use_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "procedure": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "verification": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "stop_conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

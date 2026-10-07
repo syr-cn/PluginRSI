@@ -1,0 +1,13 @@
+name: qa_completion_check
+purpose: Before submission, check every requested part against the given conditions
+  and your calculations. Check signs, units, magnitude and rounding when relevant.
+  A choice or classification answer must be exactly one allowed key. A mathematical
+  answer must preserve required tuples and multiple solutions. State necessary qualifications
+  for open answers. Budget exhaustion is not evidence of correctness; never claim
+  an external verifier approved the answer.
+inputs:
+- question
+- answer_mode
+- choices
+- task_local_evidence
+source_plugin: skill/prior_completion_evidence_gate/v0001

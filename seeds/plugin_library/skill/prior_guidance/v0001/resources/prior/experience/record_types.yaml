@@ -1,0 +1,127 @@
+schema_version: '1.0'
+generated_date: '2026-08-25'
+description: Typed records for trajectories, outcomes, lessons, memory, counterexamples and component
+  credit.
+experience_types:
+- id: E01
+  name: trajectory-record
+  category: episodic
+  purpose: Replayable typed event stream for one agent run.
+  required_fields:
+  - task_id
+  - workflow_id
+  - events
+  - final_outcome
+  - budget
+  - source_commit_manifest
+  event_fields:
+  - step
+  - role
+  - active_skills
+  - input_refs
+  - output_type
+  - output_ref
+  - tool_calls
+  - cost
+  - timestamp
+  retention: Keep full trace only in experiment storage; long-term memory receives a distilled record.
+  sources:
+  - mini-swe-agent
+  - swe-agent
+  - swe-bench-experiments
+- id: E03
+  name: task-outcome
+  category: evaluation
+  purpose: Canonical final result with resolved status, tests, changed files, cost, and failure label.
+  required_fields:
+  - task_id
+  - resolved
+  - score
+  - tests
+  - changed_files
+  - cost
+  - failure_type
+  - evaluator_version
+  retention: Permanent experiment metadata.
+  sources:
+  - swe-bench
+  - swe-bench-experiments
+- id: E04
+  name: failure-signature
+  category: diagnostic
+  purpose: Normalized recurring failure pattern used for routing, debugging, and skill evolution.
+  required_fields:
+  - stage
+  - symptom
+  - evidence_pattern
+  - likely_causes
+  - discriminating_checks
+  - scope
+  retention: Promote only after repeated support or strong causal evidence.
+  sources:
+  - superpowers
+  - addy-agent-skills
+  - swe-bench-experiments
+- id: E05
+  name: lesson-candidate
+  category: procedural
+  purpose: One bounded transferable lesson proposed from a trajectory.
+  required_fields:
+  - trigger
+  - lesson
+  - scope
+  - evidence
+  - counterexample
+  - confidence
+  - provenance
+  retention: Curator accepts, merges, rejects, or keeps provisional.
+  sources:
+  - openhands-extensions
+  - swe-smith-trajectories
+- id: E08
+  name: counterexample-record
+  category: safety
+  purpose: Case where a generally useful prompt, skill, or memory rule should not fire.
+  required_fields:
+  - target_asset
+  - trigger_that_failed
+  - context
+  - harm
+  - correct_boundary
+  - provenance
+  retention: Must survive merges and pruning while the target asset is active.
+  sources:
+  - anthropic-skills
+  - superpowers
+- id: E09
+  name: component-credit
+  category: meta-evaluation
+  purpose: Trace-grounded positive, negative, or uncertain credit assigned to workflow components.
+  required_fields:
+  - workflow_version
+  - components
+  - interaction_effects
+  - evidence
+  - uncertainty
+  - counterfactuals
+  retention: Attach to candidate lineage and use for one-change mutations.
+  sources:
+  - deepseek-harness
+  - swe-bench-experiments
+- id: E10
+  name: skill-evaluation-record
+  category: asset-evaluation
+  purpose: Matched-budget evidence for adding, editing, splitting, merging, or retiring a skill.
+  required_fields:
+  - skill_version
+  - positive_trigger_tasks
+  - negative_trigger_tasks
+  - baseline
+  - candidate
+  - metrics
+  - decision
+  retention: Permanent provenance for promoted skill versions.
+  sources:
+  - anthropic-skills
+  - openhands-extensions
+  - agentskills-spec

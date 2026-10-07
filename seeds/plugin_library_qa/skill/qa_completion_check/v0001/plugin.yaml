@@ -1,0 +1,28 @@
+schema_version: 1
+kind: skill
+name: qa_completion_check
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Before submission, check every requested part against the given conditions
+  and your calculations.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: QA adaptation of S27 completion-evidence-gate (mini-SWE-agent / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S27
+    path: skills/completion-evidence-gate/SKILL.md
+  - id: S27
+    path: skills/catalog.yaml
+  adaptation: Adapted from the local SWE plugin for QA/classification; implementation
+    lineage and upstream attribution retained.
+  parent_refs:
+  - skill/prior_completion_evidence_gate/v0001

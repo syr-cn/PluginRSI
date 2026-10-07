@@ -1,0 +1,67 @@
+schema_version: 1
+kind: skill
+name: prior_guidance
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Reference-only scaffold, workflow, policy, schema and routing guidance
+  for free-form harness authoring.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: PRIOR_GUIDANCE guidance (Addy Osmani Agent Skills / Agentless / Agent Skills
+    Specification / Aider / Anthropic Skills / DeepSeek Harness / mini-SWE-agent /
+    OpenHands Software Agent SDK / OpenHands Extensions / Superpowers / SWE-agent
+    / SWE-bench / SWE-bench Experiments / SWE-smith / SWE-smith Trajectories)
+  sources:
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: openhands-agent-sdk
+    title: OpenHands Software Agent SDK
+    url: https://github.com/OpenHands/software-agent-sdk
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: swe-bench
+    title: SWE-bench
+    url: https://github.com/SWE-bench/SWE-bench
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  - id: swe-smith
+    title: SWE-smith
+    url: https://github.com/SWE-bench/SWE-smith
+  - id: swe-smith-trajectories
+    title: SWE-smith Trajectories
+    url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  upstream_assets:
+  - id: PRIOR_GUIDANCE
+    path: ASSET_MANIFEST.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

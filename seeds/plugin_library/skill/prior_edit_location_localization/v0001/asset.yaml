@@ -1,0 +1,24 @@
+id: S09
+name: edit-location-localization
+title: Edit-location Localization
+category: localization
+tier: core
+description: Identify concrete line regions where a minimal repair could change the
+  faulty mechanism.
+applicable_roles:
+- Solver
+- Localizer
+- Planner
+required_inputs:
+- ranked_symbols
+- diagnosis
+- source_context
+output_type: EditLocations
+allowed_tools:
+- read_range
+- symbol_search
+source_ids:
+- agentless
+optional_inputs:
+- public_contracts
+path: skills/edit-location-localization/SKILL.md

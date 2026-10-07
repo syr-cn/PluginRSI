@@ -1,0 +1,38 @@
+schema_version: 1
+kind: memory
+name: prior_skill_evaluation_record
+version: v0001
+entrypoint: implementation:PriorMemory
+description: Matched-budget evidence for adding, editing, splitting, merging, or retiring
+  a skill.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    top_k:
+      type: integer
+      minimum: 1
+      default: 5
+provenance:
+  label: E10 skill-evaluation-record (Anthropic Skills / OpenHands Extensions / Agent
+    Skills Specification)
+  sources:
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  upstream_assets:
+  - id: E10
+    path: experience/record_types.yaml
+  - id: E10
+    path: experience/PROTOCOL.md
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    memory interface; not verbatim paper code. Append-only per-plugin state with required-field
+    validation and lexical retrieval. Records remain unreviewed evidence; no automatic
+    promotion or cross-task persistence.
+  parent_refs: []

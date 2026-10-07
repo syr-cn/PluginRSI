@@ -1,0 +1,19 @@
+id: T04
+name: read_range
+category: inspection
+description: Read a bounded line range with line numbers.
+input_schema:
+  path: path
+  start_line: integer
+  end_line: integer
+output_schema:
+  content: string
+  actual_start: integer
+  actual_end: integer
+side_effect: none
+guards:
+- Require a bounded line interval.
+- Preserve line numbers.
+source_ids:
+- aider
+- agentless

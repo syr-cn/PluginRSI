@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PromptSpec",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "role",
+    "stage",
+    "purpose",
+    "inputs",
+    "output_type",
+    "system_prompt",
+    "guardrails",
+    "source_ids"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^P[0-9]{2}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "role": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_type": {
+      "type": "string"
+    },
+    "system_prompt": {
+      "type": "string",
+      "minLength": 20
+    },
+    "guardrails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

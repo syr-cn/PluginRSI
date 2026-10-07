@@ -1,0 +1,18 @@
+id: T07
+name: repo_map
+category: context
+description: Produce a compact structural map of important files, symbols and references.
+input_schema:
+  repository_root: path
+  query: string?
+  token_budget: integer
+output_schema:
+  map: string
+  ranked_symbols: array
+  token_estimate: integer
+side_effect: cache write only
+guards:
+- Keep within token budget.
+- Expose signatures and structure, not full file contents.
+source_ids:
+- aider

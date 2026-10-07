@@ -1,0 +1,24 @@
+schema_version: 1
+source_library: seeds/plugin_library
+plugins:
+- source_ref: role/coder/v0001
+  plugin_ref: role/qa_solver/v0001
+  change: Render evidence-based QA and classification instructions.
+- source_ref: skill/prior_issue_analysis/v0001
+  plugin_ref: skill/qa_task_analysis/v0001
+  change: Separate the question into requested outputs, given facts, constraints and
+    unknowns.
+- source_ref: skill/prior_hypothesis_testing/v0001
+  plugin_ref: skill/qa_hypothesis_testing/v0001
+  change: When candidate answers or interpretations compete, identify an observation
+    or calculation that distinguishes them.
+- source_ref: skill/prior_completion_evidence_gate/v0001
+  plugin_ref: skill/qa_completion_check/v0001
+  change: Before submission, check every requested part against the given conditions
+    and your calculations.
+- source_ref: tool/terminal/v0001
+  plugin_ref: tool/qa_calculator/v0001
+  change: Evaluate bounded numeric expressions in the QA environment.
+- source_ref: memory/experience_bank/v0001
+  plugin_ref: memory/experience_bank/v0001
+  change: Copied unchanged; task-local lexical retrieval.

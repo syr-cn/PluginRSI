@@ -1,0 +1,27 @@
+id: S29
+name: environment-blocker-diagnosis
+title: Environment Blocker Diagnosis
+category: recovery
+tier: core
+description: Separate environment/setup failures from product failures and produce
+  a bounded recovery plan.
+applicable_roles:
+- Critic
+- Solver
+- Termination Controller
+required_inputs:
+- command
+- failure_output
+- environment_info
+output_type: EnvironmentDiagnosis
+allowed_tools:
+- shell_exec
+- read_file
+- inspect_failure
+source_ids:
+- mini-swe-agent
+- swe-agent
+- superpowers
+optional_inputs:
+- repository_memory
+path: skills/environment-blocker-diagnosis/SKILL.md

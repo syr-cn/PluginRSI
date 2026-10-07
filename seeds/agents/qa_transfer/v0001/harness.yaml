@@ -1,0 +1,21 @@
+schema_version: 1
+entrypoint: workflow:Workflow
+plugins:
+  solver:
+    ref: role/qa_solver/v0001
+    config: {}
+  analysis:
+    ref: skill/qa_task_analysis/v0001
+    config: {}
+  hypotheses:
+    ref: skill/qa_hypothesis_testing/v0001
+    config: {}
+  completion:
+    ref: skill/qa_completion_check/v0001
+    config: {}
+  calculator:
+    ref: tool/qa_calculator/v0001
+    config: {}
+  experience:
+    ref: memory/experience_bank/v0001
+    config: {}

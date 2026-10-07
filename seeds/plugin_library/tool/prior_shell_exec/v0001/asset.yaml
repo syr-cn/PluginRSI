@@ -1,0 +1,24 @@
+id: T01
+name: shell_exec
+category: execution
+description: Execute one bounded shell command inside the task sandbox.
+input_schema:
+  command: string
+  cwd: path
+  timeout_seconds: integer
+  env_overrides: object?
+output_schema:
+  exit_code: integer
+  stdout: string
+  stderr: string
+  duration_seconds: number
+  truncated: boolean
+side_effect: process and filesystem effects of command
+guards:
+- Require explicit cwd and timeout.
+- Capture command and output in trajectory.
+- Disallow host access and uncontrolled background jobs.
+source_ids:
+- mini-swe-agent
+- swe-agent
+- deepseek-harness

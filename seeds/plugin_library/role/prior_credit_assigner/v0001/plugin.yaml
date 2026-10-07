@@ -1,0 +1,28 @@
+schema_version: 1
+kind: role
+name: prior_credit_assigner
+version: v0001
+entrypoint: implementation:PriorRole
+description: Attribute outcome to roles, prompts, skills, edges, and steps.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P20 credit-assigner (SWE-bench Experiments / SWE-smith Trajectories / DeepSeek
+    Harness)
+  sources:
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  - id: swe-smith-trajectories
+    title: SWE-smith Trajectories
+    url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  upstream_assets:
+  - id: P20
+    path: prompts/credit-assigner.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

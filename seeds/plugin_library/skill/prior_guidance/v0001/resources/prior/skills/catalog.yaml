@@ -1,0 +1,737 @@
+schema_version: '1.0'
+description: Metadata-first catalog for the selected modular skills.
+global_scope_guard:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+skills:
+- id: S01
+  name: skill-routing
+  title: Skill Routing
+  category: control
+  tier: core
+  description: Select the smallest useful set of coding skills for the current stage, evidence state,
+    role, and budget.
+  applicable_roles:
+  - Orchestrator
+  - Planner
+  - Context Selector
+  required_inputs:
+  - task_profile
+  - current_stage
+  - skill_catalog
+  - budget
+  output_type: SkillActivationPlan
+  allowed_tools:
+  - read_file
+  - text_search
+  source_ids:
+  - agentskills-spec
+  - deepseek-harness
+  - openhands-extensions
+  - addy-agent-skills
+  optional_inputs:
+  - active_failures
+  - repository_memory
+  path: skills/skill-routing/SKILL.md
+- id: S02
+  name: issue-analysis
+  title: Issue Analysis
+  category: understanding
+  tier: core
+  description: Translate a software issue into observable acceptance criteria, constraints, risks, and
+    an evidence plan without proposing a patch.
+  applicable_roles:
+  - Task Analyzer
+  - Planner
+  required_inputs:
+  - issue_text
+  output_type: IssueProfile
+  allowed_tools:
+  - read_file
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  optional_inputs:
+  - repository_instructions
+  path: skills/issue-analysis/SKILL.md
+- id: S03
+  name: repository-instruction-loading
+  title: Repository Instruction Loading
+  category: understanding
+  tier: core
+  description: Find and apply repository-level instructions such as AGENTS.md, CONTRIBUTING, test commands,
+    and local conventions.
+  applicable_roles:
+  - Task Analyzer
+  - Solver
+  - Verifier
+  required_inputs:
+  - repository_root
+  output_type: RepositoryRules
+  allowed_tools:
+  - list_tree
+  - read_file
+  - text_search
+  source_ids:
+  - mini-swe-agent
+  - openhands-extensions
+  - deepseek-harness
+  optional_inputs:
+  - issue_path_hints
+  path: skills/repository-instruction-loading/SKILL.md
+- id: S05
+  name: repository-orientation
+  title: Repository Orientation
+  category: localization
+  tier: core
+  description: Build a compact map of project structure, build system, tests, and likely entry points.
+  applicable_roles:
+  - Planner
+  - Solver
+  required_inputs:
+  - repository_root
+  - issue_profile
+  output_type: RepositoryOrientation
+  allowed_tools:
+  - list_tree
+  - read_file
+  - text_search
+  source_ids:
+  - mini-swe-agent
+  - aider
+  - agentless
+  optional_inputs:
+  - repository_rules
+  path: skills/repository-orientation/SKILL.md
+- id: S06
+  name: repository-map-reading
+  title: Repository Map Reading
+  category: localization
+  tier: optional
+  description: Use a structural repository map to rank definitions and references without loading full
+    files.
+  applicable_roles:
+  - Planner
+  - Solver
+  - Context Selector
+  required_inputs:
+  - repository_map
+  - issue_profile
+  output_type: RankedSymbols
+  allowed_tools:
+  - repo_map
+  - symbol_search
+  source_ids:
+  - aider
+  optional_inputs:
+  - symbol_graph
+  path: skills/repository-map-reading/SKILL.md
+- id: S07
+  name: file-localization
+  title: File Localization
+  category: localization
+  tier: core
+  description: Rank the smallest set of repository files likely to contain the failure or required behavior.
+  applicable_roles:
+  - Solver
+  - Localizer
+  required_inputs:
+  - issue_profile
+  - repository_orientation
+  - search_results
+  output_type: RankedFiles
+  allowed_tools:
+  - text_search
+  - symbol_search
+  - read_range
+  source_ids:
+  - agentless
+  - aider
+  optional_inputs:
+  - reproduction_evidence
+  path: skills/file-localization/SKILL.md
+- id: S08
+  name: symbol-localization
+  title: Symbol Localization
+  category: localization
+  tier: core
+  description: Rank functions, classes, methods, or configuration blocks inside selected files.
+  applicable_roles:
+  - Solver
+  - Localizer
+  required_inputs:
+  - ranked_files
+  - issue_profile
+  output_type: RankedSymbols
+  allowed_tools:
+  - symbol_search
+  - read_range
+  - text_search
+  source_ids:
+  - agentless
+  - aider
+  optional_inputs:
+  - call_graph
+  - reproduction_trace
+  path: skills/symbol-localization/SKILL.md
+- id: S09
+  name: edit-location-localization
+  title: Edit-location Localization
+  category: localization
+  tier: core
+  description: Identify concrete line regions where a minimal repair could change the faulty mechanism.
+  applicable_roles:
+  - Solver
+  - Localizer
+  - Planner
+  required_inputs:
+  - ranked_symbols
+  - diagnosis
+  - source_context
+  output_type: EditLocations
+  allowed_tools:
+  - read_range
+  - symbol_search
+  source_ids:
+  - agentless
+  optional_inputs:
+  - public_contracts
+  path: skills/edit-location-localization/SKILL.md
+- id: S10
+  name: call-chain-tracing
+  title: Call-chain Tracing
+  category: localization
+  tier: optional
+  description: Trace data, control, and state across callers and callees relevant to the failure.
+  applicable_roles:
+  - Solver
+  - Critic
+  required_inputs:
+  - entry_symbol
+  - source_context
+  output_type: CallChain
+  allowed_tools:
+  - symbol_search
+  - read_range
+  - inspect_failure
+  source_ids:
+  - aider
+  - superpowers
+  optional_inputs:
+  - runtime_trace
+  - repository_map
+  path: skills/call-chain-tracing/SKILL.md
+- id: S11
+  name: reproduction-script-design
+  title: Reproduction Script Design
+  category: reproduction
+  tier: core
+  description: Design a minimal safe script or command that exposes the target behavior.
+  applicable_roles:
+  - Planner
+  - Solver
+  required_inputs:
+  - issue_profile
+  - localized_context
+  - environment_info
+  output_type: ReproductionPlan
+  allowed_tools:
+  - read_file
+  - shell_exec
+  - test_discovery
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - superpowers
+  optional_inputs:
+  - existing_tests
+  path: skills/reproduction-script-design/SKILL.md
+- id: S12
+  name: focused-failure-reproduction
+  title: Focused Failure Reproduction
+  category: reproduction
+  tier: core
+  description: Execute and stabilize the smallest reproduction before editing.
+  applicable_roles:
+  - Solver
+  - Verifier
+  required_inputs:
+  - reproduction_plan
+  - repository_state
+  output_type: ReproductionResult
+  allowed_tools:
+  - shell_exec
+  - inspect_failure
+  - git_status
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  optional_inputs:
+  - environment_memory
+  path: skills/focused-failure-reproduction/SKILL.md
+- id: S13
+  name: root-cause-debugging
+  title: Root-cause Debugging
+  category: diagnosis
+  tier: core
+  description: Infer and test the smallest causal explanation instead of stacking speculative fixes.
+  applicable_roles:
+  - Critic
+  - Solver
+  required_inputs:
+  - issue_profile
+  - reproduction_result
+  - localized_code
+  output_type: RootCauseDiagnosis
+  allowed_tools:
+  - read_range
+  - shell_exec
+  - inspect_failure
+  - text_search
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - swe-agent
+  optional_inputs:
+  - trajectory
+  - memory_hits
+  path: skills/root-cause-debugging/SKILL.md
+- id: S14
+  name: hypothesis-testing
+  title: Hypothesis Testing
+  category: diagnosis
+  tier: optional
+  description: Design cheap discriminating checks between competing failure hypotheses.
+  applicable_roles:
+  - Critic
+  - Solver
+  - Planner
+  required_inputs:
+  - hypotheses
+  - available_evidence
+  - tool_budget
+  output_type: HypothesisTestPlan
+  allowed_tools:
+  - shell_exec
+  - read_range
+  - inspect_failure
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  optional_inputs: []
+  path: skills/hypothesis-testing/SKILL.md
+- id: S15
+  name: test-output-interpretation
+  title: Test-output Interpretation
+  category: diagnosis
+  tier: core
+  description: Turn noisy command output into a localized failure signature without overclaiming.
+  applicable_roles:
+  - Critic
+  - Verifier
+  - Solver
+  required_inputs:
+  - command
+  - stdout
+  - stderr
+  - exit_status
+  output_type: FailureInterpretation
+  allowed_tools:
+  - inspect_failure
+  - text_search
+  - read_range
+  source_ids:
+  - swe-agent
+  - agentless
+  - superpowers
+  optional_inputs:
+  - test_metadata
+  - previous_runs
+  path: skills/test-output-interpretation/SKILL.md
+- id: S16
+  name: minimal-patch
+  title: Minimal Patch
+  category: patching
+  tier: core
+  description: Implement the smallest coherent source change that repairs a validated root cause.
+  applicable_roles:
+  - Solver
+  - Reviser
+  required_inputs:
+  - diagnosis
+  - edit_locations
+  - repository_rules
+  output_type: CandidatePatch
+  allowed_tools:
+  - apply_patch
+  - read_range
+  - git_diff
+  source_ids:
+  - mini-swe-agent
+  - agentless
+  - superpowers
+  optional_inputs:
+  - public_contracts
+  - focused_tests
+  path: skills/minimal-patch/SKILL.md
+- id: S18
+  name: preserve-api-contract
+  title: Preserve API Contract
+  category: patching
+  tier: core
+  description: Check that a repair does not unintentionally change public signatures, return types, errors,
+    or compatibility.
+  applicable_roles:
+  - Solver
+  - Verifier
+  - Critic
+  required_inputs:
+  - candidate_patch
+  - public_interfaces
+  - issue_profile
+  output_type: ContractAssessment
+  allowed_tools:
+  - symbol_search
+  - text_search
+  - git_diff
+  - read_range
+  source_ids:
+  - aider
+  - openhands-agent-sdk
+  optional_inputs:
+  - downstream_references
+  path: skills/preserve-api-contract/SKILL.md
+- id: S19
+  name: scope-guard
+  title: Scope Guard
+  category: review
+  tier: core
+  description: Detect repository restructuring, unrelated refactors, test weakening, and incidental changes.
+  applicable_roles:
+  - Verifier
+  - Critic
+  - Finalizer
+  required_inputs:
+  - issue_profile
+  - git_diff
+  - repository_rules
+  output_type: ScopeAssessment
+  allowed_tools:
+  - git_status
+  - git_diff
+  - read_file
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - addy-agent-skills
+  optional_inputs:
+  - git_status
+  path: skills/scope-guard/SKILL.md
+- id: S21
+  name: edit-format-compliance
+  title: Edit-format Compliance
+  category: patching
+  tier: optional
+  description: Produce syntactically valid edit blocks or unified diffs that apply cleanly.
+  applicable_roles:
+  - Editor
+  - Solver
+  required_inputs:
+  - planned_edits
+  - target_file_contents
+  - edit_format
+  output_type: ValidatedEdits
+  allowed_tools:
+  - apply_patch
+  - git_diff
+  - read_range
+  source_ids:
+  - aider
+  - swe-agent
+  optional_inputs: []
+  path: skills/edit-format-compliance/SKILL.md
+- id: S23
+  name: existing-test-discovery
+  title: Existing Test Discovery
+  category: verification
+  tier: core
+  description: Find the smallest existing tests that exercise the changed behavior and nearby contracts.
+  applicable_roles:
+  - Verifier
+  - Planner
+  - Solver
+  required_inputs:
+  - issue_profile
+  - changed_symbols
+  - repository_orientation
+  output_type: RelevantTests
+  allowed_tools:
+  - test_discovery
+  - text_search
+  - symbol_search
+  - read_file
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  - aider
+  optional_inputs:
+  - repository_map
+  path: skills/existing-test-discovery/SKILL.md
+- id: S24
+  name: focused-test-selection
+  title: Focused Test Selection
+  category: verification
+  tier: core
+  description: Choose an ordered, budget-aware test ladder from reproduction to targeted regressions.
+  applicable_roles:
+  - Verifier
+  - Planner
+  required_inputs:
+  - issue_profile
+  - candidate_patch
+  - relevant_tests
+  - budget
+  output_type: TestPlan
+  allowed_tools:
+  - test_discovery
+  - read_file
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  optional_inputs:
+  - historical_test_times
+  path: skills/focused-test-selection/SKILL.md
+- id: S25
+  name: regression-check
+  title: Regression Check
+  category: verification
+  tier: core
+  description: Check target correctness and nearby behavior without defaulting to an expensive full suite.
+  applicable_roles:
+  - Verifier
+  required_inputs:
+  - candidate_patch
+  - test_plan
+  - baseline_evidence
+  output_type: RegressionResult
+  allowed_tools:
+  - run_test
+  - shell_exec
+  - inspect_failure
+  source_ids:
+  - agentless
+  - mini-swe-agent
+  - superpowers
+  optional_inputs:
+  - repository_rules
+  path: skills/regression-check/SKILL.md
+- id: S26
+  name: final-diff-inspection
+  title: Final Diff Inspection
+  category: review
+  tier: core
+  description: Review the final working-tree diff for scope, correctness, artifacts, and incomplete edits.
+  applicable_roles:
+  - Verifier
+  - Finalizer
+  - Critic
+  required_inputs:
+  - issue_profile
+  - git_diff
+  - git_status
+  - verification_result
+  output_type: DiffInspection
+  allowed_tools:
+  - git_status
+  - git_diff
+  - read_range
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  - openhands-extensions
+  optional_inputs:
+  - repository_rules
+  path: skills/final-diff-inspection/SKILL.md
+- id: S27
+  name: completion-evidence-gate
+  title: Completion Evidence Gate
+  category: verification
+  tier: core
+  description: Prevent submission until acceptance criteria and scope are backed by fresh evidence.
+  applicable_roles:
+  - Finalizer
+  - Termination Controller
+  required_inputs:
+  - issue_profile
+  - verification_result
+  - diff_inspection
+  - budget
+  output_type: CompletionDecision
+  allowed_tools:
+  - read_file
+  source_ids:
+  - mini-swe-agent
+  - superpowers
+  optional_inputs:
+  - known_blockers
+  path: skills/completion-evidence-gate/SKILL.md
+- id: S29
+  name: environment-blocker-diagnosis
+  title: Environment Blocker Diagnosis
+  category: recovery
+  tier: core
+  description: Separate environment/setup failures from product failures and produce a bounded recovery
+    plan.
+  applicable_roles:
+  - Critic
+  - Solver
+  - Termination Controller
+  required_inputs:
+  - command
+  - failure_output
+  - environment_info
+  output_type: EnvironmentDiagnosis
+  allowed_tools:
+  - shell_exec
+  - read_file
+  - inspect_failure
+  source_ids:
+  - mini-swe-agent
+  - swe-agent
+  - superpowers
+  optional_inputs:
+  - repository_memory
+  path: skills/environment-blocker-diagnosis/SKILL.md
+- id: S30
+  name: backtrack-after-failed-fixes
+  title: Backtrack After Failed Fixes
+  category: recovery
+  tier: core
+  description: Recover from repeated ineffective edits by reverting unsupported changes and reopening
+    diagnosis.
+  applicable_roles:
+  - Termination Controller
+  - Critic
+  - Solver
+  required_inputs:
+  - trajectory
+  - candidate_patch
+  - verification_failures
+  output_type: BacktrackPlan
+  allowed_tools:
+  - git_diff
+  - apply_patch
+  - shell_exec
+  source_ids:
+  - superpowers
+  - addy-agent-skills
+  - deepseek-harness
+  optional_inputs:
+  - component_credit
+  path: skills/backtrack-after-failed-fixes/SKILL.md
+- id: S31
+  name: trajectory-to-lesson
+  title: Trajectory to Lesson
+  category: learning
+  tier: meta
+  description: Extract a bounded transferable procedure or anti-pattern from a completed trajectory.
+  applicable_roles:
+  - Reflection Agent
+  - Memory Curator
+  required_inputs:
+  - trajectory
+  - outcome
+  - task_profile
+  output_type: LessonCandidate
+  allowed_tools:
+  - read_file
+  source_ids:
+  - swe-bench-experiments
+  - swe-smith-trajectories
+  - openhands-extensions
+  optional_inputs:
+  - component_credit
+  - counterfactuals
+  path: skills/trajectory-to-lesson/SKILL.md
+- id: S32
+  name: review-feedback-distillation
+  title: Review Feedback Distillation
+  category: learning
+  tier: meta
+  description: Convert repeated code-review or evaluator feedback into reusable guidelines or skill edits.
+  applicable_roles:
+  - Reflection Agent
+  - Skill Compiler
+  required_inputs:
+  - review_feedback
+  - patches
+  - outcomes
+  output_type: DistilledReviewLesson
+  allowed_tools:
+  - read_file
+  - text_search
+  source_ids:
+  - openhands-extensions
+  - anthropic-skills
+  optional_inputs:
+  - existing_skills
+  path: skills/review-feedback-distillation/SKILL.md
+- id: S35
+  name: skill-change-proposal
+  title: Skill Change Proposal
+  category: skill-evolution
+  tier: meta
+  description: Propose add/edit/merge/split/retire operations from repeated failures and evaluation evidence.
+  applicable_roles:
+  - Skill Compiler
+  - Prompt Optimizer
+  required_inputs:
+  - failure_cluster_or_lessons
+  - skill_library
+  - asset_usage
+  output_type: SkillChangeProposal
+  allowed_tools:
+  - read_file
+  - text_search
+  source_ids:
+  - agentskills-spec
+  - anthropic-skills
+  - openhands-extensions
+  - superpowers
+  optional_inputs:
+  - counterexamples
+  path: skills/skill-change-proposal/SKILL.md
+- id: S36
+  name: skill-evaluation
+  title: Skill Evaluation
+  category: skill-evolution
+  tier: meta
+  description: Evaluate a candidate skill or skill edit on positive and negative triggers under a matched
+    budget.
+  applicable_roles:
+  - Judge
+  - Verifier
+  - Skill Compiler
+  required_inputs:
+  - candidate_skill
+  - baseline_skill
+  - evaluation_tasks
+  - budget
+  output_type: SkillEvaluationRecord
+  allowed_tools:
+  - shell_exec
+  - run_test
+  - read_file
+  source_ids:
+  - anthropic-skills
+  - openhands-extensions
+  - swe-smith
+  optional_inputs:
+  - historical_results
+  path: skills/skill-evaluation/SKILL.md

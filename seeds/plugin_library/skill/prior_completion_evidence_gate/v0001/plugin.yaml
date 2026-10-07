@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_completion_evidence_gate
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Prevent submission until acceptance criteria and scope are backed by
+  fresh evidence.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S27 completion-evidence-gate (mini-SWE-agent / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S27
+    path: skills/completion-evidence-gate/SKILL.md
+  - id: S27
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

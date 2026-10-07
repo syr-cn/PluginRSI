@@ -1,0 +1,105 @@
+id: W09
+name: prompt-evolution-loop
+title: Prompt / Configuration Evolution Loop
+tier: meta
+purpose: Use trajectories to make one bounded prompt or local configuration change while keeping graph and skills frozen.
+source_ids:
+- deepseek-harness
+- swe-bench-experiments
+nodes:
+- id: execute
+  role: Harness Runner
+  prompt: workflow-designer
+  skills: []
+  consumes:
+  - frozen_workflow
+  - task_batch
+  produces:
+  - trajectories
+  - outcomes
+  visibility:
+  - workflow
+  - tasks
+- id: diagnose
+  role: Critic
+  prompt: root-cause-diagnoser
+  skills:
+  - trajectory-to-lesson
+  consumes:
+  - trajectories
+  - outcomes
+  - current_prompts
+  produces:
+  - prompt_failure_diagnosis
+  visibility:
+  - traces
+  - prompts
+  - outcomes
+- id: edit
+  role: Prompt Optimizer
+  prompt: prompt-editor
+  skills: []
+  consumes:
+  - prompt_failure_diagnosis
+  - target_prompt
+  - prompt_schema
+  produces:
+  - prompt_patch
+  visibility:
+  - prompt
+  - diagnosis
+- id: validate
+  role: Prompt Validator
+  prompt: verifier
+  skills: []
+  consumes:
+  - target_prompt
+  - prompt_patch
+  - schemas
+  produces:
+  - validation_result
+  visibility:
+  - prompt
+  - patch
+- id: select
+  role: Judge
+  prompt: patch-ranker
+  skills: []
+  consumes:
+  - baseline_results
+  - candidate_results
+  - matched_budget
+  produces:
+  - selected_prompt
+  visibility:
+  - results
+  - candidate_prompt
+edges:
+- from: execute
+  to: diagnose
+- from: diagnose
+  to: edit
+- from: edit
+  to: validate
+- from: validate
+  to: execute
+  data:
+  - patched_prompt
+  when: validation_result == 'pass'
+- from: execute
+  to: select
+  when: candidate batch complete
+control_flow:
+  entry: execute
+  termination:
+    success: budget exhausted with a validated best prompt version
+    failure: no valid prompt patch or evaluation failure
+budget:
+  max_prompt_edits_per_iteration: 1
+  matched_budget: true
+invariants:
+- Workflow graph, skill bodies, model, evaluator, and memory remain frozen.
+- Prompt patch must preserve typed inputs, outputs, and invariants.
+allowed_mutations:
+- one_prompt_body
+- one_local_config

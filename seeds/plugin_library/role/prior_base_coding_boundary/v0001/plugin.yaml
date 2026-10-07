@@ -1,0 +1,29 @@
+schema_version: 1
+kind: role
+name: prior_base_coding_boundary
+version: v0001
+entrypoint: implementation:PriorRole
+description: Provide always-on SWE-bench scope, evidence, and repository-integrity
+  rules.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P01 base-coding-boundary (mini-SWE-agent / Superpowers / Addy Osmani Agent
+    Skills)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  upstream_assets:
+  - id: P01
+    path: prompts/base-coding-boundary.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

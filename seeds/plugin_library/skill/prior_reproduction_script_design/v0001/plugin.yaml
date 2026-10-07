@@ -1,0 +1,29 @@
+schema_version: 1
+kind: skill
+name: prior_reproduction_script_design
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Design a minimal safe script or command that exposes the target behavior.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S11 reproduction-script-design (mini-SWE-agent / Agentless / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S11
+    path: skills/reproduction-script-design/SKILL.md
+  - id: S11
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

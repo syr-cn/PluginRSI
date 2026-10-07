@@ -1,0 +1,37 @@
+{
+  "type": "function",
+  "name": "symbol_search",
+  "description": "Search definitions and references using language-aware or indexed metadata. Guards: Fall back to text search when language support is unavailable. Do not treat approximate matches as exact.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "symbol_or_query": {
+        "type": "string"
+      },
+      "paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "definition",
+          "reference",
+          "both"
+        ]
+      },
+      "max_results": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "symbol_or_query",
+      "kind",
+      "max_results"
+    ],
+    "additionalProperties": false
+  }
+}

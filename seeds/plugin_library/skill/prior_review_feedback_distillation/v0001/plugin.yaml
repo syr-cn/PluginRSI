@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_review_feedback_distillation
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Convert repeated code-review or evaluator feedback into reusable guidelines
+  or skill edits.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S32 review-feedback-distillation (OpenHands Extensions / Anthropic Skills)
+  sources:
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  upstream_assets:
+  - id: S32
+    path: skills/review-feedback-distillation/SKILL.md
+  - id: S32
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

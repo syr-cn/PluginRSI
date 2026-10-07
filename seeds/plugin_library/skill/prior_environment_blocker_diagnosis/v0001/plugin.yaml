@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_environment_blocker_diagnosis
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Separate environment/setup failures from product failures and produce
+  a bounded recovery plan.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S29 environment-blocker-diagnosis (mini-SWE-agent / SWE-agent / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S29
+    path: skills/environment-blocker-diagnosis/SKILL.md
+  - id: S29
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

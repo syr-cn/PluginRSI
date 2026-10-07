@@ -1,0 +1,29 @@
+id: S15
+name: test-output-interpretation
+title: Test-output Interpretation
+category: diagnosis
+tier: core
+description: Turn noisy command output into a localized failure signature without
+  overclaiming.
+applicable_roles:
+- Critic
+- Verifier
+- Solver
+required_inputs:
+- command
+- stdout
+- stderr
+- exit_status
+output_type: FailureInterpretation
+allowed_tools:
+- inspect_failure
+- text_search
+- read_range
+source_ids:
+- swe-agent
+- agentless
+- superpowers
+optional_inputs:
+- test_metadata
+- previous_runs
+path: skills/test-output-interpretation/SKILL.md

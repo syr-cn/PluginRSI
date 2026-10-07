@@ -1,0 +1,29 @@
+id: S01
+name: skill-routing
+title: Skill Routing
+category: control
+tier: core
+description: Select the smallest useful set of coding skills for the current stage,
+  evidence state, role, and budget.
+applicable_roles:
+- Orchestrator
+- Planner
+- Context Selector
+required_inputs:
+- task_profile
+- current_stage
+- skill_catalog
+- budget
+output_type: SkillActivationPlan
+allowed_tools:
+- read_file
+- text_search
+source_ids:
+- agentskills-spec
+- deepseek-harness
+- openhands-extensions
+- addy-agent-skills
+optional_inputs:
+- active_failures
+- repository_memory
+path: skills/skill-routing/SKILL.md

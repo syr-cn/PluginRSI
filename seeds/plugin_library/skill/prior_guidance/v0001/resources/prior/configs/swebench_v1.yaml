@@ -1,0 +1,116 @@
+schema_version: '1.0'
+experiment: MetaDSH SWE-bench v1
+objective: Test whether typed repository-derived priors improve a minimal coding harness without broad
+  repository restructuring.
+base_scaffold_profile: HP01
+baseline_workflow: W01
+fixed_workflow_baselines:
+- W02
+- W03
+- W05
+global_prompt: P01
+core_skills:
+- S02
+- S03
+- S05
+- S07
+- S08
+- S09
+- S11
+- S12
+- S13
+- S15
+- S16
+- S18
+- S19
+- S23
+- S24
+- S25
+- S26
+- S27
+disabled_in_v1:
+  memory: true
+  skill_evolution: true
+  prompt_evolution: true
+  multi_patch: true
+  broad_refactoring: true
+mutation_schedule:
+- stage: graph
+  freeze:
+  - role definitions
+  - prompt bodies
+  - skill bodies
+  - model
+  - evaluator
+  - memory
+  allow:
+  - role selection
+  - edges
+  - order
+  - visibility
+  - bounded loops
+  - stop conditions
+  max_changes_per_iteration: 1
+- stage: prompt
+  after: select one stable graph
+  freeze:
+  - workflow graph
+  - skill bodies
+  - model
+  - evaluator
+  - memory
+  allow:
+  - one role prompt or local config
+  max_changes_per_iteration: 1
+- stage: skill
+  after: prompt and graph baselines
+  freeze:
+  - workflow graph
+  - role prompts
+  - model
+  - evaluator
+  allow:
+  - one skill add/edit/merge/split/retire proposal
+  requires:
+  - matched-budget held-out evaluation
+  - negative-trigger cases
+budget:
+  max_model_calls_per_task: 20
+  max_active_skills_per_role: 5
+  max_repair_loops: 3
+  reserve_fraction_for_verification: 0.3
+logging:
+  typed_events: true
+  record_prompt_version: true
+  record_active_skills: true
+  record_tool_calls: true
+  record_component_credit: true
+  record_final_diff: true
+scope_guards:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+selection: L0+L1 with selected-workflow dependency closure
+control_skills:
+- S01
+workflow_dependency_skills:
+- S06
+- S10
+- S14
+- S21
+- S29
+- S30
+meta_skills:
+- S31
+- S32
+- S35
+- S36
+evolution_workflows:
+  scaffold: W10
+  prompt: W09
+  skill: W08

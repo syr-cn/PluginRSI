@@ -1,0 +1,25 @@
+id: S07
+name: file-localization
+title: File Localization
+category: localization
+tier: core
+description: Rank the smallest set of repository files likely to contain the failure
+  or required behavior.
+applicable_roles:
+- Solver
+- Localizer
+required_inputs:
+- issue_profile
+- repository_orientation
+- search_results
+output_type: RankedFiles
+allowed_tools:
+- text_search
+- symbol_search
+- read_range
+source_ids:
+- agentless
+- aider
+optional_inputs:
+- reproduction_evidence
+path: skills/file-localization/SKILL.md

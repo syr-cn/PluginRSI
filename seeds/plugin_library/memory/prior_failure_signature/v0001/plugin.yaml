@@ -1,0 +1,38 @@
+schema_version: 1
+kind: memory
+name: prior_failure_signature
+version: v0001
+entrypoint: implementation:PriorMemory
+description: Normalized recurring failure pattern used for routing, debugging, and
+  skill evolution.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    top_k:
+      type: integer
+      minimum: 1
+      default: 5
+provenance:
+  label: E04 failure-signature (Superpowers / Addy Osmani Agent Skills / SWE-bench
+    Experiments)
+  sources:
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  upstream_assets:
+  - id: E04
+    path: experience/record_types.yaml
+  - id: E04
+    path: experience/PROTOCOL.md
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    memory interface; not verbatim paper code. Append-only per-plugin state with required-field
+    validation and lexical retrieval. Records remain unreviewed evidence; no automatic
+    promotion or cross-task persistence.
+  parent_refs: []

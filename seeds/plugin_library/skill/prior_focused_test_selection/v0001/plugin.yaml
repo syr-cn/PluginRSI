@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_focused_test_selection
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Choose an ordered, budget-aware test ladder from reproduction to targeted
+  regressions.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S24 focused-test-selection (Agentless / mini-SWE-agent)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  upstream_assets:
+  - id: S24
+    path: skills/focused-test-selection/SKILL.md
+  - id: S24
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

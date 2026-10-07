@@ -1,0 +1,18 @@
+id: T03
+name: read_file
+category: inspection
+description: Read a text file with size and binary guards.
+input_schema:
+  path: path
+  max_bytes: integer
+  encoding: string?
+output_schema:
+  content: string
+  truncated: boolean
+side_effect: none
+guards:
+- Reject binary/oversized files unless explicitly allowed.
+source_ids:
+- swe-agent
+- openhands-agent-sdk
+- deepseek-harness

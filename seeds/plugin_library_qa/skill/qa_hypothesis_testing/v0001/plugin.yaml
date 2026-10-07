@@ -1,0 +1,29 @@
+schema_version: 1
+kind: skill
+name: qa_hypothesis_testing
+version: v0001
+entrypoint: implementation:PriorSkill
+description: When candidate answers or interpretations compete, identify an observation
+  or calculation that distinguishes them.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: QA adaptation of S14 hypothesis-testing (Superpowers / Addy Osmani Agent
+    Skills)
+  sources:
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  upstream_assets:
+  - id: S14
+    path: skills/hypothesis-testing/SKILL.md
+  - id: S14
+    path: skills/catalog.yaml
+  adaptation: Adapted from the local SWE plugin for QA/classification; implementation
+    lineage and upstream attribution retained.
+  parent_refs:
+  - skill/prior_hypothesis_testing/v0001

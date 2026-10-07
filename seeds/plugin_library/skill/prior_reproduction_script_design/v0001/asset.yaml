@@ -1,0 +1,25 @@
+id: S11
+name: reproduction-script-design
+title: Reproduction Script Design
+category: reproduction
+tier: core
+description: Design a minimal safe script or command that exposes the target behavior.
+applicable_roles:
+- Planner
+- Solver
+required_inputs:
+- issue_profile
+- localized_context
+- environment_info
+output_type: ReproductionPlan
+allowed_tools:
+- read_file
+- shell_exec
+- test_discovery
+source_ids:
+- mini-swe-agent
+- agentless
+- superpowers
+optional_inputs:
+- existing_tests
+path: skills/reproduction-script-design/SKILL.md

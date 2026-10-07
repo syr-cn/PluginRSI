@@ -1,0 +1,24 @@
+schema_version: 1
+kind: role
+name: prior_prompt_editor
+version: v0001
+entrypoint: implementation:PriorRole
+description: Propose one trace-grounded prompt change while preserving the role contract.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P21 prompt-editor (DeepSeek Harness / SWE-bench Experiments)
+  sources:
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  upstream_assets:
+  - id: P21
+    path: prompts/prompt-editor.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

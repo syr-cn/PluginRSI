@@ -1,0 +1,25 @@
+schema_version: 1
+kind: role
+name: prior_fault_localizer
+version: v0001
+entrypoint: implementation:PriorRole
+description: Rank files, symbols, and concrete edit locations that can explain the
+  issue.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P06 fault-localizer (Agentless / Aider)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  upstream_assets:
+  - id: P06
+    path: prompts/fault-localizer.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

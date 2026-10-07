@@ -1,0 +1,28 @@
+schema_version: 1
+kind: skill
+name: qa_task_analysis
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Separate the question into requested outputs, given facts, constraints
+  and unknowns.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: QA adaptation of S02 issue-analysis (mini-SWE-agent / Agentless)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: S02
+    path: skills/issue-analysis/SKILL.md
+  - id: S02
+    path: skills/catalog.yaml
+  adaptation: Adapted from the local SWE plugin for QA/classification; implementation
+    lineage and upstream attribution retained.
+  parent_refs:
+  - skill/prior_issue_analysis/v0001

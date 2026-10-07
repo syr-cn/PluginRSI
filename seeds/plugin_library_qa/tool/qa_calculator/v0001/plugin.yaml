@@ -1,0 +1,28 @@
+schema_version: 1
+kind: tool
+name: qa_calculator
+version: v0001
+entrypoint: implementation:Calculator
+description: Evaluate bounded numeric expressions in the QA environment.
+provenance:
+  label: QA adaptation of PluginRSI-Baseline-Terminal
+  sources: []
+  upstream_assets: []
+  adaptation: Adapted from the local SWE plugin for QA/classification; implementation
+    lineage and upstream attribution retained.
+  parent_refs:
+  - tool/terminal/v0001
+config_schema:
+  type: object
+  properties:
+    max_output_bytes:
+      type: integer
+      minimum: 1
+      default: 4096
+      maximum: 4096
+    timeout_seconds:
+      type: number
+      exclusiveMinimum: 0
+      default: 5
+      maximum: 5
+  additionalProperties: false

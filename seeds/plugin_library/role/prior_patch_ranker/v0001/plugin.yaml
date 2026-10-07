@@ -1,0 +1,21 @@
+schema_version: 1
+kind: role
+name: prior_patch_ranker
+version: v0001
+entrypoint: implementation:PriorRole
+description: Rank candidate patches using matched evidence rather than style preference.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P12 patch-ranker (Agentless)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: P12
+    path: prompts/patch-ranker.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

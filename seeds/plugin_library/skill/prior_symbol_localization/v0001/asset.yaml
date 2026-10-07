@@ -1,0 +1,25 @@
+id: S08
+name: symbol-localization
+title: Symbol Localization
+category: localization
+tier: core
+description: Rank functions, classes, methods, or configuration blocks inside selected
+  files.
+applicable_roles:
+- Solver
+- Localizer
+required_inputs:
+- ranked_files
+- issue_profile
+output_type: RankedSymbols
+allowed_tools:
+- symbol_search
+- read_range
+- text_search
+source_ids:
+- agentless
+- aider
+optional_inputs:
+- call_graph
+- reproduction_trace
+path: skills/symbol-localization/SKILL.md

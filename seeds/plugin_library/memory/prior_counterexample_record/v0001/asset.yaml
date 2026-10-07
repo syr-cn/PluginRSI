@@ -1,0 +1,15 @@
+id: E08
+name: counterexample-record
+category: safety
+purpose: Case where a generally useful prompt, skill, or memory rule should not fire.
+required_fields:
+- target_asset
+- trigger_that_failed
+- context
+- harm
+- correct_boundary
+- provenance
+retention: Must survive merges and pruning while the target asset is active.
+sources:
+- anthropic-skills
+- superpowers

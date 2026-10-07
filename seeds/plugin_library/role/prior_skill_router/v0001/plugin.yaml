@@ -1,0 +1,28 @@
+schema_version: 1
+kind: role
+name: prior_skill_router
+version: v0001
+entrypoint: implementation:PriorRole
+description: Select a minimal active skill set.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P03 skill-router (Agent Skills Specification / DeepSeek Harness / OpenHands
+    Extensions)
+  sources:
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  upstream_assets:
+  - id: P03
+    path: prompts/skill-router.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

@@ -1,0 +1,17 @@
+schema_version: 1
+kind: memory
+name: experience_bank
+version: v0001
+entrypoint: implementation:ExperienceBank
+description: Persist and retrieve task-local command experiences by word overlap.
+provenance:
+  label: PluginRSI-Baseline-ExperienceBank
+  sources: []
+  upstream_assets: []
+  adaptation: Task-local lexical retrieval baseline; not ReasoningBank reproduction.
+config_schema:
+  type: object
+  properties:
+    top_k: {type: integer, minimum: 1, default: 5}
+    initial_snapshot: {type: string, enum: [empty], default: empty}
+  additionalProperties: false

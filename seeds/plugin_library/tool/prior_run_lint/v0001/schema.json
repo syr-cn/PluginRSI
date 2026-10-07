@@ -1,0 +1,32 @@
+{
+  "type": "function",
+  "name": "run_lint",
+  "description": "Run a targeted linter, type checker or formatter check without broad source rewrites. Guards: Prefer check mode. Do not auto-format unrelated files.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string"
+      },
+      "cwd": {
+        "type": "string"
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "command",
+      "cwd",
+      "timeout_seconds"
+    ],
+    "additionalProperties": false
+  }
+}

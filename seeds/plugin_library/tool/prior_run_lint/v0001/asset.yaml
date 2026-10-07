@@ -1,0 +1,22 @@
+id: T12
+name: run_lint
+category: verification
+description: Run a targeted linter, type checker or formatter check without broad
+  source rewrites.
+input_schema:
+  command: string
+  cwd: path
+  timeout_seconds: integer
+  paths: array?
+output_schema:
+  status: pass|fail|timeout|error
+  diagnostics: array
+  stdout: string
+  stderr: string
+side_effect: process effects; no auto-fix unless explicit
+guards:
+- Prefer check mode.
+- Do not auto-format unrelated files.
+source_ids:
+- aider
+- openhands-agent-sdk

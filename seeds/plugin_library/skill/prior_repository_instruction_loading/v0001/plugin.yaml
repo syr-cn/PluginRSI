@@ -1,0 +1,31 @@
+schema_version: 1
+kind: skill
+name: prior_repository_instruction_loading
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Find and apply repository-level instructions such as AGENTS.md, CONTRIBUTING,
+  test commands, and local conventions.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S03 repository-instruction-loading (mini-SWE-agent / OpenHands Extensions
+    / DeepSeek Harness)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  upstream_assets:
+  - id: S03
+    path: skills/repository-instruction-loading/SKILL.md
+  - id: S03
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

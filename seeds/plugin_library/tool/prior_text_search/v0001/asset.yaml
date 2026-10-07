@@ -1,0 +1,20 @@
+id: T05
+name: text_search
+category: search
+description: Search text or regex within a bounded path set.
+input_schema:
+  query: string
+  paths: array
+  regex: boolean?
+  max_results: integer
+output_schema:
+  matches: array
+  truncated: boolean
+side_effect: none
+guards:
+- Bound paths and result count.
+- Return path, line and context.
+source_ids:
+- mini-swe-agent
+- agentless
+- aider

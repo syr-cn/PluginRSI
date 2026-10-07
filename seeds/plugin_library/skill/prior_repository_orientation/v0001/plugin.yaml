@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_repository_orientation
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Build a compact map of project structure, build system, tests, and likely
+  entry points.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S05 repository-orientation (mini-SWE-agent / Aider / Agentless)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: S05
+    path: skills/repository-orientation/SKILL.md
+  - id: S05
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

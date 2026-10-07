@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_final_diff_inspection
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Review the final working-tree diff for scope, correctness, artifacts,
+  and incomplete edits.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S26 final-diff-inspection (mini-SWE-agent / Superpowers / OpenHands Extensions)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  upstream_assets:
+  - id: S26
+    path: skills/final-diff-inspection/SKILL.md
+  - id: S26
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

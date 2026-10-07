@@ -1,0 +1,21 @@
+id: T08
+name: apply_patch
+category: editing
+description: Apply a unified diff or typed edit operations to tracked source files.
+input_schema:
+  patch: string|array
+  dry_run: boolean?
+output_schema:
+  applied: boolean
+  changed_files: array
+  errors: array
+  diff: string
+side_effect: repository modification
+guards:
+- Default to dry-run validation.
+- Reject path traversal and edits outside repository.
+- Record post-edit diff.
+source_ids:
+- aider
+- swe-agent
+- openhands-agent-sdk

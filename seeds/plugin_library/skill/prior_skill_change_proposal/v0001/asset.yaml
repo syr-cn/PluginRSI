@@ -1,0 +1,26 @@
+id: S35
+name: skill-change-proposal
+title: Skill Change Proposal
+category: skill-evolution
+tier: meta
+description: Propose add/edit/merge/split/retire operations from repeated failures
+  and evaluation evidence.
+applicable_roles:
+- Skill Compiler
+- Prompt Optimizer
+required_inputs:
+- failure_cluster_or_lessons
+- skill_library
+- asset_usage
+output_type: SkillChangeProposal
+allowed_tools:
+- read_file
+- text_search
+source_ids:
+- agentskills-spec
+- anthropic-skills
+- openhands-extensions
+- superpowers
+optional_inputs:
+- counterexamples
+path: skills/skill-change-proposal/SKILL.md

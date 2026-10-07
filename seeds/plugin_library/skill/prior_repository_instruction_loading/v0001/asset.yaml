@@ -1,0 +1,25 @@
+id: S03
+name: repository-instruction-loading
+title: Repository Instruction Loading
+category: understanding
+tier: core
+description: Find and apply repository-level instructions such as AGENTS.md, CONTRIBUTING,
+  test commands, and local conventions.
+applicable_roles:
+- Task Analyzer
+- Solver
+- Verifier
+required_inputs:
+- repository_root
+output_type: RepositoryRules
+allowed_tools:
+- list_tree
+- read_file
+- text_search
+source_ids:
+- mini-swe-agent
+- openhands-extensions
+- deepseek-harness
+optional_inputs:
+- issue_path_hints
+path: skills/repository-instruction-loading/SKILL.md

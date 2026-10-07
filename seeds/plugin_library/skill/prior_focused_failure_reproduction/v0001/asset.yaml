@@ -1,0 +1,23 @@
+id: S12
+name: focused-failure-reproduction
+title: Focused Failure Reproduction
+category: reproduction
+tier: core
+description: Execute and stabilize the smallest reproduction before editing.
+applicable_roles:
+- Solver
+- Verifier
+required_inputs:
+- reproduction_plan
+- repository_state
+output_type: ReproductionResult
+allowed_tools:
+- shell_exec
+- inspect_failure
+- git_status
+source_ids:
+- mini-swe-agent
+- superpowers
+optional_inputs:
+- environment_memory
+path: skills/focused-failure-reproduction/SKILL.md

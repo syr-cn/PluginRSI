@@ -1,0 +1,25 @@
+id: S25
+name: regression-check
+title: Regression Check
+category: verification
+tier: core
+description: Check target correctness and nearby behavior without defaulting to an
+  expensive full suite.
+applicable_roles:
+- Verifier
+required_inputs:
+- candidate_patch
+- test_plan
+- baseline_evidence
+output_type: RegressionResult
+allowed_tools:
+- run_test
+- shell_exec
+- inspect_failure
+source_ids:
+- agentless
+- mini-swe-agent
+- superpowers
+optional_inputs:
+- repository_rules
+path: skills/regression-check/SKILL.md

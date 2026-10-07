@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_preserve_api_contract
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Check that a repair does not unintentionally change public signatures,
+  return types, errors, or compatibility.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S18 preserve-api-contract (Aider / OpenHands Software Agent SDK)
+  sources:
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: openhands-agent-sdk
+    title: OpenHands Software Agent SDK
+    url: https://github.com/OpenHands/software-agent-sdk
+  upstream_assets:
+  - id: S18
+    path: skills/preserve-api-contract/SKILL.md
+  - id: S18
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

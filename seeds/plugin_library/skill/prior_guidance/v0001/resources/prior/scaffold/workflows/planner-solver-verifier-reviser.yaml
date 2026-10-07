@@ -1,0 +1,142 @@
+id: W05
+name: planner-solver-verifier-reviser
+title: Planner–Solver–Verifier–Reviser
+tier: core
+purpose: A clean role-separated correction workflow for testing the causal value of explicit verification.
+source_ids:
+- mini-swe-agent
+- superpowers
+- openhands-extensions
+nodes:
+- id: analyze
+  role: Task Analyzer
+  prompt: task-analyzer
+  skills:
+  - issue-analysis
+  - repository-instruction-loading
+  consumes:
+  - issue_text
+  - repository_root
+  produces:
+  - issue_profile
+  - repository_rules
+  visibility:
+  - issue
+- id: plan
+  role: Planner
+  prompt: patch-planner
+  skills:
+  - repository-orientation
+  - file-localization
+  - reproduction-script-design
+  consumes:
+  - issue_profile
+  - repository_rules
+  produces:
+  - execution_plan
+  visibility:
+  - repository
+  - issue
+- id: solve
+  role: Solver
+  prompt: patch-generator
+  skills:
+  - focused-failure-reproduction
+  - root-cause-debugging
+  - minimal-patch
+  consumes:
+  - execution_plan
+  - issue_profile
+  produces:
+  - candidate_patch
+  - trajectory
+  visibility:
+  - repository
+  - plan
+- id: verify
+  role: Verifier
+  prompt: verifier
+  skills:
+  - focused-test-selection
+  - regression-check
+  - scope-guard
+  - final-diff-inspection
+  consumes:
+  - issue_profile
+  - candidate_patch
+  - trajectory
+  produces:
+  - verification_result
+  visibility:
+  - issue
+  - patch
+  - tests
+- id: revise
+  role: Reviser
+  prompt: patch-generator
+  skills:
+  - backtrack-after-failed-fixes
+  - minimal-patch
+  consumes:
+  - candidate_patch
+  - verification_result
+  - issue_profile
+  produces:
+  - revised_patch
+  visibility:
+  - patch
+  - diagnosis
+- id: finalize
+  role: Finalizer
+  prompt: finalizer
+  skills:
+  - completion-evidence-gate
+  consumes:
+  - issue_profile
+  - verification_result
+  produces:
+  - completion_decision
+  visibility:
+  - evidence
+edges:
+- from: analyze
+  to: plan
+- from: plan
+  to: solve
+- from: solve
+  to: verify
+- from: verify
+  to: revise
+  data:
+  - verification_result
+  when: verification_result.overall == 'fail'
+- from: revise
+  to: verify
+  data:
+  - revised_patch
+- from: verify
+  to: finalize
+  data:
+  - verification_result
+  when: verification_result.overall == 'pass'
+control_flow:
+  entry: analyze
+  termination:
+    success: completion_decision.action == 'submit'
+    failure: maximum revisions reached or unrecoverable blocker
+budget:
+  max_model_calls: 24
+  max_revision_loops: 3
+invariants:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+allowed_mutations:
+- skill_selection
+- visibility
+- loop_limit

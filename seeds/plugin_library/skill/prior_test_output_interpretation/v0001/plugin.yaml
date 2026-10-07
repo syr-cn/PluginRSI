@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_test_output_interpretation
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Turn noisy command output into a localized failure signature without
+  overclaiming.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S15 test-output-interpretation (SWE-agent / Agentless / Superpowers)
+  sources:
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S15
+    path: skills/test-output-interpretation/SKILL.md
+  - id: S15
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

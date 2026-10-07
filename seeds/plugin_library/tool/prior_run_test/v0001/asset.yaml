@@ -1,0 +1,24 @@
+id: T11
+name: run_test
+category: verification
+description: Run a focused test command under an explicit timeout.
+input_schema:
+  command: string
+  cwd: path
+  timeout_seconds: integer
+  test_scope: string
+output_schema:
+  status: pass|fail|timeout|error
+  exit_code: integer
+  stdout: string
+  stderr: string
+  duration_seconds: number
+side_effect: process effects and test artifacts
+guards:
+- Record exact command and current revision.
+- Do not mutate tests during execution.
+- Bound output.
+source_ids:
+- mini-swe-agent
+- agentless
+- swe-bench

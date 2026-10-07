@@ -1,0 +1,444 @@
+schema_version: '1.0'
+retrieved_at: '2026-08-25'
+description: External source registry for the three-dimensional MetaDSH prior corpus.
+sources:
+- id: deepseek-harness
+  name: DeepSeek Harness
+  kind: target_runtime
+  url: https://github.com/deepseek-ai/deepseek-harness
+  ref: master
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - plugin boundaries and scoped service registries
+  - ordered system-prompt assembly and tool-schema injection
+  - filesystem-backed skill provider and workflow orchestration seams
+  - context, session, compaction, storage and invariant interfaces
+  avoid:
+  - coupling the paper claim to one developer-preview API
+  - opening prompt, graph, skill and memory mutation simultaneously
+  relevant_paths:
+  - packages/core/system-prompt/
+  - packages/core/tools/
+  - packages/skill/
+  - packages/workflow/
+  - packages/context/
+  - packages/session/
+  - packages/compaction/
+  - docs/
+  - AGENTS.md
+- id: mini-swe-agent
+  name: mini-SWE-agent
+  kind: coding_harness
+  url: https://github.com/SWE-agent/mini-swe-agent
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - minimal bash-only action loop
+  - linear message and trajectory representation
+  - SWE-bench system/instance prompt boundaries
+  - clean baseline for modular additions
+  avoid:
+  - adding a large tool interface before proving its value
+  - turning every coding action into a new agent
+  relevant_paths:
+  - src/minisweagent/agents/
+  - src/minisweagent/config/
+  - src/minisweagent/run/
+  - docs/
+  - AGENTS.md
+- id: swe-agent
+  name: SWE-agent
+  kind: coding_harness
+  url: https://github.com/SWE-agent/SWE-agent
+  ref: main
+  priority: P1
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - configurable command/tool interfaces
+  - prompt and configuration YAMLs
+  - demonstration and trajectory formats
+  - history processors and trajectory browsing conventions
+  avoid:
+  - copying the full interface into the minimal baseline
+  - using instance-specific demos for held-out tasks
+  relevant_paths:
+  - config/
+  - sweagent/agent/
+  - sweagent/tools/
+  - docs/config/
+  - docs/usage/
+- id: agentless
+  name: Agentless
+  kind: coding_harness
+  url: https://github.com/OpenAutoCoder/Agentless
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - hierarchical file/symbol/edit-location localization
+  - multiple candidate patch generation
+  - reproduction and regression-test selection
+  - patch validation and reranking
+  avoid:
+  - treating each deterministic pipeline stage as a conversational agent
+  - using gold localization signals
+  relevant_paths:
+  - agentless/fl/
+  - agentless/repair/
+  - agentless/test/
+  - get_repo_structure/
+  - README_swebench.md
+- id: aider
+  name: Aider
+  kind: coding_harness
+  url: https://github.com/Aider-AI/aider
+  ref: main
+  priority: P0
+  license: Apache-2.0; verify at fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - repository map and symbol ranking
+  - architect/editor separation
+  - edit-format contracts and diff discipline
+  - lint/test feedback integration
+  avoid:
+  - automatic commits unless controlled
+  - loading unrelated repository context
+  relevant_paths:
+  - aider/repomap.py
+  - aider/coders/
+  - aider/linter.py
+  - docs/
+- id: aider-swe-bench
+  name: Aider SWE-bench Harness
+  kind: benchmark_harness
+  url: https://github.com/Aider-AI/aider-swe-bench
+  ref: main
+  priority: P2
+  license: Apache-2.0; verify at fetched commit
+  fetch_default: false
+  large: false
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  take:
+  - benchmark invocation patterns
+  - prediction and evaluation-log conventions
+  avoid:
+  - leaking evaluator information into solver-visible context
+  relevant_paths:
+  - README.md
+  - scripts/
+  - harness/
+- id: openhands-agent-sdk
+  name: OpenHands Software Agent SDK
+  kind: coding_harness
+  url: https://github.com/OpenHands/software-agent-sdk
+  ref: main
+  priority: P1
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - modular code-agent SDK interfaces
+  - workspace/tool/agent-server contracts
+  - conversation execution contracts
+  avoid:
+  - coupling MetaDSH to a production SDK
+  relevant_paths:
+  - openhands-sdk/
+  - openhands-tools/
+  - openhands-workspace/
+  - examples/
+- id: openhands-extensions
+  name: OpenHands Extensions
+  kind: skill_repository
+  url: https://github.com/OpenHands/extensions
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Skill / Tools
+  take:
+  - agent-memory
+  - code-review
+  - learn-from-code-review
+  - skill lifecycle and progressive disclosure
+  avoid:
+  - unrelated production integrations
+  - writing task answers into repository memory
+  relevant_paths:
+  - skills/
+  - plugins/qa-changes/
+  - plugins/pr-review/
+  - AGENTS.md
+- id: agentskills-spec
+  name: Agent Skills Specification
+  kind: standard
+  url: https://github.com/agentskills/agentskills
+  ref: main
+  priority: P0
+  license: Apache-2.0; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Skill / Tools
+  take:
+  - SKILL.md directory/frontmatter standard
+  - progressive disclosure
+  - validation conventions
+  avoid:
+  - inventing incompatible portable fields without an adapter
+  relevant_paths:
+  - README.md
+  - docs/
+  - schemas/
+  - examples/
+- id: anthropic-skills
+  name: Anthropic Skills
+  kind: skill_repository
+  url: https://github.com/anthropics/skills
+  ref: main
+  priority: P0
+  license: mixed; inspect each skill before redistribution
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Skill / Tools
+  take:
+  - skill structure and creation/evaluation patterns
+  - progressive disclosure examples
+  avoid:
+  - vendoring mixed-license content indiscriminately
+  - copying large skill bodies verbatim
+  relevant_paths:
+  - skills/
+  - README.md
+- id: superpowers
+  name: Superpowers
+  kind: skill_repository
+  url: https://github.com/obra/superpowers
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - systematic debugging
+  - verification before completion
+  - failure-oriented workflow discipline
+  avoid:
+  - importing a full software-development ceremony into SWE-bench
+  relevant_paths:
+  - skills/systematic-debugging/
+  - skills/verification-before-completion/
+  - skills/
+- id: addy-agent-skills
+  name: Addy Osmani Agent Skills
+  kind: skill_repository
+  url: https://github.com/addyosmani/agent-skills
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: false
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - debugging/error recovery
+  - using-agent-skills routing
+  - scope discipline
+  avoid:
+  - copying very long prose skills instead of distilling atomic procedures
+  relevant_paths:
+  - skills/
+  - README.md
+- id: swe-bench
+  name: SWE-bench
+  kind: benchmark
+  url: https://github.com/SWE-bench/SWE-bench
+  ref: main
+  priority: P0
+  license: MIT; verify at fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Harness Scaffold
+  take:
+  - official evaluation harness
+  - prediction format
+  - container execution and grading contracts
+  avoid:
+  - exposing hidden tests or evaluator internals to the solver
+  relevant_paths:
+  - swebench/harness/
+  - README.md
+- id: swe-bench-experiments
+  name: SWE-bench Experiments
+  kind: trajectory_repository
+  url: https://github.com/SWE-bench/experiments
+  ref: main
+  priority: P1
+  license: repository/dataset terms require local review
+  fetch_default: false
+  large: true
+  modules:
+  - Prompt / Experience
+  - Skill / Tools
+  take:
+  - public predictions, logs and trajectories
+  - cross-system failure/success pattern mining
+  avoid:
+  - redistributing unlicensed raw traces
+  - memorizing task-specific patches or hidden-test hints
+  relevant_paths:
+  - trajectories/
+  - evaluation/
+  - README.md
+- id: swe-smith
+  name: SWE-smith
+  kind: training_environment
+  url: https://github.com/SWE-bench/SWE-smith
+  ref: main
+  priority: P2
+  license: MIT; verify at fetched commit
+  fetch_default: false
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - synthetic task generation
+  - environment construction
+  - non-test contamination-safe training tasks
+  avoid:
+  - assuming synthetic distribution matches SWE-bench Verified
+  relevant_paths:
+  - swesmith/
+  - README.md
+- id: swe-smith-trajectories
+  name: SWE-smith Trajectories
+  kind: trajectory_dataset
+  url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  ref: main
+  priority: P2
+  license: dataset card must be checked before redistribution
+  fetch_default: false
+  large: true
+  modules:
+  - Prompt / Experience
+  - Skill / Tools
+  take:
+  - large procedural coding trajectory corpus for offline skill mining
+  avoid:
+  - treating all trajectories as high-quality
+  - mixing held-out benchmark answers into training
+  relevant_paths: []
+- id: letta-code
+  name: Letta Code
+  kind: memory_first_harness
+  url: https://github.com/letta-ai/letta-code
+  ref: main
+  priority: P1
+  license: Apache-2.0 with exclusions; inspect fetched commit
+  fetch_default: true
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  - Skill / Tools
+  take:
+  - persistent coding memory and MemFS patterns
+  - project/global/agent skill scope separation
+  avoid:
+  - adopting the full memory-first runtime before basic ablations
+  relevant_paths:
+  - README.md
+  - packages/
+  - docs/
+- id: langgraph
+  name: LangGraph
+  kind: memory_workflow_framework
+  url: https://github.com/langchain-ai/langgraph
+  ref: main
+  priority: P2
+  license: MIT; verify at fetched commit
+  fetch_default: false
+  large: true
+  modules:
+  - Prompt / Experience
+  - Harness Scaffold
+  take:
+  - thread-scoped state versus namespaced long-term memory
+  - typed graph/checkpoint/store patterns
+  avoid:
+  - making a framework dependency part of the method novelty
+  relevant_paths:
+  - libs/
+  - docs/
+- id: mem0
+  name: Mem0
+  kind: memory_backend
+  url: https://github.com/mem0ai/mem0
+  ref: main
+  priority: P2
+  license: Apache-2.0; verify at fetched commit
+  fetch_default: false
+  large: true
+  modules:
+  - Prompt / Experience
+  take:
+  - memory CRUD/retrieval backend interface
+  - conflict and lifecycle inspiration
+  avoid:
+  - introducing a heavyweight backend before proving memory usefulness
+  relevant_paths:
+  - mem0/
+  - docs/
+  - README.md

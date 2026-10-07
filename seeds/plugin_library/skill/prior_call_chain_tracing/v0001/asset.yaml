@@ -1,0 +1,25 @@
+id: S10
+name: call-chain-tracing
+title: Call-chain Tracing
+category: localization
+tier: optional
+description: Trace data, control, and state across callers and callees relevant to
+  the failure.
+applicable_roles:
+- Solver
+- Critic
+required_inputs:
+- entry_symbol
+- source_context
+output_type: CallChain
+allowed_tools:
+- symbol_search
+- read_range
+- inspect_failure
+source_ids:
+- aider
+- superpowers
+optional_inputs:
+- runtime_trace
+- repository_map
+path: skills/call-chain-tracing/SKILL.md

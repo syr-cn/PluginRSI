@@ -1,0 +1,27 @@
+id: S19
+name: scope-guard
+title: Scope Guard
+category: review
+tier: core
+description: Detect repository restructuring, unrelated refactors, test weakening,
+  and incidental changes.
+applicable_roles:
+- Verifier
+- Critic
+- Finalizer
+required_inputs:
+- issue_profile
+- git_diff
+- repository_rules
+output_type: ScopeAssessment
+allowed_tools:
+- git_status
+- git_diff
+- read_file
+source_ids:
+- mini-swe-agent
+- superpowers
+- addy-agent-skills
+optional_inputs:
+- git_status
+path: skills/scope-guard/SKILL.md

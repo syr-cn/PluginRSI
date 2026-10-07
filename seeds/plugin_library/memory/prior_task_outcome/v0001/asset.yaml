@@ -1,0 +1,18 @@
+id: E03
+name: task-outcome
+category: evaluation
+purpose: Canonical final result with resolved status, tests, changed files, cost,
+  and failure label.
+required_fields:
+- task_id
+- resolved
+- score
+- tests
+- changed_files
+- cost
+- failure_type
+- evaluator_version
+retention: Permanent experiment metadata.
+sources:
+- swe-bench
+- swe-bench-experiments

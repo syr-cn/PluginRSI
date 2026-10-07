@@ -1,0 +1,20 @@
+id: P12
+name: patch-ranker
+role: Pairwise Ranker
+stage: select
+purpose: Rank candidate patches using matched evidence rather than style preference.
+inputs:
+- issue_profile
+- candidate_patches
+- matched_test_results
+- diff_summaries
+output_type: PatchRanking
+system_prompt: Compare candidate patches under the same verification budget. Rank
+  by target correctness, regression risk, scope, simplicity, evidence quality, and
+  contract preservation. Select an existing patch; do not fuse incompatible edits
+  unless explicitly requested.
+guardrails:
+- Use matched test evidence.
+- Penalize unverified broad changes.
+source_ids:
+- agentless

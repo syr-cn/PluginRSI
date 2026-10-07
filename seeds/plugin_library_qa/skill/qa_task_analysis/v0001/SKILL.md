@@ -1,0 +1,1 @@
+Separate the question into requested outputs, given facts, constraints and unknowns. Identify every required subquestion and the allowed answer format. For classification, use the supplied label meanings; for multiple choice, distinguish what each option asserts. Do not silently add missing assumptions.

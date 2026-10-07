@@ -1,0 +1,23 @@
+id: S06
+name: repository-map-reading
+title: Repository Map Reading
+category: localization
+tier: optional
+description: Use a structural repository map to rank definitions and references without
+  loading full files.
+applicable_roles:
+- Planner
+- Solver
+- Context Selector
+required_inputs:
+- repository_map
+- issue_profile
+output_type: RankedSymbols
+allowed_tools:
+- repo_map
+- symbol_search
+source_ids:
+- aider
+optional_inputs:
+- symbol_graph
+path: skills/repository-map-reading/SKILL.md

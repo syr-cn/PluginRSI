@@ -1,0 +1,113 @@
+id: W10
+name: workflow-evolution-loop
+title: Workflow Evolution Loop
+tier: meta
+purpose: Use trace-grounded credit to evolve role composition and information flow while keeping prompts and skills frozen.
+source_ids:
+- deepseek-harness
+- swe-bench-experiments
+- swe-smith-trajectories
+nodes:
+- id: execute
+  role: Harness Runner
+  prompt: workflow-designer
+  skills: []
+  consumes:
+  - workflow_graph
+  - task_batch
+  produces:
+  - trajectories
+  - outcomes
+  visibility:
+  - workflow
+  - tasks
+- id: credit
+  role: Credit Assigner
+  prompt: credit-assigner
+  skills: []
+  consumes:
+  - workflow_graph
+  - trajectories
+  - outcomes
+  produces:
+  - credit_assignment
+  visibility:
+  - graph
+  - traces
+  - outcomes
+- id: edit
+  role: Topology Optimizer
+  prompt: topology-editor
+  skills: []
+  consumes:
+  - workflow_graph
+  - credit_assignment
+  - budget
+  produces:
+  - graph_patch
+  visibility:
+  - graph
+  - credit
+- id: validate
+  role: Workflow Validator
+  prompt: verifier
+  skills: []
+  consumes:
+  - workflow_graph
+  - graph_patch
+  - workflow_schema
+  produces:
+  - validation_result
+  - patched_workflow
+  visibility:
+  - graph
+  - patch
+  - schemas
+- id: select
+  role: Workflow Ranker
+  prompt: patch-ranker
+  skills: []
+  consumes:
+  - candidate_workflows
+  - matched_budget_results
+  produces:
+  - selected_workflow
+  visibility:
+  - candidates
+  - results
+edges:
+- from: execute
+  to: credit
+- from: credit
+  to: edit
+- from: edit
+  to: validate
+- from: validate
+  to: execute
+  data:
+  - patched_workflow
+  when: validation_result == 'pass'
+- from: execute
+  to: select
+  when: candidate batch complete
+control_flow:
+  entry: execute
+  termination:
+    success: budget exhausted with a validated best workflow
+    failure: no valid graph patch
+budget:
+  max_graph_edits_per_iteration: 1
+  matched_budget: true
+  pre_execution_validation: true
+invariants:
+- Role definitions, prompt bodies, skill bodies, model, evaluator, and memory remain frozen.
+- Every edge must be type compatible.
+- Allow one interpretable graph mutation per iteration.
+allowed_mutations:
+- role_selection
+- node_count
+- edges
+- order
+- visibility
+- bounded_loops
+- stop_conditions

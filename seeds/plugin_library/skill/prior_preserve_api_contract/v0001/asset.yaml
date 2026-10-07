@@ -1,0 +1,27 @@
+id: S18
+name: preserve-api-contract
+title: Preserve API Contract
+category: patching
+tier: core
+description: Check that a repair does not unintentionally change public signatures,
+  return types, errors, or compatibility.
+applicable_roles:
+- Solver
+- Verifier
+- Critic
+required_inputs:
+- candidate_patch
+- public_interfaces
+- issue_profile
+output_type: ContractAssessment
+allowed_tools:
+- symbol_search
+- text_search
+- git_diff
+- read_range
+source_ids:
+- aider
+- openhands-agent-sdk
+optional_inputs:
+- downstream_references
+path: skills/preserve-api-contract/SKILL.md

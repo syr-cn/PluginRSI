@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_existing_test_discovery
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Find the smallest existing tests that exercise the changed behavior and
+  nearby contracts.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S23 existing-test-discovery (Agentless / mini-SWE-agent / Aider)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  upstream_assets:
+  - id: S23
+    path: skills/existing-test-discovery/SKILL.md
+  - id: S23
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

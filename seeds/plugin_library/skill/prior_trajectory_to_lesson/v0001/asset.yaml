@@ -1,0 +1,25 @@
+id: S31
+name: trajectory-to-lesson
+title: Trajectory to Lesson
+category: learning
+tier: meta
+description: Extract a bounded transferable procedure or anti-pattern from a completed
+  trajectory.
+applicable_roles:
+- Reflection Agent
+- Memory Curator
+required_inputs:
+- trajectory
+- outcome
+- task_profile
+output_type: LessonCandidate
+allowed_tools:
+- read_file
+source_ids:
+- swe-bench-experiments
+- swe-smith-trajectories
+- openhands-extensions
+optional_inputs:
+- component_credit
+- counterfactuals
+path: skills/trajectory-to-lesson/SKILL.md

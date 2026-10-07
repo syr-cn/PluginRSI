@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_scope_guard
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Detect repository restructuring, unrelated refactors, test weakening,
+  and incidental changes.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S19 scope-guard (mini-SWE-agent / Superpowers / Addy Osmani Agent Skills)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  upstream_assets:
+  - id: S19
+    path: skills/scope-guard/SKILL.md
+  - id: S19
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

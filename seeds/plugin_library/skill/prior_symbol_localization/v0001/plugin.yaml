@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_symbol_localization
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Rank functions, classes, methods, or configuration blocks inside selected
+  files.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S08 symbol-localization (Agentless / Aider)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  upstream_assets:
+  - id: S08
+    path: skills/symbol-localization/SKILL.md
+  - id: S08
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

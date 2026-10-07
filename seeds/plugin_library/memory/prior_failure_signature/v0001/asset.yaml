@@ -1,0 +1,17 @@
+id: E04
+name: failure-signature
+category: diagnostic
+purpose: Normalized recurring failure pattern used for routing, debugging, and skill
+  evolution.
+required_fields:
+- stage
+- symptom
+- evidence_pattern
+- likely_causes
+- discriminating_checks
+- scope
+retention: Promote only after repeated support or strong causal evidence.
+sources:
+- superpowers
+- addy-agent-skills
+- swe-bench-experiments

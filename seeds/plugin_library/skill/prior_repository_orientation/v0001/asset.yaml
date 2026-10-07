@@ -1,0 +1,25 @@
+id: S05
+name: repository-orientation
+title: Repository Orientation
+category: localization
+tier: core
+description: Build a compact map of project structure, build system, tests, and likely
+  entry points.
+applicable_roles:
+- Planner
+- Solver
+required_inputs:
+- repository_root
+- issue_profile
+output_type: RepositoryOrientation
+allowed_tools:
+- list_tree
+- read_file
+- text_search
+source_ids:
+- mini-swe-agent
+- aider
+- agentless
+optional_inputs:
+- repository_rules
+path: skills/repository-orientation/SKILL.md

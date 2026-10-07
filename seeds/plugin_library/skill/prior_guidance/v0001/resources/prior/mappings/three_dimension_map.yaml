@@ -1,0 +1,73 @@
+schema_version: '1.0'
+generated_date: '2026-08-25'
+thesis: Repository- and trajectory-grounded executable priors organized as content, structure, and capability.
+dimensions:
+- id: D1
+  name: Prompt / Experience
+  question: What local policy and accumulated evidence should condition the next decision?
+  assets:
+  - prompts
+  - trajectory records
+  - demonstrations
+  - failure signatures
+  - lessons
+  - memory records
+  - component credit
+  mutable_fields:
+  - prompt body
+  - prompt sections
+  - examples
+  - memory content
+  - retrieval parameters
+  must_freeze_when_testing:
+  - workflow topology
+  - skill body
+  - model
+  - evaluator
+- id: D2
+  name: Harness Scaffold
+  question: What runtime structure decides order, visibility, loops, validation, resources, and termination?
+  assets:
+  - runner
+  - workflow graph
+  - context processor
+  - sandbox
+  - budget controller
+  - termination
+  - evaluator
+  - mutation validator
+  mutable_fields:
+  - role selection
+  - nodes
+  - edges
+  - serial/parallel order
+  - visibility
+  - loop limits
+  - stop conditions
+  must_freeze_when_testing:
+  - prompt bodies
+  - skill bodies
+  - memory writes
+  - model
+  - evaluator
+- id: D3
+  name: Skill / Tools
+  question: What reusable procedure should be activated, and through which primitive interface may it act?
+  assets:
+  - SKILL.md procedures
+  - tool schemas
+  - activation metadata
+  - skill versions
+  - evaluation records
+  mutable_fields:
+  - skill selection
+  - skill text
+  - triggers
+  - negative triggers
+  - tool permissions
+  - skill split/merge
+  must_freeze_when_testing:
+  - workflow topology
+  - prompt bodies
+  - model
+  - evaluator

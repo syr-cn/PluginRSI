@@ -1,0 +1,7 @@
+schema_version: 1
+entrypoint: workflow:Workflow
+plugins:
+  coder: {ref: role/coder/v0001, config: {}}
+  terminal: {ref: tool/terminal/v0001, config: {}}
+  debugging: {ref: skill/debugging/v0001, config: {}}
+  experience: {ref: memory/experience_bank/v0001, config: {}}

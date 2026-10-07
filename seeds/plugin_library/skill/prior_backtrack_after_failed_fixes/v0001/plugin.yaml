@@ -1,0 +1,31 @@
+schema_version: 1
+kind: skill
+name: prior_backtrack_after_failed_fixes
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Recover from repeated ineffective edits by reverting unsupported changes
+  and reopening diagnosis.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S30 backtrack-after-failed-fixes (Superpowers / Addy Osmani Agent Skills
+    / DeepSeek Harness)
+  sources:
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  upstream_assets:
+  - id: S30
+    path: skills/backtrack-after-failed-fixes/SKILL.md
+  - id: S30
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

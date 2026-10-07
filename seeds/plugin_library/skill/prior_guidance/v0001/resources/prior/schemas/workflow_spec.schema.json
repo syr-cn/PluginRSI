@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkflowSpec",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "title",
+    "tier",
+    "purpose",
+    "source_ids",
+    "nodes",
+    "edges",
+    "control_flow",
+    "budget",
+    "invariants"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^W[0-9]{2}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "prompt",
+          "skills",
+          "consumes",
+          "produces",
+          "visibility"
+        ]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to"
+        ]
+      }
+    },
+    "control_flow": {
+      "type": "object"
+    },
+    "budget": {
+      "type": "object"
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_mutations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

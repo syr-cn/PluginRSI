@@ -1,0 +1,147 @@
+id: W03
+name: reproduce-debug-patch-verify
+title: Reproduce–Debug–Patch–Verify
+tier: core
+purpose: An evidence-first debugging loop that prevents speculative edits.
+source_ids:
+- superpowers
+- addy-agent-skills
+- mini-swe-agent
+nodes:
+- id: analyze
+  role: Task Analyzer
+  prompt: task-analyzer
+  skills:
+  - issue-analysis
+  - repository-instruction-loading
+  consumes:
+  - issue_text
+  - repository_root
+  produces:
+  - issue_profile
+  - repository_rules
+  visibility:
+  - issue
+- id: reproduce
+  role: Solver
+  prompt: reproduction-planner
+  skills:
+  - repository-orientation
+  - reproduction-script-design
+  - focused-failure-reproduction
+  consumes:
+  - issue_profile
+  - repository_rules
+  - repository_root
+  produces:
+  - reproduction_result
+  visibility:
+  - repository
+  - commands
+- id: diagnose
+  role: Critic
+  prompt: root-cause-diagnoser
+  skills:
+  - file-localization
+  - symbol-localization
+  - root-cause-debugging
+  - hypothesis-testing
+  - test-output-interpretation
+  consumes:
+  - issue_profile
+  - reproduction_result
+  produces:
+  - diagnosis
+  - edit_locations
+  visibility:
+  - trace
+  - localized_code
+- id: patch
+  role: Solver
+  prompt: patch-generator
+  skills:
+  - minimal-patch
+  - preserve-api-contract
+  - scope-guard
+  consumes:
+  - diagnosis
+  - edit_locations
+  - repository_rules
+  produces:
+  - patch
+  visibility:
+  - target_files
+  - contracts
+- id: verify
+  role: Verifier
+  prompt: verifier
+  skills:
+  - focused-test-selection
+  - regression-check
+  - final-diff-inspection
+  - completion-evidence-gate
+  consumes:
+  - issue_profile
+  - patch
+  - reproduction_result
+  produces:
+  - verification_result
+  - completion_decision
+  visibility:
+  - issue
+  - evidence
+  - diff
+- id: recover
+  role: Critic
+  prompt: root-cause-diagnoser
+  skills:
+  - backtrack-after-failed-fixes
+  - environment-blocker-diagnosis
+  consumes:
+  - trajectory
+  - verification_result
+  produces:
+  - backtrack_plan
+  visibility:
+  - trajectory
+  - working_tree
+edges:
+- from: analyze
+  to: reproduce
+- from: reproduce
+  to: diagnose
+- from: diagnose
+  to: patch
+- from: patch
+  to: verify
+- from: verify
+  to: recover
+  data:
+  - verification_result
+  when: verification_result.overall == 'fail'
+- from: recover
+  to: diagnose
+  data:
+  - backtrack_plan
+control_flow:
+  entry: analyze
+  termination:
+    success: completion_decision.action == 'submit'
+    failure: reproduction blocked and no source-level evidence, or budget exhausted
+budget:
+  max_model_calls: 26
+  max_hypothesis_checks: 4
+  max_repair_loops: 3
+invariants:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+allowed_mutations:
+- skill_selection
+- loop_limit
+- visibility

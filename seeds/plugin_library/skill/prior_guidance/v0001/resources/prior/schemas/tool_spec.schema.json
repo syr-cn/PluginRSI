@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ToolSpec",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "category",
+    "description",
+    "input_schema",
+    "output_schema",
+    "side_effect",
+    "guards",
+    "source_ids"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^T[0-9]{2}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "category": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "input_schema": {
+      "type": "object"
+    },
+    "output_schema": {
+      "type": "object"
+    },
+    "side_effect": {
+      "type": "string"
+    },
+    "guards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

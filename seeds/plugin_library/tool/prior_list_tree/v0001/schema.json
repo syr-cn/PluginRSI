@@ -1,0 +1,30 @@
+{
+  "type": "function",
+  "name": "list_tree",
+  "description": "List a bounded repository subtree with depth and ignore controls. Guards: Do not recursively enumerate the full repository by default. Respect ignore patterns.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "root": {
+        "type": "string"
+      },
+      "max_depth": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "include_hidden": {
+        "type": "boolean"
+      },
+      "max_entries": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "root",
+      "max_depth",
+      "max_entries"
+    ],
+    "additionalProperties": false
+  }
+}

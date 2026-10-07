@@ -1,0 +1,24 @@
+schema_version: 1
+kind: skill
+name: prior_repository_map_reading
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Use a structural repository map to rank definitions and references without
+  loading full files.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S06 repository-map-reading (Aider)
+  sources:
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  upstream_assets:
+  - id: S06
+    path: skills/repository-map-reading/SKILL.md
+  - id: S06
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

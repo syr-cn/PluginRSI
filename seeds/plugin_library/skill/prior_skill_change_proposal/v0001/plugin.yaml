@@ -1,0 +1,34 @@
+schema_version: 1
+kind: skill
+name: prior_skill_change_proposal
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Propose add/edit/merge/split/retire operations from repeated failures
+  and evaluation evidence.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S35 skill-change-proposal (Agent Skills Specification / Anthropic Skills
+    / OpenHands Extensions / Superpowers)
+  sources:
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S35
+    path: skills/skill-change-proposal/SKILL.md
+  - id: S35
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

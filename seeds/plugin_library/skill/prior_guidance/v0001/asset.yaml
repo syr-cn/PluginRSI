@@ -1,0 +1,20 @@
+id: PRIOR_GUIDANCE
+name: guidance
+source_ids:
+- addy-agent-skills
+- agentless
+- agentskills-spec
+- aider
+- anthropic-skills
+- deepseek-harness
+- mini-swe-agent
+- openhands-agent-sdk
+- openhands-extensions
+- superpowers
+- swe-agent
+- swe-bench
+- swe-bench-experiments
+- swe-smith
+- swe-smith-trajectories
+description: Reference-only scaffold, workflow, policy, schema and routing guidance
+  for free-form harness authoring.

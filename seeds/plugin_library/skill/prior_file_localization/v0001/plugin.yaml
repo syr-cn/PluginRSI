@@ -1,0 +1,27 @@
+schema_version: 1
+kind: skill
+name: prior_file_localization
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Rank the smallest set of repository files likely to contain the failure
+  or required behavior.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S07 file-localization (Agentless / Aider)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  upstream_assets:
+  - id: S07
+    path: skills/file-localization/SKILL.md
+  - id: S07
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

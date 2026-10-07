@@ -1,0 +1,21 @@
+id: T06
+name: symbol_search
+category: search
+description: Search definitions and references using language-aware or indexed metadata.
+input_schema:
+  symbol_or_query: string
+  paths: array?
+  kind: definition|reference|both
+  max_results: integer
+output_schema:
+  symbols: array
+  references: array
+  confidence: number?
+side_effect: none
+guards:
+- Fall back to text search when language support is unavailable.
+- Do not treat approximate matches as exact.
+source_ids:
+- aider
+- agentless
+- openhands-agent-sdk

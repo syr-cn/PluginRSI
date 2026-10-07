@@ -1,0 +1,27 @@
+schema_version: 1
+kind: role
+name: prior_context_selector
+version: v0001
+entrypoint: implementation:PriorRole
+description: Choose bounded task-relevant context.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P04 context-selector (Aider / SWE-agent / DeepSeek Harness)
+  sources:
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  upstream_assets:
+  - id: P04
+    path: prompts/context-selector.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

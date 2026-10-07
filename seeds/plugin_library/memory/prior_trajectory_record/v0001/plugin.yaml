@@ -1,0 +1,36 @@
+schema_version: 1
+kind: memory
+name: prior_trajectory_record
+version: v0001
+entrypoint: implementation:PriorMemory
+description: Replayable typed event stream for one agent run.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    top_k:
+      type: integer
+      minimum: 1
+      default: 5
+provenance:
+  label: E01 trajectory-record (mini-SWE-agent / SWE-agent / SWE-bench Experiments)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  upstream_assets:
+  - id: E01
+    path: experience/record_types.yaml
+  - id: E01
+    path: experience/PROTOCOL.md
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    memory interface; not verbatim paper code. Append-only per-plugin state with required-field
+    validation and lexical retrieval. Records remain unreviewed evidence; no automatic
+    promotion or cross-task persistence.
+  parent_refs: []

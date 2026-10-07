@@ -1,0 +1,19 @@
+id: T02
+name: list_tree
+category: inspection
+description: List a bounded repository subtree with depth and ignore controls.
+input_schema:
+  root: path
+  max_depth: integer
+  include_hidden: boolean?
+  max_entries: integer
+output_schema:
+  entries: array
+  truncated: boolean
+side_effect: none
+guards:
+- Do not recursively enumerate the full repository by default.
+- Respect ignore patterns.
+source_ids:
+- mini-swe-agent
+- openhands-agent-sdk

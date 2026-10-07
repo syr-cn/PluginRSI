@@ -1,0 +1,24 @@
+schema_version: 1
+kind: skill
+name: prior_edit_location_localization
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Identify concrete line regions where a minimal repair could change the
+  faulty mechanism.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S09 edit-location-localization (Agentless)
+  sources:
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: S09
+    path: skills/edit-location-localization/SKILL.md
+  - id: S09
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

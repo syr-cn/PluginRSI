@@ -1,0 +1,25 @@
+{
+  "type": "function",
+  "name": "repo_map",
+  "description": "Produce a compact structural map of important files, symbols and references. Guards: Keep within token budget. Expose signatures and structure, not full file contents.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "repository_root": {
+        "type": "string"
+      },
+      "query": {
+        "type": "string"
+      },
+      "token_budget": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "repository_root",
+      "token_budget"
+    ],
+    "additionalProperties": false
+  }
+}

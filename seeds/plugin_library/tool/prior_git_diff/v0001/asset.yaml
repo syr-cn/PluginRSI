@@ -1,0 +1,20 @@
+id: T10
+name: git_diff
+category: version-control
+description: Return a bounded unified diff for current or selected paths.
+input_schema:
+  paths: array?
+  staged: boolean?
+  max_bytes: integer
+output_schema:
+  diff: string
+  changed_files: array
+  truncated: boolean
+side_effect: none
+guards:
+- Do not omit changed-file list when diff is truncated.
+- Read-only.
+source_ids:
+- mini-swe-agent
+- aider
+- openhands-agent-sdk

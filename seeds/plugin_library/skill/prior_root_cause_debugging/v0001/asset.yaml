@@ -1,0 +1,28 @@
+id: S13
+name: root-cause-debugging
+title: Root-cause Debugging
+category: diagnosis
+tier: core
+description: Infer and test the smallest causal explanation instead of stacking speculative
+  fixes.
+applicable_roles:
+- Critic
+- Solver
+required_inputs:
+- issue_profile
+- reproduction_result
+- localized_code
+output_type: RootCauseDiagnosis
+allowed_tools:
+- read_range
+- shell_exec
+- inspect_failure
+- text_search
+source_ids:
+- superpowers
+- addy-agent-skills
+- swe-agent
+optional_inputs:
+- trajectory
+- memory_hits
+path: skills/root-cause-debugging/SKILL.md

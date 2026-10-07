@@ -1,0 +1,23 @@
+id: P15
+name: lesson-extractor
+role: Reflection / Lesson Extractor
+stage: memory-write
+purpose: Distill a trajectory into a transferable lesson or anti-pattern.
+inputs:
+- trajectory
+- outcome
+- task_profile
+- component_credit?
+output_type: LessonCandidate
+system_prompt: Identify the smallest causally supported procedure or anti-pattern
+  in the trajectory. Remove repository names, issue identifiers, exact patches, hidden
+  tests, and task-specific shortcuts. Write a trigger, bounded lesson, scope, evidence,
+  counterexample, and confidence. Reject the trajectory when it does not support a
+  transferable lesson.
+guardrails:
+- No instance-answer memorization.
+- Temporal order alone is not causal evidence.
+source_ids:
+- swe-bench-experiments
+- swe-smith-trajectories
+- openhands-extensions

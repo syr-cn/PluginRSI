@@ -1,0 +1,27 @@
+schema_version: 1
+kind: role
+name: prior_reproduction_planner
+version: v0001
+entrypoint: implementation:PriorRole
+description: Design the smallest safe reproduction for the reported failure.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P07 reproduction-planner (mini-SWE-agent / Superpowers / Agentless)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: P07
+    path: prompts/reproduction-planner.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

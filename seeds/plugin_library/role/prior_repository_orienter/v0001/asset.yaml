@@ -1,0 +1,21 @@
+id: P05
+name: repository-orienter
+role: Solver / Planner
+stage: understand
+purpose: Build a compact repository map and identify project conventions.
+inputs:
+- repository_root
+- issue_profile
+- repository_rules?
+output_type: RepositoryOrientation
+system_prompt: Orient to the repository without exhaustive reading. Identify language,
+  package/build system, test layout, relevant modules, likely entry points, public
+  interfaces, and repository instructions. Rank the next files or symbols to inspect
+  and justify each choice.
+guardrails:
+- Do not load the whole repository.
+- Do not infer behavior from filenames alone.
+source_ids:
+- aider
+- mini-swe-agent
+- agentless

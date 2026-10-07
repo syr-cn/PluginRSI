@@ -1,0 +1,25 @@
+{
+  "type": "function",
+  "name": "read_file",
+  "description": "Read a text file with size and binary guards. Guards: Reject binary/oversized files unless explicitly allowed.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "max_bytes": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "encoding": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "path",
+      "max_bytes"
+    ],
+    "additionalProperties": false
+  }
+}

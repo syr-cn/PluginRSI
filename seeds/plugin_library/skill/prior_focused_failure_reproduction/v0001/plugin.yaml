@@ -1,0 +1,26 @@
+schema_version: 1
+kind: skill
+name: prior_focused_failure_reproduction
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Execute and stabilize the smallest reproduction before editing.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S12 focused-failure-reproduction (mini-SWE-agent / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S12
+    path: skills/focused-failure-reproduction/SKILL.md
+  - id: S12
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

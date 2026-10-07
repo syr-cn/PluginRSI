@@ -1,0 +1,31 @@
+schema_version: 1
+kind: role
+name: prior_skill_editor
+version: v0001
+entrypoint: implementation:PriorRole
+description: Propose minimal evidence-grounded changes to the skill library.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P17 skill-editor (Anthropic Skills / Superpowers / OpenHands Extensions /
+    Agent Skills Specification)
+  sources:
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  upstream_assets:
+  - id: P17
+    path: prompts/skill-editor.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

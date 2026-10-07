@@ -1,0 +1,30 @@
+{
+  "type": "function",
+  "name": "inspect_failure",
+  "description": "Parse command/test output into structured frames, messages and failure class. Guards: Preserve raw output references. Return unknown when parsing is ambiguous.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string"
+      },
+      "stdout": {
+        "type": "string"
+      },
+      "stderr": {
+        "type": "string"
+      },
+      "exit_code": {
+        "type": "integer",
+        "minimum": -2147483648
+      }
+    },
+    "required": [
+      "command",
+      "stdout",
+      "stderr",
+      "exit_code"
+    ],
+    "additionalProperties": false
+  }
+}

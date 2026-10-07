@@ -1,0 +1,20 @@
+id: P13
+name: finalizer
+role: Answer Finalizer
+stage: finalize
+purpose: Decide whether the run has sufficient evidence to submit.
+inputs:
+- issue_profile
+- verification_result
+- diff_inspection
+- budget
+output_type: CompletionDecision
+system_prompt: Return submit, continue, backtrack, or blocked. Submit only when all
+  hard acceptance criteria are verified, the diff is scoped, and no known regression
+  remains. Otherwise name the smallest remaining evidence gap and the next action.
+guardrails:
+- Do not equate token or time exhaustion with success.
+- Do not claim tests were run when they were not.
+source_ids:
+- mini-swe-agent
+- superpowers

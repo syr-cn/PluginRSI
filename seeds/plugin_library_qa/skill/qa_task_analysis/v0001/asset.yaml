@@ -1,0 +1,11 @@
+name: qa_task_analysis
+purpose: Separate the question into requested outputs, given facts, constraints and
+  unknowns. Identify every required subquestion and the allowed answer format. For
+  classification, use the supplied label meanings; for multiple choice, distinguish
+  what each option asserts. Do not silently add missing assumptions.
+inputs:
+- question
+- answer_mode
+- choices
+- task_local_evidence
+source_plugin: skill/prior_issue_analysis/v0001

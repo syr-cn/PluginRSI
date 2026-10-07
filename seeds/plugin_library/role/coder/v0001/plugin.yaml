@@ -1,0 +1,14 @@
+schema_version: 1
+kind: role
+name: coder
+version: v0001
+entrypoint: implementation:Coder
+description: Render the baseline software-engineering instructions.
+provenance:
+  label: PluginRSI-Baseline-Coder
+  sources: []
+  upstream_assets: []
+  adaptation: Original minimal baseline for this project; not attributed to a paper.
+config_schema:
+  type: object
+  additionalProperties: false

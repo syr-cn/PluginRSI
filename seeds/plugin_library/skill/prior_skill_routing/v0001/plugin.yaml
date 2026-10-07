@@ -1,0 +1,34 @@
+schema_version: 1
+kind: skill
+name: prior_skill_routing
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Select the smallest useful set of coding skills for the current stage,
+  evidence state, role, and budget.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S01 skill-routing (Agent Skills Specification / DeepSeek Harness / OpenHands
+    Extensions / Addy Osmani Agent Skills)
+  sources:
+  - id: agentskills-spec
+    title: Agent Skills Specification
+    url: https://github.com/agentskills/agentskills
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  upstream_assets:
+  - id: S01
+    path: skills/skill-routing/SKILL.md
+  - id: S01
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

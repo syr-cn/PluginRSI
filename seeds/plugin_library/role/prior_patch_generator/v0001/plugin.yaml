@@ -1,0 +1,27 @@
+schema_version: 1
+kind: role
+name: prior_patch_generator
+version: v0001
+entrypoint: implementation:PriorRole
+description: Implement a minimal source patch from a typed plan.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P10 patch-generator (mini-SWE-agent / Aider / Agentless)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  upstream_assets:
+  - id: P10
+    path: prompts/patch-generator.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

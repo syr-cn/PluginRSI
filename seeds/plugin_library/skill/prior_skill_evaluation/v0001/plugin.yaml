@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_skill_evaluation
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Evaluate a candidate skill or skill edit on positive and negative triggers
+  under a matched budget.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S36 skill-evaluation (Anthropic Skills / OpenHands Extensions / SWE-smith)
+  sources:
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: swe-smith
+    title: SWE-smith
+    url: https://github.com/SWE-bench/SWE-smith
+  upstream_assets:
+  - id: S36
+    path: skills/skill-evaluation/SKILL.md
+  - id: S36
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

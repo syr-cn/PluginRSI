@@ -1,0 +1,24 @@
+id: S32
+name: review-feedback-distillation
+title: Review Feedback Distillation
+category: learning
+tier: meta
+description: Convert repeated code-review or evaluator feedback into reusable guidelines
+  or skill edits.
+applicable_roles:
+- Reflection Agent
+- Skill Compiler
+required_inputs:
+- review_feedback
+- patches
+- outcomes
+output_type: DistilledReviewLesson
+allowed_tools:
+- read_file
+- text_search
+source_ids:
+- openhands-extensions
+- anthropic-skills
+optional_inputs:
+- existing_skills
+path: skills/review-feedback-distillation/SKILL.md

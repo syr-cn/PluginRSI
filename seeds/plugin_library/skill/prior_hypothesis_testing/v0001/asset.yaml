@@ -1,0 +1,24 @@
+id: S14
+name: hypothesis-testing
+title: Hypothesis Testing
+category: diagnosis
+tier: optional
+description: Design cheap discriminating checks between competing failure hypotheses.
+applicable_roles:
+- Critic
+- Solver
+- Planner
+required_inputs:
+- hypotheses
+- available_evidence
+- tool_budget
+output_type: HypothesisTestPlan
+allowed_tools:
+- shell_exec
+- read_range
+- inspect_failure
+source_ids:
+- superpowers
+- addy-agent-skills
+optional_inputs: []
+path: skills/hypothesis-testing/SKILL.md

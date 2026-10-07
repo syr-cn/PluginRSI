@@ -1,0 +1,24 @@
+schema_version: 1
+kind: role
+name: prior_finalizer
+version: v0001
+entrypoint: implementation:PriorRole
+description: Decide whether the run has sufficient evidence to submit.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P13 finalizer (mini-SWE-agent / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: P13
+    path: prompts/finalizer.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

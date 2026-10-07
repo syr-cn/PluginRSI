@@ -1,0 +1,28 @@
+id: S36
+name: skill-evaluation
+title: Skill Evaluation
+category: skill-evolution
+tier: meta
+description: Evaluate a candidate skill or skill edit on positive and negative triggers
+  under a matched budget.
+applicable_roles:
+- Judge
+- Verifier
+- Skill Compiler
+required_inputs:
+- candidate_skill
+- baseline_skill
+- evaluation_tasks
+- budget
+output_type: SkillEvaluationRecord
+allowed_tools:
+- shell_exec
+- run_test
+- read_file
+source_ids:
+- anthropic-skills
+- openhands-extensions
+- swe-smith
+optional_inputs:
+- historical_results
+path: skills/skill-evaluation/SKILL.md

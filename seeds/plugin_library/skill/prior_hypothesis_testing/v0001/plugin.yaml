@@ -1,0 +1,26 @@
+schema_version: 1
+kind: skill
+name: prior_hypothesis_testing
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Design cheap discriminating checks between competing failure hypotheses.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S14 hypothesis-testing (Superpowers / Addy Osmani Agent Skills)
+  sources:
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: addy-agent-skills
+    title: Addy Osmani Agent Skills
+    url: https://github.com/addyosmani/agent-skills
+  upstream_assets:
+  - id: S14
+    path: skills/hypothesis-testing/SKILL.md
+  - id: S14
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

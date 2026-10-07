@@ -1,0 +1,28 @@
+schema_version: 1
+kind: role
+name: prior_lesson_extractor
+version: v0001
+entrypoint: implementation:PriorRole
+description: Distill a trajectory into a transferable lesson or anti-pattern.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P15 lesson-extractor (SWE-bench Experiments / SWE-smith Trajectories / OpenHands
+    Extensions)
+  sources:
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  - id: swe-smith-trajectories
+    title: SWE-smith Trajectories
+    url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  upstream_assets:
+  - id: P15
+    path: prompts/lesson-extractor.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

@@ -1,0 +1,27 @@
+id: S16
+name: minimal-patch
+title: Minimal Patch
+category: patching
+tier: core
+description: Implement the smallest coherent source change that repairs a validated
+  root cause.
+applicable_roles:
+- Solver
+- Reviser
+required_inputs:
+- diagnosis
+- edit_locations
+- repository_rules
+output_type: CandidatePatch
+allowed_tools:
+- apply_patch
+- read_range
+- git_diff
+source_ids:
+- mini-swe-agent
+- agentless
+- superpowers
+optional_inputs:
+- public_contracts
+- focused_tests
+path: skills/minimal-patch/SKILL.md

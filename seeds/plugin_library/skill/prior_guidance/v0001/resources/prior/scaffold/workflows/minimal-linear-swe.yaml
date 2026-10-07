@@ -1,0 +1,118 @@
+id: W01
+name: minimal-linear-swe
+title: Minimal Linear SWE Loop
+tier: baseline
+purpose: A simple single-solver bash loop for measuring the marginal value of modular additions.
+source_ids:
+- mini-swe-agent
+nodes:
+- id: analyze
+  role: Task Analyzer
+  prompt: task-analyzer
+  skills:
+  - issue-analysis
+  - repository-instruction-loading
+  consumes:
+  - issue_text
+  - repository_root
+  produces:
+  - issue_profile
+  - repository_rules
+  visibility:
+  - issue
+  - root_files
+- id: solve
+  role: Solver
+  prompt: patch-generator
+  skills:
+  - repository-orientation
+  - file-localization
+  - root-cause-debugging
+  - minimal-patch
+  consumes:
+  - issue_profile
+  - repository_rules
+  - repository_root
+  produces:
+  - patch
+  - trajectory
+  visibility:
+  - issue
+  - repository
+  - prior_actions
+- id: verify
+  role: Verifier
+  prompt: verifier
+  skills:
+  - focused-test-selection
+  - regression-check
+  - final-diff-inspection
+  consumes:
+  - issue_profile
+  - patch
+  - trajectory
+  produces:
+  - verification_result
+  - diff_inspection
+  visibility:
+  - issue
+  - patch
+  - tool_output
+- id: finalize
+  role: Finalizer
+  prompt: finalizer
+  skills:
+  - completion-evidence-gate
+  consumes:
+  - issue_profile
+  - verification_result
+  - diff_inspection
+  produces:
+  - completion_decision
+  visibility:
+  - issue
+  - evidence
+edges:
+- from: analyze
+  to: solve
+  data:
+  - issue_profile
+  - repository_rules
+- from: solve
+  to: verify
+  data:
+  - patch
+  - trajectory
+- from: verify
+  to: solve
+  data:
+  - verification_result
+  when: verification_result.overall == 'fail'
+- from: verify
+  to: finalize
+  data:
+  - verification_result
+  - diff_inspection
+  when: verification_result.overall == 'pass'
+control_flow:
+  entry: analyze
+  termination:
+    success: completion_decision.action == 'submit'
+    failure: budget exhausted or unrecoverable environment blocker
+budget:
+  max_model_calls: 20
+  max_repair_loops: 3
+  max_active_skills_per_node: 5
+invariants:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+allowed_mutations:
+- prompt_parameters
+- skill_selection
+- repair_loop_limit

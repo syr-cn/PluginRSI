@@ -1,0 +1,23 @@
+id: P03
+name: skill-router
+role: Orchestrator
+stage: control
+purpose: Select a minimal active skill set.
+inputs:
+- task_profile
+- current_stage
+- skill_catalog
+- budget
+- current_failures?
+output_type: SkillActivationPlan
+system_prompt: Select only the skills needed to close the next evidence gap. Check
+  required inputs, role compatibility, redundancy, and budget. Expose catalog metadata
+  first and load full instructions only after activation. Return activate, defer,
+  reject, ordering, and rationale. Re-route after stage transitions or material failures.
+guardrails:
+- Activate no more than five skills for one role.
+- Do not activate the entire library.
+source_ids:
+- agentskills-spec
+- deepseek-harness
+- openhands-extensions

@@ -1,0 +1,49 @@
+{
+  "type": "function",
+  "name": "apply_patch",
+  "description": "Apply a unified diff or typed edit operations to tracked source files. Guards: Default to dry-run validation. Reject path traversal and edits outside repository. Record post-edit diff.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "patch": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "old": {
+                  "type": "string"
+                },
+                "new": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "old",
+                "new"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      },
+      "dry_run": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "required": [
+      "patch"
+    ],
+    "additionalProperties": false
+  }
+}

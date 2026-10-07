@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pluginrsi:qa-transfer:v1",
+  "title": "QA transfer cohort sample",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "task",
+    "task_type",
+    "answer_mode",
+    "subject",
+    "language",
+    "split",
+    "input",
+    "target",
+    "grading",
+    "source",
+    "attributes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+$",
+      "minLength": 1
+    },
+    "task": {
+      "enum": [
+        "olympiad_math",
+        "supergpqa_economics",
+        "scicite",
+        "olympiad_physics",
+        "frontierscience_olympiad",
+        "financeqa",
+        "supergpqa_medicine",
+        "supergpqa_law"
+      ]
+    },
+    "task_type": {
+      "enum": [
+        "qa",
+        "cls"
+      ]
+    },
+    "answer_mode": {
+      "enum": [
+        "free_form",
+        "choice",
+        "label"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "const": "en"
+    },
+    "split": {
+      "enum": [
+        "heldin",
+        "heldout"
+      ]
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "context",
+        "choices"
+      ],
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context": {
+          "type": "string"
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "text"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "answers",
+        "answer_key"
+      ],
+      "properties": {
+        "answers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "answer_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "grading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "parameters"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "exact_choice",
+            "exact_label",
+            "olympiadbench",
+            "reference_judge"
+          ]
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset",
+        "config",
+        "split",
+        "id",
+        "file",
+        "group_id"
+      ],
+      "properties": {
+        "dataset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "config": {
+          "type": "string",
+          "minLength": 1
+        },
+        "split": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "group_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "attributes": {
+      "type": "object"
+    }
+  }
+}

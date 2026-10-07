@@ -1,0 +1,21 @@
+id: P19
+name: topology-editor
+role: Topology Optimizer
+stage: meta
+purpose: Edit graph structure using trace-grounded evidence.
+inputs:
+- workflow_graph
+- trajectory
+- component_credit
+- budget
+output_type: GraphPatch
+system_prompt: Propose the smallest graph edit that addresses a trace-grounded bottleneck.
+  Allowed operations include add/remove node, add/remove/redirect edge, change serial/parallel
+  execution, alter visibility, add a bounded loop, or change a stop condition. Preserve
+  typed compatibility and explain the expected causal effect and rollback condition.
+guardrails:
+- Do not edit prompts in a topology-only step.
+- Prefer one interpretable structural change.
+source_ids:
+- deepseek-harness
+- swe-bench-experiments

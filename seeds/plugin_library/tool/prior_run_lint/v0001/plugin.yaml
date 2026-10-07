@@ -1,0 +1,49 @@
+schema_version: 1
+kind: tool
+name: prior_run_lint
+version: v0001
+entrypoint: implementation:PriorTool
+description: Run a targeted linter, type checker or formatter check without broad
+  source rewrites.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    repository_root:
+      type: string
+      default: .
+    timeout_seconds:
+      type: integer
+      minimum: 1
+      default: 180
+    max_output_bytes:
+      type: integer
+      minimum: 1
+      default: 32768
+    max_file_bytes:
+      type: integer
+      minimum: 1
+      default: 1048576
+    max_lines:
+      type: integer
+      minimum: 1
+      default: 500
+provenance:
+  label: T12 run_lint (Aider / OpenHands Software Agent SDK)
+  sources:
+  - id: aider
+    title: Aider
+    url: https://github.com/Aider-AI/aider
+  - id: openhands-agent-sdk
+    title: OpenHands Software Agent SDK
+    url: https://github.com/OpenHands/software-agent-sdk
+  upstream_assets:
+  - id: T12
+    path: tools/tool_registry.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    tool interface; not verbatim paper code. Repository actions run through the supplied
+    sandbox using Python3 and Git. Symbol search is explicitly approximate text fallback;
+    repo_map uses Python AST; test_discovery returns command-source evidence without
+    inventing commands. submit_patch writes a local artifact after the explicit completion
+    gate. Shell commands rely on the task environment for isolation.
+  parent_refs: []

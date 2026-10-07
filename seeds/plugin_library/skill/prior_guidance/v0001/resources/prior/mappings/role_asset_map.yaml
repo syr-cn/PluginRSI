@@ -1,0 +1,298 @@
+roles:
+- id: R01
+  name: Task Analyzer
+  stage: understand
+  primary_output: TaskProfile
+- id: R03
+  name: Role Allocator / Team Builder
+  stage: control
+  primary_output: TeamSpec
+- id: R05
+  name: Orchestrator / Coordinator
+  stage: control
+  primary_output: ControlDecision
+- id: R06
+  name: Task Decomposer
+  stage: plan
+  primary_output: SubtaskDAG
+- id: R07
+  name: Planner
+  stage: plan
+  primary_output: ExecutionPlan
+- id: R09
+  name: Context Selector / Visibility Controller
+  stage: control
+  primary_output: ContextPacket
+- id: R11
+  name: Termination / Early-Stop Controller
+  stage: control
+  primary_output: TerminationDecision
+- id: R12
+  name: Workflow Designer / Graph Constructor
+  stage: meta
+  primary_output: WorkflowGraph
+- id: R13
+  name: Topology Optimizer / Edge Editor
+  stage: meta
+  primary_output: GraphPatch
+- id: R16
+  name: Prompt Optimizer / Instruction Evolver
+  stage: meta
+  primary_output: PromptPatch
+- id: R17
+  name: Solver / Proposer
+  stage: solve
+  primary_output: CandidatePatch
+- id: R29
+  name: Critic / Error Diagnoser
+  stage: diagnose
+  primary_output: Diagnosis
+- id: R30
+  name: Verifier / Constraint Checker
+  stage: verify
+  primary_output: VerificationResult
+- id: R32
+  name: Judge / Scalar Scorer
+  stage: evaluate
+  primary_output: ScoreCard
+- id: R33
+  name: Pairwise Ranker / Selector
+  stage: select
+  primary_output: Ranking
+- id: R38
+  name: Credit Assigner / Component Attributor
+  stage: meta
+  primary_output: CreditAssignment
+- id: R40
+  name: Reviser / Corrector
+  stage: repair
+  primary_output: RevisedPatch
+- id: R42
+  name: Aggregator / Fuser / Multi-output Summarizer
+  stage: synthesize
+  primary_output: Synthesis
+- id: R45
+  name: Answer Finalizer / Formatter
+  stage: finalize
+  primary_output: CompletionDecision
+- id: R47
+  name: Reflection / Lesson Extractor
+  stage: learn
+  primary_output: LessonCandidate
+- id: R48
+  name: Strategy / Workflow Distiller
+  stage: learn
+  primary_output: GeneralizedStrategy
+- id: R50
+  name: Skill Compiler / Reusable Procedure Inducer
+  stage: meta
+  primary_output: CompiledSkill
+role_asset_map:
+- role_id: R01
+  prompts:
+  - P02
+  skills:
+  - S02
+  - S03
+  workflows:
+  - W01
+  - W02
+  - W03
+  - W05
+- role_id: R03
+  prompts:
+  - P03
+  - P18
+  skills:
+  - S01
+  workflows:
+  - W10
+- role_id: R05
+  prompts:
+  - P03
+  skills:
+  - S01
+  workflows:
+  - W01
+  - W05
+- role_id: R06
+  prompts:
+  - P18
+  skills:
+  - S05
+  - S07
+  - S08
+  workflows:
+  - W02
+- role_id: R07
+  prompts:
+  - P07
+  - P09
+  skills:
+  - S05
+  - S11
+  - S23
+  - S24
+  workflows:
+  - W03
+  - W05
+- role_id: R09
+  prompts:
+  - P04
+  skills:
+  - S06
+  workflows:
+  - W10
+- role_id: R11
+  prompts:
+  - P13
+  skills:
+  - S27
+  - S29
+  - S30
+  workflows:
+  - W01
+  - W03
+  - W05
+- role_id: R12
+  prompts:
+  - P18
+  skills:
+  - S01
+  workflows:
+  - W10
+- role_id: R13
+  prompts:
+  - P19
+  skills: []
+  workflows:
+  - W10
+- role_id: R16
+  prompts:
+  - P21
+  skills: []
+  workflows:
+  - W09
+- role_id: R17
+  prompts:
+  - P05
+  - P06
+  - P10
+  skills:
+  - S05
+  - S06
+  - S07
+  - S08
+  - S09
+  - S10
+  - S11
+  - S12
+  - S13
+  - S14
+  - S15
+  - S16
+  - S18
+  - S19
+  - S21
+  workflows:
+  - W01
+  - W02
+  - W03
+  - W05
+- role_id: R29
+  prompts:
+  - P08
+  skills:
+  - S10
+  - S13
+  - S14
+  - S15
+  - S29
+  - S30
+  workflows:
+  - W03
+- role_id: R30
+  prompts:
+  - P11
+  skills:
+  - S18
+  - S19
+  - S23
+  - S24
+  - S25
+  - S26
+  workflows:
+  - W01
+  - W02
+  - W03
+  - W05
+- role_id: R32
+  prompts:
+  - P11
+  - P12
+  skills:
+  - S36
+  workflows:
+  - W08
+  - W09
+- role_id: R33
+  prompts:
+  - P12
+  skills: []
+  workflows:
+  - W10
+- role_id: R38
+  prompts:
+  - P20
+  skills: []
+  workflows:
+  - W10
+- role_id: R40
+  prompts:
+  - P10
+  skills:
+  - S16
+  - S18
+  - S21
+  - S30
+  workflows:
+  - W05
+- role_id: R42
+  prompts:
+  - P12
+  skills: []
+  workflows: []
+- role_id: R45
+  prompts:
+  - P13
+  skills:
+  - S26
+  - S27
+  workflows:
+  - W01
+  - W05
+- role_id: R47
+  prompts:
+  - P15
+  skills:
+  - S31
+  - S32
+  workflows:
+  - W08
+- role_id: R48
+  prompts:
+  - P15
+  - P17
+  skills:
+  - S31
+  - S32
+  workflows:
+  - W08
+- role_id: R50
+  prompts:
+  - P17
+  skills:
+  - S35
+  - S36
+  workflows:
+  - W08

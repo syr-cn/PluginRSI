@@ -1,0 +1,34 @@
+schema_version: 1
+kind: memory
+name: prior_counterexample_record
+version: v0001
+entrypoint: implementation:PriorMemory
+description: Case where a generally useful prompt, skill, or memory rule should not
+  fire.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    top_k:
+      type: integer
+      minimum: 1
+      default: 5
+provenance:
+  label: E08 counterexample-record (Anthropic Skills / Superpowers)
+  sources:
+  - id: anthropic-skills
+    title: Anthropic Skills
+    url: https://github.com/anthropics/skills
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: E08
+    path: experience/record_types.yaml
+  - id: E08
+    path: experience/PROTOCOL.md
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    memory interface; not verbatim paper code. Append-only per-plugin state with required-field
+    validation and lexical retrieval. Records remain unreviewed evidence; no automatic
+    promotion or cross-task persistence.
+  parent_refs: []

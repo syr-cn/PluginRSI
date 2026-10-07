@@ -1,0 +1,29 @@
+{
+  "type": "function",
+  "name": "test_discovery",
+  "description": "Find tests, fixtures and exact repository-native commands relevant to selected symbols. Guards: Use repository instructions. Rank by behavioral relevance.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "symbols": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "repository_root": {
+        "type": "string"
+      },
+      "max_results": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "symbols",
+      "repository_root",
+      "max_results"
+    ],
+    "additionalProperties": false
+  }
+}

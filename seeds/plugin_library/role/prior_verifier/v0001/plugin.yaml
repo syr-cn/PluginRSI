@@ -1,0 +1,27 @@
+schema_version: 1
+kind: role
+name: prior_verifier
+version: v0001
+entrypoint: implementation:PriorRole
+description: Verify a patch criterion by criterion using fresh execution evidence.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: P11 verifier (mini-SWE-agent / Superpowers / OpenHands Extensions)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  upstream_assets:
+  - id: P11
+    path: prompts/verifier.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    role interface; not verbatim paper code.
+  parent_refs: []

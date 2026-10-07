@@ -1,0 +1,18 @@
+id: E10
+name: skill-evaluation-record
+category: asset-evaluation
+purpose: Matched-budget evidence for adding, editing, splitting, merging, or retiring
+  a skill.
+required_fields:
+- skill_version
+- positive_trigger_tasks
+- negative_trigger_tasks
+- baseline
+- candidate
+- metrics
+- decision
+retention: Permanent provenance for promoted skill versions.
+sources:
+- anthropic-skills
+- openhands-extensions
+- agentskills-spec

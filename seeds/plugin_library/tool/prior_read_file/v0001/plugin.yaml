@@ -1,0 +1,51 @@
+schema_version: 1
+kind: tool
+name: prior_read_file
+version: v0001
+entrypoint: implementation:PriorTool
+description: Read a text file with size and binary guards.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    repository_root:
+      type: string
+      default: .
+    timeout_seconds:
+      type: integer
+      minimum: 1
+      default: 180
+    max_output_bytes:
+      type: integer
+      minimum: 1
+      default: 32768
+    max_file_bytes:
+      type: integer
+      minimum: 1
+      default: 1048576
+    max_lines:
+      type: integer
+      minimum: 1
+      default: 500
+provenance:
+  label: T03 read_file (SWE-agent / OpenHands Software Agent SDK / DeepSeek Harness)
+  sources:
+  - id: swe-agent
+    title: SWE-agent
+    url: https://github.com/SWE-agent/SWE-agent
+  - id: openhands-agent-sdk
+    title: OpenHands Software Agent SDK
+    url: https://github.com/OpenHands/software-agent-sdk
+  - id: deepseek-harness
+    title: DeepSeek Harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+  upstream_assets:
+  - id: T03
+    path: tools/tool_registry.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    tool interface; not verbatim paper code. Repository actions run through the supplied
+    sandbox using Python3 and Git. Symbol search is explicitly approximate text fallback;
+    repo_map uses Python AST; test_discovery returns command-source evidence without
+    inventing commands. submit_patch writes a local artifact after the explicit completion
+    gate. Shell commands rely on the task environment for isolation.
+  parent_refs: []

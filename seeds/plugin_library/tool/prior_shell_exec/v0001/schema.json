@@ -1,0 +1,29 @@
+{
+  "type": "function",
+  "name": "shell_exec",
+  "description": "Execute one bounded shell command inside the task sandbox. Guards: Require explicit cwd and timeout. Capture command and output in trajectory. Disallow host access and uncontrolled background jobs.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string"
+      },
+      "cwd": {
+        "type": "string"
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "env_overrides": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "command",
+      "cwd",
+      "timeout_seconds"
+    ],
+    "additionalProperties": false
+  }
+}

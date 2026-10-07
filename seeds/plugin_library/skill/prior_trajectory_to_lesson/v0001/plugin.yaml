@@ -1,0 +1,31 @@
+schema_version: 1
+kind: skill
+name: prior_trajectory_to_lesson
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Extract a bounded transferable procedure or anti-pattern from a completed
+  trajectory.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S31 trajectory-to-lesson (SWE-bench Experiments / SWE-smith Trajectories
+    / OpenHands Extensions)
+  sources:
+  - id: swe-bench-experiments
+    title: SWE-bench Experiments
+    url: https://github.com/SWE-bench/experiments
+  - id: swe-smith-trajectories
+    title: SWE-smith Trajectories
+    url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  upstream_assets:
+  - id: S31
+    path: skills/trajectory-to-lesson/SKILL.md
+  - id: S31
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

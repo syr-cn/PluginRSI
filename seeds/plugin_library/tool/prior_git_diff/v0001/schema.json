@@ -1,0 +1,27 @@
+{
+  "type": "function",
+  "name": "git_diff",
+  "description": "Return a bounded unified diff for current or selected paths. Guards: Do not omit changed-file list when diff is truncated. Read-only.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "staged": {
+        "type": "boolean"
+      },
+      "max_bytes": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "max_bytes"
+    ],
+    "additionalProperties": false
+  }
+}

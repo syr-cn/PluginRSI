@@ -1,0 +1,91 @@
+experiment:
+  name: terminal_bench
+  output_root: runs
+  local_root: .work
+  env_files:
+  - .env
+  expected_feedback_tasks: 59
+  expected_selection_tasks: 59
+  expected_heldout_tasks: 30
+  report_on_budget_stop: true
+  max_infra_resumes: 0
+schema_version: 1
+seed: seeds/agents/terminal_bench_2_1/v0001
+plugin_library: seeds/plugin_library
+search:
+  local_failure_tasks: 10
+  recomposition_offspring: 1
+  iterations: 15
+  offspring_per_phase: 8
+  feedback_batch_size: 20
+  random_seed: 42
+  max_task_rollouts: 24000
+  local_branch_timeout_seconds: 9000
+evaluation:
+  benchmark: terminal_bench_2_1
+  feedback_tasks: datasets/terminal_bench_2_1/heldin59.jsonl
+  selection_tasks: datasets/terminal_bench_2_1/heldin59.jsonl
+  heldout_tasks: datasets/terminal_bench_2_1/heldout30.jsonl
+  concurrency: 128
+  parallel_heldout: true
+  min_valid_ratio: 0.9
+  infra_retry_attempts: 1
+  task_timeout_seconds: 1200
+  infrastructure_timeout_seconds: 600
+  startup_stagger_min_seconds: 0
+  startup_stagger_max_seconds: 2
+  benchmark_options:
+    worker_python: ''
+    module_paths: []
+    environment:
+      type: ''
+  accept_partial_results: false
+  local_timeout_seconds: 7200
+  evaluation_timeout_seconds: 3600
+  verifier_timeout_seconds: 600
+  eager_infra_retries: true
+  fail_fast_candidate_errors: true
+  worker_initialization_timeout_seconds: 600
+  full_min_valid_ratio: 0.9322033898305084
+solver:
+  model: ''
+  api_mode: chat_completions
+  api_key_env: SOLVER_API_KEY
+  base_url_env: SOLVER_BASE_URL
+  reasoning_effort: none
+  max_output_tokens: 8192
+  max_calls: 100
+  timeout_seconds: 180.0
+  max_attempts: 4
+  retry_delay_seconds: 3.0
+  rpm_limit: 300
+  rpm_state_path: .rate_limits/terminal_bench.json
+  adaptive_rate_limit: false
+proposer:
+  command:
+  - python3
+  - -m
+  - pluginrsi.search.json_proposer
+  concurrency: 20
+  timeout_seconds: 1800
+  agent:
+    model: ''
+    api_mode: chat_completions
+    api_key_env: EVOLVER_API_KEY
+    base_url_env: EVOLVER_BASE_URL
+    reasoning_effort: xhigh
+    max_output_tokens: 16384
+    max_calls: 40
+    timeout_seconds: 360.0
+    max_attempts: 4
+    retry_delay_seconds: 3.0
+    rpm_limit: 300
+    rpm_state_path: .rate_limits/terminal_bench.json
+    adaptive_rate_limit: false
+  validation_timeout_seconds: 180.0
+  validation_max_attempts: 2
+  compact_evidence: true
+  read_max_chars: 12000
+  read_batch_max_chars: 32000
+  context_max_bytes: 196608
+  evidence_top_k: 3

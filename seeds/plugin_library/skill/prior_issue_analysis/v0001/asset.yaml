@@ -1,0 +1,21 @@
+id: S02
+name: issue-analysis
+title: Issue Analysis
+category: understanding
+tier: core
+description: Translate a software issue into observable acceptance criteria, constraints,
+  risks, and an evidence plan without proposing a patch.
+applicable_roles:
+- Task Analyzer
+- Planner
+required_inputs:
+- issue_text
+output_type: IssueProfile
+allowed_tools:
+- read_file
+source_ids:
+- mini-swe-agent
+- agentless
+optional_inputs:
+- repository_instructions
+path: skills/issue-analysis/SKILL.md

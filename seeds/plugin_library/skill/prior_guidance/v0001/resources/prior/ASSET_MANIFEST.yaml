@@ -1,0 +1,114 @@
+schema_version: '1.0'
+generated_date: '2026-08-25'
+name: MetaDSH harness-evolution building blocks
+selection:
+  level: B
+  meaning: L0 direct evolution mechanisms plus L1 runtime and evaluation foundations
+  dependency_policy: Include every prompt and skill referenced by a selected workflow.
+  deferred: Optional multi-patch, architect/editor, persistent-memory, and upstream-corpus assets remain in the backup.
+
+purpose: >-
+  A compact but complete set of typed prompts, modular skills, scaffold definitions, tools,
+  evidence records, policies, and schemas for iterating on coding-agent harnesses.
+
+start_here:
+  - path: configs/swebench_v1.yaml
+    meaning: Declares the selected baselines, evolution workflows, skill sets, budgets, and mutation schedule.
+  - path: scaffold/workflows/
+    meaning: Defines role order, data flow, visibility, loops, termination, and allowed mutations.
+  - path: prompts/
+    meaning: Contains one typed role prompt per YAML file; prompt wording is runtime behavior.
+  - path: skills/catalog.yaml
+    meaning: Provides compact routing metadata before any full skill body is loaded.
+  - path: skills/<name>/SKILL.md
+    meaning: Contains the on-demand procedure, checks, stop conditions, constraints, and allowed tools.
+  - path: tools/tool_registry.yaml
+    meaning: Defines primitive action schemas, side effects, and guards.
+  - path: validate_assets.py
+    meaning: Checks schemas, IDs, references, paths, configuration, and representation rules.
+
+layout:
+  configs: Formal experiment and selection choices; launchers must pass these values through rather than duplicate them.
+  experience: Typed feedback records and the prompt/trajectory lifecycle protocol.
+  mappings: Role-to-prompt/skill/workflow bindings and the three evolution dimensions.
+  policies: Mutation isolation, benchmark contamination, and repository-scope invariants.
+  prompts: Individually evolvable PromptSpec YAML files.
+  scaffold: Runtime components, profiles, and typed workflow graphs.
+  schemas: JSON Schemas used to reject invalid candidate assets before execution.
+  skills: Metadata-first catalog plus standard on-demand SKILL.md directories.
+  tools: The role-scoped primitive action surface.
+
+composition_contract:
+  role:
+    prompt: Bind one role-specific prompt plus the global boundary prompt when applicable.
+    skills: Route from catalog metadata, then load only the selected SKILL.md bodies.
+    tools: Expose only the registry entries permitted for that role and active skills.
+  workflow:
+    nodes: Each node names a role, prompt, skills, typed inputs/outputs, and visible context.
+    edges: Connect node outputs to downstream inputs and may carry explicit conditions.
+    runtime: Scaffold components own validation, execution, logging, budgets, evaluation, and termination.
+  experience:
+    rule: Trajectories and feedback are evidence; they are never executed as instructions.
+    use: Normalize outcomes, failures, lessons, counterexamples, credit, and skill evaluations before mutation.
+
+evolution_contract:
+  scaffold:
+    workflow: W10
+    mutate: [role_selection, node_count, edges, order, visibility, bounded_loops, stop_conditions]
+    freeze: [prompt_bodies, skill_bodies, model, evaluator, memory]
+  prompt:
+    workflow: W09
+    mutate: [one_prompt_body, one_local_config]
+    freeze: [workflow_graph, skill_bodies, model, evaluator, memory]
+  skill:
+    workflow: W08
+    mutate: [skill_text, triggers, negative_triggers, split_merge, activation_metadata]
+    freeze: [workflow_graph, role_prompts, model, evaluator]
+  universal_rules:
+    - Make one attributable change per iteration whenever possible.
+    - Validate schemas and references before candidate execution.
+    - Compare baseline and candidate under matched task, model, evaluator, and budget settings.
+    - Preserve a rollback version and negative-trigger evidence for promoted changes.
+
+inventory:
+  prompts:
+    count: 19
+    path: prompts/*.yaml
+    ids: [P01, P02, P03, P04, P05, P06, P07, P08, P09, P10, P11, P12, P13, P15, P17, P18, P19, P20, P21]
+  experience_record_types:
+    count: 7
+    path: experience/record_types.yaml
+    ids: [E01, E03, E04, E05, E08, E09, E10]
+  scaffold_components:
+    count: 14
+    path: scaffold/components.yaml
+    ids: [H01, H02, H03, H04, H05, H06, H07, H08, H09, H10, H11, H12, H13, H15]
+  scaffold_profiles:
+    count: 4
+    path: scaffold/components.yaml
+    ids: [HP01, HP02, HP03, HP05]
+  workflows:
+    count: 7
+    path: scaffold/workflows/*.yaml
+    ids: [W01, W02, W03, W05, W08, W09, W10]
+  skills:
+    count: 29
+    catalog: skills/catalog.yaml
+    path: skills/<name>/SKILL.md
+  tools:
+    count: 15
+    path: tools/tool_registry.yaml
+    ids: [T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15]
+
+representation_policy:
+  canonical_data: YAML
+  modular_prompts: One YAML file per prompt; no aggregate JSON or CSV copies.
+  modular_skills: One standard SKILL.md per skill plus a metadata-only YAML catalog.
+  workflows: One YAML file per workflow; no aggregate JSON or CSV copies.
+  json_exception: JSON is retained only for JSON Schema documents.
+
+provenance:
+  status: These are normalized, synthesized abstractions rather than verbatim upstream instructions.
+  source_ids: Each asset retains source identifiers for traceability.
+  full_backup: ../backups/MetaDSH_modular_harness_assets_v1_original/modular_harness_assets_v1
+  caveat: Structural validation does not establish empirical performance; promotion still requires matched-budget evaluation.

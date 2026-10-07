@@ -1,0 +1,33 @@
+schema_version: 1
+kind: memory
+name: prior_lesson_candidate
+version: v0001
+entrypoint: implementation:PriorMemory
+description: One bounded transferable lesson proposed from a trajectory.
+config_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    top_k:
+      type: integer
+      minimum: 1
+      default: 5
+provenance:
+  label: E05 lesson-candidate (OpenHands Extensions / SWE-smith Trajectories)
+  sources:
+  - id: openhands-extensions
+    title: OpenHands Extensions
+    url: https://github.com/OpenHands/extensions
+  - id: swe-smith-trajectories
+    title: SWE-smith Trajectories
+    url: https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories
+  upstream_assets:
+  - id: E05
+    path: experience/record_types.yaml
+  - id: E05
+    path: experience/PROTOCOL.md
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    memory interface; not verbatim paper code. Append-only per-plugin state with required-field
+    validation and lexical retrieval. Records remain unreviewed evidence; no automatic
+    promotion or cross-task persistence.
+  parent_refs: []

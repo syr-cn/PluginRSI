@@ -1,0 +1,22 @@
+id: T13
+name: inspect_failure
+category: analysis
+description: Parse command/test output into structured frames, messages and failure
+  class.
+input_schema:
+  command: string
+  stdout: string
+  stderr: string
+  exit_code: integer
+output_schema:
+  failure_class: string
+  primary_error: string
+  frames: array
+  candidate_symbols: array
+side_effect: none
+guards:
+- Preserve raw output references.
+- Return unknown when parsing is ambiguous.
+source_ids:
+- swe-agent
+- agentless

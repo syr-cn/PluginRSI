@@ -1,0 +1,27 @@
+{
+  "type": "function",
+  "name": "read_range",
+  "description": "Read a bounded line range with line numbers. Guards: Require a bounded line interval. Preserve line numbers.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "start_line": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "end_line": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "path",
+      "start_line",
+      "end_line"
+    ],
+    "additionalProperties": false
+  }
+}

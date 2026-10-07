@@ -1,0 +1,30 @@
+{
+  "type": "function",
+  "name": "run_test",
+  "description": "Run a focused test command under an explicit timeout. Guards: Record exact command and current revision. Do not mutate tests during execution. Bound output.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string"
+      },
+      "cwd": {
+        "type": "string"
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "test_scope": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "command",
+      "cwd",
+      "timeout_seconds",
+      "test_scope"
+    ],
+    "additionalProperties": false
+  }
+}

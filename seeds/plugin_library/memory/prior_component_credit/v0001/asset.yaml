@@ -1,0 +1,16 @@
+id: E09
+name: component-credit
+category: meta-evaluation
+purpose: Trace-grounded positive, negative, or uncertain credit assigned to workflow
+  components.
+required_fields:
+- workflow_version
+- components
+- interaction_effects
+- evidence
+- uncertainty
+- counterfactuals
+retention: Attach to candidate lineage and use for one-change mutations.
+sources:
+- deepseek-harness
+- swe-bench-experiments

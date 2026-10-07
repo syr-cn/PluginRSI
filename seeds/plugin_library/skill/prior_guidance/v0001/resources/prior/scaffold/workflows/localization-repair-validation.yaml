@@ -1,0 +1,154 @@
+id: W02
+name: localization-repair-validation
+title: Localization–Repair–Validation Pipeline
+tier: core
+purpose: A hierarchical Agentless-style pipeline that keeps localization separate from repair and validation.
+source_ids:
+- agentless
+- aider
+nodes:
+- id: analyze
+  role: Task Analyzer
+  prompt: task-analyzer
+  skills:
+  - issue-analysis
+  - repository-instruction-loading
+  consumes:
+  - issue_text
+  - repository_root
+  produces:
+  - issue_profile
+  - repository_rules
+  visibility:
+  - issue
+  - root_files
+- id: orient
+  role: Planner
+  prompt: repository-orienter
+  skills:
+  - repository-orientation
+  - repository-map-reading
+  consumes:
+  - issue_profile
+  - repository_root
+  - repository_rules
+  produces:
+  - repository_orientation
+  - repository_map
+  visibility:
+  - repository
+- id: file_localize
+  role: Solver / Localizer
+  prompt: fault-localizer
+  skills:
+  - file-localization
+  consumes:
+  - issue_profile
+  - repository_orientation
+  - repository_map
+  produces:
+  - ranked_files
+  visibility:
+  - issue
+  - map
+  - search
+- id: symbol_localize
+  role: Solver / Localizer
+  prompt: fault-localizer
+  skills:
+  - symbol-localization
+  - call-chain-tracing
+  consumes:
+  - issue_profile
+  - ranked_files
+  produces:
+  - ranked_symbols
+  visibility:
+  - selected_files
+  - references
+- id: edit_localize
+  role: Planner
+  prompt: patch-planner
+  skills:
+  - edit-location-localization
+  consumes:
+  - issue_profile
+  - ranked_symbols
+  produces:
+  - edit_locations
+  - patch_plan
+  visibility:
+  - source_ranges
+  - contracts
+- id: repair
+  role: Solver
+  prompt: patch-generator
+  skills:
+  - minimal-patch
+  - edit-format-compliance
+  consumes:
+  - patch_plan
+  - edit_locations
+  - repository_rules
+  produces:
+  - patch
+  visibility:
+  - target_files
+- id: validate
+  role: Verifier
+  prompt: verifier
+  skills:
+  - existing-test-discovery
+  - focused-test-selection
+  - regression-check
+  - final-diff-inspection
+  consumes:
+  - issue_profile
+  - patch
+  produces:
+  - verification_result
+  - diff_inspection
+  visibility:
+  - issue
+  - patch
+  - tool_output
+edges:
+- from: analyze
+  to: orient
+- from: orient
+  to: file_localize
+- from: file_localize
+  to: symbol_localize
+- from: symbol_localize
+  to: edit_localize
+- from: edit_localize
+  to: repair
+- from: repair
+  to: validate
+- from: validate
+  to: edit_localize
+  data:
+  - verification_result
+  when: verification_result.overall == 'fail'
+control_flow:
+  entry: analyze
+  termination:
+    success: verification_result.overall == 'pass' and diff_inspection.scope_ok == true
+    failure: no valid localization or budget exhausted
+budget:
+  max_model_calls: 24
+  localization_candidates: 5
+  max_repair_loops: 2
+invariants:
+- Do not create a new top-level directory unless the issue explicitly requires it.
+- Do not reorganize the repository or refactor unrelated code.
+- Do not modify tests merely to hide a failure.
+- Do not change dependencies, lockfiles, build files, or CI configuration unless causally necessary.
+- Prefer the smallest coherent source patch that satisfies the issue and preserves public behavior.
+- Run focused verification before broad test suites.
+- Inspect the final diff and revert incidental edits before submission.
+- Do not claim success without fresh execution evidence.
+allowed_mutations:
+- skill_selection
+- candidate_count
+- context_visibility

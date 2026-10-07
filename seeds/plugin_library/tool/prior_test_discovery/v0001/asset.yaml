@@ -1,0 +1,20 @@
+id: T14
+name: test_discovery
+category: search
+description: Find tests, fixtures and exact repository-native commands relevant to
+  selected symbols.
+input_schema:
+  symbols: array
+  repository_root: path
+  max_results: integer
+output_schema:
+  tests: array
+  commands: array
+  evidence: array
+side_effect: none
+guards:
+- Use repository instructions.
+- Rank by behavioral relevance.
+source_ids:
+- agentless
+- aider

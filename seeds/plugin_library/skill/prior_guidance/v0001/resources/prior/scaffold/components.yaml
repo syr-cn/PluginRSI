@@ -1,0 +1,339 @@
+schema_version: '1.0'
+generated_date: '2026-08-25'
+description: Composable runtime components and recommended profiles.
+components:
+- id: H01
+  name: linear-agent-loop
+  category: runner
+  purpose: Minimal observe–act–update loop with one trajectory and one solver.
+  consumes:
+  - task
+  - system_prompt
+  - tool_registry
+  - budget
+  produces:
+  - trajectory
+  - candidate_patch
+  - outcome
+  configurable:
+  - max_steps
+  - timeout
+  - history_policy
+  - termination_protocol
+  sources:
+  - mini-swe-agent
+- id: H02
+  name: typed-graph-runner
+  category: runner
+  purpose: Validate and execute a typed DAG or bounded cyclic workflow.
+  consumes:
+  - workflow_graph
+  - task
+  - role_registry
+  - skill_registry
+  - tool_registry
+  produces:
+  - typed_events
+  - artifacts
+  - outcome
+  configurable:
+  - scheduler
+  - parallelism
+  - loop_limits
+  - failure_policy
+  sources:
+  - deepseek-harness
+  - langgraph
+  - agentless
+- id: H03
+  name: session-log
+  category: observability
+  purpose: Append-only structured event log for roles, skills, tools, outputs, cost, and state changes.
+  consumes:
+  - runtime_events
+  produces:
+  - trajectory_record
+  - event_index
+  configurable:
+  - redaction
+  - compression
+  - artifact_storage
+  - sampling
+  sources:
+  - swe-agent
+  - mini-swe-agent
+  - swe-bench-experiments
+- id: H04
+  name: history-processor
+  category: context
+  purpose: Trim, summarize, or reference prior events while preserving causal evidence.
+  consumes:
+  - trajectory
+  - decision_goal
+  - token_budget
+  produces:
+  - history_packet
+  configurable:
+  - strategy
+  - recent_window
+  - artifact_references
+  - compression_threshold
+  sources:
+  - swe-agent
+  - deepseek-harness
+- id: H05
+  name: prompt-assembler
+  category: prompt
+  purpose: Compose ordered prompt sections from role, global boundary, active skills, memory, and task
+    context.
+  consumes:
+  - role_prompt
+  - global_prompt
+  - active_skills
+  - memory_hits
+  - context_packet
+  produces:
+  - assembled_prompt
+  - section_manifest
+  configurable:
+  - section_order
+  - max_tokens
+  - deduplication
+  - variable_binding
+  sources:
+  - deepseek-harness
+  - agentskills-spec
+- id: H06
+  name: tool-registry
+  category: tools
+  purpose: Expose role-scoped tool schemas and execute validated tool calls.
+  consumes:
+  - tool_definitions
+  - role_permissions
+  - tool_call
+  produces:
+  - tool_result
+  - audit_event
+  configurable:
+  - allowed_tools
+  - timeouts
+  - sandbox_policy
+  - output_limits
+  sources:
+  - deepseek-harness
+  - swe-agent
+  - openhands-agent-sdk
+- id: H07
+  name: skill-provider
+  category: skills
+  purpose: List compact skill metadata and load full SKILL.md instructions on demand.
+  consumes:
+  - skill_library
+  - activation_plan
+  produces:
+  - skill_catalog
+  - active_skill_bodies
+  configurable:
+  - metadata_fields
+  - max_active
+  - scope
+  - version_policy
+  sources:
+  - agentskills-spec
+  - deepseek-harness
+  - openhands-extensions
+- id: H08
+  name: context-selector
+  category: context
+  purpose: Choose role-visible query, files, trajectory segments, candidates, memory, and budget.
+  consumes:
+  - role_spec
+  - available_context
+  - decision_goal
+  - budget
+  produces:
+  - context_packet
+  configurable:
+  - visibility
+  - token_budget
+  - retrieval_limit
+  - compression
+  sources:
+  - aider
+  - deepseek-harness
+  - swe-agent
+- id: H09
+  name: sandbox
+  category: environment
+  purpose: Isolate repository, commands, resources, network, and evaluator boundaries.
+  consumes:
+  - task_environment
+  - command_or_edit
+  produces:
+  - observation
+  - filesystem_state
+  - resource_usage
+  configurable:
+  - network
+  - cpu
+  - memory
+  - timeout
+  - mounts
+  sources:
+  - swe-bench
+  - mini-swe-agent
+  - openhands-agent-sdk
+- id: H10
+  name: output-schema-validator
+  category: validation
+  purpose: Validate role, skill and workflow outputs before downstream use.
+  consumes:
+  - typed_output
+  - schema
+  produces:
+  - validation_result
+  - repair_request
+  configurable:
+  - strictness
+  - repair_attempts
+  - unknown_field_policy
+  sources:
+  - deepseek-harness
+  - agentskills-spec
+- id: H11
+  name: budget-controller
+  category: control
+  purpose: Track and allocate model calls, tokens, wall time, test time, and parallelism.
+  consumes:
+  - budget
+  - usage_events
+  - workflow_state
+  produces:
+  - budget_state
+  - allocation_decision
+  configurable:
+  - caps
+  - reserve_for_verification
+  - marginal_value_threshold
+  sources:
+  - deepseek-harness
+  - agentless
+- id: H12
+  name: termination-controller
+  category: control
+  purpose: Stop, continue, retry, backtrack, or escalate from evidence and budget.
+  consumes:
+  - acceptance_criteria
+  - trajectory
+  - verification
+  - budget_state
+  produces:
+  - termination_decision
+  configurable:
+  - max_loops
+  - hard_gates
+  - blocked_policy
+  sources:
+  - mini-swe-agent
+  - superpowers
+- id: H13
+  name: evaluator
+  category: evaluation
+  purpose: Run official or surrogate evaluation without leaking evaluator-only state.
+  consumes:
+  - prediction
+  - task_environment
+  - evaluator_config
+  produces:
+  - outcome
+  - metrics
+  - failure_labels
+  configurable:
+  - metric_set
+  - timeouts
+  - artifact_retention
+  sources:
+  - swe-bench
+  - swe-bench-experiments
+- id: H15
+  name: mutation-validator
+  category: meta
+  purpose: Reject invalid prompt, skill or graph mutations before benchmark execution.
+  consumes:
+  - current_asset
+  - candidate_patch
+  - schemas
+  - mutation_policy
+  produces:
+  - validation_result
+  - compiled_candidate
+  configurable:
+  - allowed_operations
+  - one_change_rule
+  - rollback
+  sources:
+  - deepseek-harness
+  - agentskills-spec
+profiles:
+- id: HP01
+  name: minimal-baseline
+  workflow: W01
+  components:
+  - H01
+  - H03
+  - H05
+  - H06
+  - H09
+  - H11
+  - H12
+  - H13
+  use: Measure the marginal value of prompts, skills, or explicit roles on a minimal loop.
+- id: HP02
+  name: localization-pipeline
+  workflow: W02
+  components:
+  - H02
+  - H03
+  - H04
+  - H05
+  - H06
+  - H08
+  - H09
+  - H10
+  - H11
+  - H12
+  - H13
+  use: Test deterministic coding-stage decomposition and localization priors.
+- id: HP03
+  name: role-separated-repair
+  workflow: W05
+  components:
+  - H02
+  - H03
+  - H04
+  - H05
+  - H06
+  - H07
+  - H08
+  - H09
+  - H10
+  - H11
+  - H12
+  - H13
+  use: Test explicit planner/solver/verifier/reviser roles and skill routing.
+- id: HP05
+  name: meta-evolution
+  workflow: W10
+  components:
+  - H02
+  - H03
+  - H05
+  - H06
+  - H07
+  - H08
+  - H09
+  - H10
+  - H11
+  - H13
+  - H15
+  use: Search role composition, information flow, loops, and stop conditions with deterministic validation.

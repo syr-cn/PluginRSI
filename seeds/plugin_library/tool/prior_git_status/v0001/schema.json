@@ -1,0 +1,20 @@
+{
+  "type": "function",
+  "name": "git_status",
+  "description": "Inspect tracked, modified and untracked repository state. Guards: Read-only. Use before and after edits.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "repository_root": {
+        "type": "string"
+      },
+      "porcelain": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "repository_root"
+    ],
+    "additionalProperties": false
+  }
+}

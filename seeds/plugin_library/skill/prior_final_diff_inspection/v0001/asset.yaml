@@ -1,0 +1,28 @@
+id: S26
+name: final-diff-inspection
+title: Final Diff Inspection
+category: review
+tier: core
+description: Review the final working-tree diff for scope, correctness, artifacts,
+  and incomplete edits.
+applicable_roles:
+- Verifier
+- Finalizer
+- Critic
+required_inputs:
+- issue_profile
+- git_diff
+- git_status
+- verification_result
+output_type: DiffInspection
+allowed_tools:
+- git_status
+- git_diff
+- read_range
+source_ids:
+- mini-swe-agent
+- superpowers
+- openhands-extensions
+optional_inputs:
+- repository_rules
+path: skills/final-diff-inspection/SKILL.md

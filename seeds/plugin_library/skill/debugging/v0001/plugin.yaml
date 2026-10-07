@@ -1,0 +1,14 @@
+schema_version: 1
+kind: skill
+name: debugging
+version: v0001
+entrypoint: implementation:Debugging
+description: Load a concise debugging procedure.
+provenance:
+  label: PluginRSI-Baseline-Debugging
+  sources: []
+  upstream_assets: []
+  adaptation: Original baseline procedure; not a reproduction of a paper method.
+config_schema:
+  type: object
+  additionalProperties: false

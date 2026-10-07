@@ -1,0 +1,57 @@
+{
+  "type": "function",
+  "name": "submit_patch",
+  "description": "Produce the benchmark prediction artifact after the completion gate passes. Guards: Require completion_decision=submit. Never include hidden-test or evaluator internals.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string"
+      },
+      "patch": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "old": {
+                  "type": "string"
+                },
+                "new": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "old",
+                "new"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ]
+      },
+      "evidence_summary": {
+        "type": "object"
+      },
+      "workflow_version": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "task_id",
+      "patch",
+      "evidence_summary",
+      "workflow_version"
+    ],
+    "additionalProperties": false
+  }
+}

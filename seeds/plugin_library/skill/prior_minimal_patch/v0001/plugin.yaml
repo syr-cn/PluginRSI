@@ -1,0 +1,30 @@
+schema_version: 1
+kind: skill
+name: prior_minimal_patch
+version: v0001
+entrypoint: implementation:PriorSkill
+description: Implement the smallest coherent source change that repairs a validated
+  root cause.
+config_schema:
+  type: object
+  additionalProperties: false
+provenance:
+  label: S16 minimal-patch (mini-SWE-agent / Agentless / Superpowers)
+  sources:
+  - id: mini-swe-agent
+    title: mini-SWE-agent
+    url: https://github.com/SWE-agent/mini-swe-agent
+  - id: agentless
+    title: Agentless
+    url: https://github.com/OpenAutoCoder/Agentless
+  - id: superpowers
+    title: Superpowers
+    url: https://github.com/obra/superpowers
+  upstream_assets:
+  - id: S16
+    path: skills/minimal-patch/SKILL.md
+  - id: S16
+    path: skills/catalog.yaml
+  adaptation: Normalized/synthesized upstream design guidance adapted to PluginRSI's
+    skill interface; not verbatim paper code.
+  parent_refs: []

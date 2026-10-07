@@ -1,0 +1,28 @@
+id: S23
+name: existing-test-discovery
+title: Existing Test Discovery
+category: verification
+tier: core
+description: Find the smallest existing tests that exercise the changed behavior and
+  nearby contracts.
+applicable_roles:
+- Verifier
+- Planner
+- Solver
+required_inputs:
+- issue_profile
+- changed_symbols
+- repository_orientation
+output_type: RelevantTests
+allowed_tools:
+- test_discovery
+- text_search
+- symbol_search
+- read_file
+source_ids:
+- agentless
+- mini-swe-agent
+- aider
+optional_inputs:
+- repository_map
+path: skills/existing-test-discovery/SKILL.md
