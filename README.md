@@ -25,7 +25,9 @@ Yaorui Shi<sup>1,2</sup>, Yuchun Miao<sup>2,3</sup>, Yuxin Chen<sup>2,4</sup>, J
   <a href="#citation">Citation</a>
 </p>
 
-<img src="figures/teaser.png" width="80%" alt="Harness rewriting vs. plugin-based harness evolution">
+<a href="https://syr-cn.github.io/PluginRSI/#demo"><img src="figures/demo.gif" width="90%" alt="Animated replay: plugin mutations are screened, kept variants join the library, and the harness is recomposed"></a>
+<br><sub>Each iteration screens eight plugin mutations; the ones that help join the library (blue), then the harness is recomposed from it.
+<a href="https://syr-cn.github.io/PluginRSI/#demo">Step through all 15 iterations on the project page →</a></sub>
 
 </div>
 
@@ -54,15 +56,9 @@ Yaorui Shi<sup>1,2</sup>, Yuchun Miao<sup>2,3</sup>, Yuxin Chen<sup>2,4</sup>, J
 ## 🏗️ Method
 
 <div align="center">
+<img src="figures/teaser.png" width="75%" alt="Harness rewriting vs. plugin-based harness evolution">
+<br><br>
 <img src="figures/framework.png" width="100%" alt="PluginRSI framework">
-</div>
-
-<br>
-
-<div align="center">
-<a href="https://syr-cn.github.io/PluginRSI/#demo"><img src="figures/demo.gif" width="90%" alt="Animated replay: plugin mutations are screened, kept variants join the library, and the harness is recomposed"></a>
-<br><sub>Each iteration screens eight plugin mutations; the ones that help join the library (blue), then the harness is recomposed from it.
-<a href="https://syr-cn.github.io/PluginRSI/#demo">Step through all 15 iterations on the project page →</a></sub>
 </div>
 
 <br>
