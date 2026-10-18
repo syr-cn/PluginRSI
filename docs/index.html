@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PluginRSI</title>
+<meta name="description" content="PluginRSI represents an agent harness as a composition of atomized plugins, improves plugins independently, accumulates them in a shared library, and recombines them into new harnesses at each iteration.">
+<meta property="og:title" content="PluginRSI: Recursive Improvement of Agent Harnesses with Reusable Plugins">
+<meta property="og:description" content="Harness evolution organized around reusable plugins.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --soft:#f6f6f7; --line:#e6e6e8; --line-strong:#cfcfd4;
+  --text:#18181b; --muted:#5c5c66; --faint:#9a9aa3;
+  --accent:#2451c7; --accent-tint:rgba(36,81,199,.08);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111113; --soft:#18181b; --line:#27272b; --line-strong:#3a3a40;
+    --text:#ececef; --muted:#a3a3ad; --faint:#6e6e78;
+    --accent:#7d9dff; --accent-tint:rgba(125,157,255,.12);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111113; --soft:#18181b; --line:#27272b; --line-strong:#3a3a40;
+  --text:#ececef; --muted:#a3a3ad; --faint:#6e6e78;
+  --accent:#7d9dff; --accent-tint:rgba(125,157,255,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.narrow{max-width:780px;margin:0 auto}
+code,.mono{font-family:var(--mono);font-size:.86em}
+
+/* header */
+header.hero{padding:64px 0 28px;text-align:center}
+h1.title{font-size:clamp(26px,4vw,40px);line-height:1.2;margin:0 auto 20px;max-width:860px;font-weight:700;letter-spacing:-.02em}
+.authors{font-size:16.5px;max-width:820px;margin:0 auto 4px}
+.authors span{white-space:nowrap;margin:0 7px}
+sup{font-size:11px;color:var(--muted)}
+.affils{font-size:14px;color:var(--muted);max-width:820px;margin:0 auto}
+.affils span{margin:0 8px;white-space:nowrap}
+.corr{font-size:13px;color:var(--faint);margin-top:2px}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:22px 0 4px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:999px;border:1px solid var(--line-strong);color:var(--text);font-weight:500;font-size:14.5px}
+.btn:hover{text-decoration:none;border-color:var(--text)}
+.btn svg{width:15px;height:15px}
+nav.toc{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:2px;justify-content:safe center;overflow-x:auto;scrollbar-width:none}
+nav.toc a{padding:10px 12px;font-size:14px;color:var(--muted);white-space:nowrap}
+nav.toc a:hover{color:var(--text);text-decoration:none}
+
+section{padding:52px 0 4px}
+h2{font-size:26px;letter-spacing:-.015em;margin:0 0 14px;font-weight:700}
+h3{font-size:18px;margin:32px 0 8px;font-weight:600}
+p{margin:0 0 14px}
+.muted{color:var(--muted)}
+.cap{font-size:14px;color:var(--muted);margin:8px 0 20px;line-height:1.6}
+
+/* ---------- demo ---------- */
+.demo{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:18px;padding:18px 0 16px}
+.demo-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px}
+.iter-label{font-weight:600;font-size:18px}
+.iter-label small{font-weight:400;color:var(--muted);font-size:14px;margin-left:8px}
+.stages{font-size:13.5px;color:var(--faint)}
+.stages span{transition:color .25s}
+.stages span.on{color:var(--text);font-weight:600}
+.stages i{font-style:normal;margin:0 8px}
+.panels{display:grid;grid-template-columns:1fr 1.35fr 1fr}
+.panel{padding:0 18px;min-width:0;border-left:1px solid var(--line)}
+.panel:first-child{border-left:none;padding-left:0}
+.panel:last-child{padding-right:0}
+.panel h4{margin:0 0 12px;font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:baseline}
+.panel h4 .num{font-family:var(--mono);font-weight:400;text-transform:none;letter-spacing:0;color:var(--text);font-size:13px}
+
+/* library */
+.libcat{margin-bottom:12px}
+.libcat-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.libcat-head .cnt{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.libcat-head .cnt b{color:var(--accent);font-weight:500}
+.tiles{display:flex;flex-wrap:wrap;gap:3px}
+.tile{width:9px;height:9px;border-radius:2px;background:var(--line-strong);transition:background .3s}
+.tile.evolved{background:var(--text);opacity:.7}
+.tile.new{background:var(--accent);opacity:1;animation:pop .5s ease-out}
+.tile.hidden{visibility:hidden}
+@keyframes pop{0%{transform:scale(.3)}60%{transform:scale(1.5)}100%{transform:scale(1)}}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--faint);margin-top:6px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* mutation rows */
+.branch{display:grid;grid-template-columns:1fr 76px 14px;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;opacity:.2;transition:opacity .3s}
+.branch:last-child{border-bottom:none}
+.branch.shown{opacity:1}
+.branch.no.shown{opacity:.55}
+.branch .ref{min-width:0}
+.branch .nm{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.branch .v{display:block;font-family:var(--mono);color:var(--faint);font-size:11px}
+.branch .mech{display:block;font-size:12px;color:var(--accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{position:relative;height:6px;border-radius:3px;background:var(--line)}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:var(--line-strong);transition:width .5s ease-out}
+.branch.ok .bar .fill{background:var(--accent)}
+.bar .base{position:absolute;top:-3px;bottom:-3px;width:1.5px;background:var(--muted)}
+.bar-l{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-align:right;margin-top:3px;white-space:nowrap}
+.mark{font-size:13px;text-align:center;opacity:0;transition:opacity .3s;color:var(--faint)}
+.branch.shown .mark{opacity:1}
+.branch.ok .mark{color:var(--accent)}
+.empty{font-size:14px;color:var(--muted);padding:6px 0;line-height:1.6}
+
+/* harness */
+.wf-head{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:6px}
+.slot{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;border-bottom:1px dotted var(--line)}
+.slot .al{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot .kd{font-size:11px;color:var(--faint);width:44px;flex:none}
+.slot .vv{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.slot.chg .al,.slot.chg .vv{color:var(--accent)}
+.slot.enter{animation:slotin .5s ease-out}
+@keyframes slotin{from{opacity:0}to{opacity:1}}
+.verdict{margin-top:12px;font-size:13px;line-height:1.5;color:var(--muted);min-height:58px}
+.verdict b{color:var(--text)}
+.verdict b.ok{color:var(--accent)}
+.verdict .ops{font-family:var(--mono);font-size:11px;color:var(--faint);display:block;margin-top:3px}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:8px;margin-top:18px;flex-wrap:wrap}
+.cbtn{border:1px solid var(--line-strong);background:var(--bg);color:var(--text);border-radius:6px;height:30px;min-width:30px;padding:0 10px;font:500 13px Inter,sans-serif;cursor:pointer}
+.cbtn:hover{border-color:var(--text)}
+.timeline{display:flex;align-items:center;gap:3px;flex:1;min-width:200px}
+.tdot{flex:1;height:20px;display:flex;align-items:center;cursor:pointer}
+.tdot::before{content:"";display:block;width:100%;height:4px;border-radius:2px;background:var(--line)}
+.tdot.done::before{background:var(--line-strong)}
+.tdot.cur::before{background:var(--accent)}
+.tdot:hover::before{background:var(--muted)}
+.tlabel{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.fly{position:fixed;width:9px;height:9px;border-radius:2px;z-index:50;pointer-events:none;background:var(--accent)}
+
+/* content */
+.fig{margin:18px 0 0;padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.fig img{display:block;width:100%;height:auto}
+.figrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:center}
+@media (max-width:640px){.figrow{grid-template-columns:1fr}}
+.figph{border:1px dashed var(--line-strong);border-radius:8px;color:var(--faint);display:flex;align-items:center;justify-content:center;text-align:center;font-size:12.5px;padding:24px;margin:18px 0 0;font-family:var(--mono)}
+.steps{margin:18px 0 6px;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;padding-left:30px;position:relative;margin-bottom:12px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;border:1px solid var(--line-strong);font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+.tblwrap{overflow-x:auto;margin:14px 0 0}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.35;font-variant-numeric:tabular-nums}
+th,td{padding:6px 10px;text-align:center;white-space:nowrap}
+thead tr:first-child th{border-top:1.5px solid var(--text)}
+thead tr:last-child th{border-bottom:1px solid var(--text)}
+th{font-weight:600;font-size:13px}
+td:first-child,th:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:1.5px solid var(--text)}
+tr.grp td{font-size:12.5px;color:var(--muted);font-style:italic;padding-top:12px}
+tr.ours td:first-child{font-weight:600}
+td.b{font-weight:700}
+.dag{font-size:11px;color:var(--faint)}
+
+.hbars{margin:18px 0 6px}
+.hrow{display:grid;grid-template-columns:150px 1fr 40px;align-items:center;gap:12px;margin-bottom:6px;font-size:14px}
+.hrow .track{height:14px}
+.hrow .fillb{height:100%;background:var(--line-strong);border-radius:2px;width:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.hrow.ours .fillb{background:var(--accent)}
+.hrow.ours span:first-child,.hrow.ours .val{font-weight:600}
+.hrow .val{font-family:var(--mono);font-size:13px;text-align:right}
+
+.ex{margin:22px 0;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.ex:last-child{border-bottom:none}
+.ex h4{margin:0 0 2px;font-size:16px;font-weight:600}
+.ex .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+.ex .meta .mono{color:var(--text)}
+.ba{font-size:14px;line-height:1.55;padding:2px 0 2px 14px;margin:6px 0;border-left:2px solid var(--line-strong);color:var(--muted)}
+.ba.after{border-left-color:var(--accent);color:var(--text)}
+.ba .t{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-right:6px;color:var(--faint)}
+.ba.after .t{color:var(--accent)}
+
+pre.bib{position:relative;background:var(--soft);border-radius:8px;padding:16px;font-family:var(--mono);font-size:13px;line-height:1.55;overflow-x:auto;margin:12px 0}
+.copy{position:absolute;top:10px;right:10px;font:500 12px Inter,sans-serif;padding:4px 10px;border-radius:6px;border:1px solid var(--line-strong);background:var(--bg);color:var(--text);cursor:pointer}
+footer{padding:48px 0 56px;color:var(--faint);font-size:13px;text-align:center}
+
+@media (max-width:899px){
+  nav.toc .wrap{justify-content:flex-start}
+  .panels{grid-template-columns:1fr}
+  .panel{border-left:none;padding:0;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+  .panel:first-child{border-top:none;margin-top:0;padding-top:0}
+}
+@media (max-width:520px){
+  header.hero{padding-top:40px}
+  .hrow{grid-template-columns:110px 1fr 36px;font-size:13px}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1 class="title">PluginRSI: Recursive Improvement of Agent Harnesses with Reusable Plugins</h1>
+  <div class="authors">
+    <span>Yaorui Shi<sup>1,2</sup></span>
+    <span>Yuchun Miao<sup>2,3</sup></span>
+    <span>Yuxin Chen<sup>2,4</sup></span>
+    <span>Jiayuan Zhang<sup>2</sup></span>
+    <span>Yueqing Sun<sup>2</sup></span>
+    <span>Xierui Song<sup>2,†</sup></span>
+    <span>Xiang Wang<sup>1</sup></span>
+    <span>An Zhang<sup>1,†</sup></span>
+  </div>
+  <div class="affils">
+    <span><sup>1</sup>University of Science and Technology of China</span>
+    <span><sup>2</sup>Meituan</span>
+    <span><sup>3</sup>Wuhan University</span>
+    <span><sup>4</sup>National University of Singapore</span>
+  </div>
+  <div class="corr">† Corresponding authors</div>
+  <div class="btns">
+    <a class="btn" href="https://arxiv.org/abs/2609.32423"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Paper</a>
+    <a class="btn" href="https://github.com/syr-cn/PluginRSI"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>Code</a>
+    <a class="btn" href="#bibtex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 14h6"/></svg>BibTeX</a>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#demo">Demo</a><a href="#approach">Approach</a><a href="#results">Results</a><a href="#ablation">Ablation</a><a href="#plugins">Discovered Plugins</a><a href="#reuse">Reuse</a><a href="#bibtex">BibTeX</a>
+</div></nav>
+
+<!-- ================= DEMO ================= -->
+<section id="demo" class="wrap">
+  <div class="narrow">
+    <h2>Harness evolution with a plugin library</h2>
+    <p class="muted">Each iteration, eight plugin mutations are screened in parallel. Variants that help are kept in a shared library, and the proposer recomposes a new harness from it.</p>
+  </div>
+
+  <div class="demo" id="demoBox">
+    <div class="demo-top">
+      <div class="iter-label" id="iterLabel">Initial harness <small>H₀</small></div>
+      <div class="stages"><span id="st1">① Plugin mutation</span><i>→</i><span id="st2">② Harness recomposition</span></div>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <h4>Plugin library <span class="num" id="libTotal">75</span></h4>
+        <div id="lib"></div>
+        <div class="legend">
+          <span><i style="background:var(--line-strong)"></i>seed</span>
+          <span><i style="background:var(--text);opacity:.7"></i>evolved</span>
+          <span><i style="background:var(--accent)"></i>added this iteration</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Plugin mutation <span class="num">minibatch score</span></h4>
+        <div id="branches"></div>
+      </div>
+      <div class="panel">
+        <h4>Harness <span class="num" id="harCount">4 plugins</span></h4>
+        <div class="wf-head" id="wfName">workflow W₀</div>
+        <div id="slots"></div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="cbtn" id="bPrev" aria-label="Previous iteration">◀</button>
+      <button class="cbtn" id="bPlay">▶ Play</button>
+      <button class="cbtn" id="bNext" aria-label="Next iteration">▶</button>
+      <span class="tlabel">H₀</span>
+      <div class="timeline" id="timeline"></div>
+      <span class="tlabel">T=15</span>
+    </div>
+  </div>
+  <p class="cap narrow">Schematic replay of a search on SWE-bench Verified (N = 8 mutations per iteration, minibatches of 20 tasks). Library growth from 75 to 132 plugins follows Fig. 5; mutations marked ★ and their scores are from Appendix K; other per-iteration details are illustrative.</p>
+</section>
+
+<!-- ================= ABSTRACT ================= -->
+<section class="wrap" style="padding-top:20px">
+  <div class="narrow">
+    <h2>Abstract</h2>
+    <p>The harness surrounding a language model is a central determinant of agent performance. Recent methods optimize harnesses by searching over complete programs, where individual mechanisms are difficult to isolate and reuse. We introduce PluginRSI, which represents a harness as a composition of atomized plugins and organizes harness evolution around these plugins. Individual plugins are improved independently and accumulated in a shared library, then recombined into new harnesses at each iteration. PluginRSI improves over existing harness optimization methods across software engineering, command-line interaction, and question-answering tasks. The resulting harnesses retain their advantage when transferred to other solver models without further optimization. The evolved plugin library accelerates subsequent optimization from the initial harness, which helps faster and higher convergence on unseen tasks. These results show that accumulating reusable mechanisms provides an effective basis for continued harness improvement.</p>
+  </div>
+</section>
+
+<!-- ================= APPROACH ================= -->
+<section id="approach" class="wrap">
+  <div class="narrow">
+    <h2>Approach</h2>
+    <p>Prior harness optimizers rewrite the complete harness program at every step. Mechanisms stay coupled inside one implementation, so new ones are hard to explore in isolation, and rewriting can overwrite ones that already worked.</p>
+    <p>PluginRSI instead uses <b>plugin-parameterized harnesses</b>, <code>H = 𝓗(W, 𝓟)</code>: a set of plugins (roles, tools, skills, memory), each a versioned package with a standard interface, plus a workflow <code>W</code> that decides when they run. Each iteration has two stages:</p>
+    <ol class="steps">
+      <li><b>Plugin mutation.</b> Eight candidates run in parallel, each on its own balanced minibatch (10 solved, 10 unsolved). Each changes one plugin while everything else stays fixed; variants that improve the score are added to the library.</li>
+      <li><b>Harness recomposition.</b> The proposer selects plugins from the updated library and revises the workflow. The new harness replaces the incumbent only if it scores higher on the full held-in set.</li>
+    </ol>
+    <figure class="fig"><img src="static/images/overview.png" alt="Overview of PluginRSI: plugin mutation explores single-plugin changes in parallel, then harness recomposition selects plugins and revises the workflow" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section id="results" class="wrap">
+  <div class="narrow">
+    <h2>Results</h2>
+    <p>On SWE-bench Verified, harnesses are optimized and selected on 400 held-in tasks, then frozen and evaluated on 100 held-out tasks. PluginRSI improves held-out resolve rate over Meta-Harness by 10 points with GPT-5.6 Terra and 6 points with Kimi-K3 as the optimization backbone.</p>
+
+    <div class="hbars" id="hbars">
+      <div class="cap" style="margin:0 0 10px">Held-out resolve rate (%), Kimi-K3 as proposer and solver</div>
+      <div class="hrow"><span>DGM</span><div class="track"><div class="fillb" data-v="55"></div></div><span class="val">55</span></div>
+      <div class="hrow"><span>A-Evolve</span><div class="track"><div class="fillb" data-v="57"></div></div><span class="val">57</span></div>
+      <div class="hrow"><span>SkillOPT</span><div class="track"><div class="fillb" data-v="60"></div></div><span class="val">60</span></div>
+      <div class="hrow"><span>GEPA</span><div class="track"><div class="fillb" data-v="62"></div></div><span class="val">62</span></div>
+      <div class="hrow"><span>AHE</span><div class="track"><div class="fillb" data-v="63"></div></div><span class="val">63</span></div>
+      <div class="hrow"><span>Meta-Harness</span><div class="track"><div class="fillb" data-v="63"></div></div><span class="val">63</span></div>
+      <div class="hrow ours"><span>PluginRSI</span><div class="track"><div class="fillb" data-v="69"></div></div><span class="val">69</span></div>
+    </div>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th rowspan="2">Method</th><th colspan="3">Held-in (400)</th><th colspan="3">Held-out (100)</th></tr>
+        <tr><th>GPT-5.6 Terra</th><th>Kimi-K3</th><th>GLM-5.2</th><th>GPT-5.6 Terra</th><th>Kimi-K3</th><th>GLM-5.2</th></tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="7">Expert-curated harnesses</td></tr>
+        <tr><td>ReAct (zero-shot)</td><td>38.25</td><td>41.00</td><td>37.75</td><td>39.00</td><td>41.00</td><td>41.00</td></tr>
+        <tr><td>ReAct (few-shot)</td><td>52.50</td><td>44.25</td><td>38.25</td><td>55.00</td><td>47.00</td><td>41.00</td></tr>
+        <tr><td>ACE</td><td>46.75</td><td>41.00</td><td>30.25</td><td>43.00</td><td>37.00</td><td>31.00</td></tr>
+        <tr class="grp"><td colspan="7">Automatically optimized with GPT-5.6 Terra</td></tr>
+        <tr><td>GEPA</td><td>50.50<span class="dag">†</span></td><td>42.50</td><td>39.25</td><td>51.00</td><td>44.00</td><td>48.00</td></tr>
+        <tr><td>DGM</td><td>49.00<span class="dag">†</span></td><td>42.00</td><td>37.25</td><td>50.00</td><td>51.00</td><td>43.00</td></tr>
+        <tr><td>Meta-Harness</td><td>54.50<span class="dag">†</span></td><td>54.00</td><td>45.25</td><td>55.00</td><td>53.00</td><td>44.00</td></tr>
+        <tr class="ours"><td>PluginRSI</td><td class="b">58.50<span class="dag">†</span></td><td class="b">60.50</td><td class="b">48.00</td><td class="b">65.00</td><td class="b">60.00</td><td class="b">52.00</td></tr>
+        <tr class="grp"><td colspan="7">Automatically optimized with Kimi-K3</td></tr>
+        <tr><td>GEPA</td><td>55.00</td><td>61.00<span class="dag">†</span></td><td>47.00</td><td>61.00</td><td>62.00</td><td>52.00</td></tr>
+        <tr><td>DGM</td><td>57.75</td><td>58.00<span class="dag">†</span></td><td>50.00</td><td>58.00</td><td>55.00</td><td>51.00</td></tr>
+        <tr><td>Meta-Harness</td><td class="b">58.25</td><td>64.25<span class="dag">†</span></td><td class="b">59.75</td><td>60.00</td><td>63.00</td><td>59.00</td></tr>
+        <tr class="ours"><td>PluginRSI</td><td>58.00</td><td class="b">66.75<span class="dag">†</span></td><td>59.50</td><td class="b">64.00</td><td class="b">69.00</td><td class="b">64.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="narrow">
+    <p class="cap">SWE-bench Verified resolve rates (%). † marks the score used for harness selection; bold is the best within each optimization setting. The selected harnesses keep their advantage when transferred to other solver models without re-optimization.</p>
+
+    <figure class="fig"><img src="static/images/dynamics.svg" alt="Held-in and held-out resolve rates of the best harness against cumulative solver rollouts" loading="lazy"></figure>
+    <p class="cap">PluginRSI reaches stronger harnesses with fewer solver rollouts, and its held-in gains carry over to held-out tasks.</p>
+
+    <h3>Terminal-Bench and QA</h3>
+    <p>The same pattern holds on command-line tasks and question answering, with Kimi-K3 as proposer and solver.</p>
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr><th rowspan="2">Method</th><th colspan="2">Terminal-Bench-2.1 (%)</th><th colspan="3">QA (accuracy)</th></tr>
+          <tr><th>Held-in</th><th>Held-out</th><th>Held-in</th><th>Held-out</th><th>Overall</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ReAct</td><td>47.5</td><td>50.0</td><td>0.480</td><td>0.332</td><td>0.388</td></tr>
+          <tr><td>ACE</td><td>54.2</td><td>56.7</td><td>–</td><td>–</td><td>–</td></tr>
+          <tr><td>GEPA</td><td>57.6</td><td>63.3</td><td>0.633</td><td>0.472</td><td>0.533</td></tr>
+          <tr><td>DGM</td><td>57.6</td><td>60.0</td><td>–</td><td>–</td><td>–</td></tr>
+          <tr><td>Meta-Harness</td><td>64.4</td><td>66.7</td><td>0.753</td><td>0.568</td><td>0.638</td></tr>
+          <tr class="ours"><td>PluginRSI</td><td class="b">69.5</td><td class="b">73.3</td><td class="b">0.820</td><td class="b">0.588</td><td class="b">0.675</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cap">Terminal-Bench-2.1: 59 held-in / 30 held-out tasks (ReAct is zero-shot). QA: optimized on three domains (150 tasks) and evaluated on five unseen domains (250 tasks); domain averages shown.</p>
+  </div>
+</section>
+
+<!-- ================= ABLATION ================= -->
+<section id="ablation" class="wrap">
+  <div class="narrow">
+    <h2>Ablation</h2>
+    <p>Both stages matter: removing plugin mutation or harness recomposition drops the Kimi-K3 held-out rate from 69% to 57% and 59%. A plugin library by itself does little — adding one to Meta-Harness moves it from 63% to 64%.</p>
+  </div>
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th rowspan="2">Optimized with Kimi-K3</th><th colspan="3">Held-in (400)</th><th colspan="3">Held-out (100)</th></tr>
+        <tr><th>GPT-5.6 Terra</th><th>Kimi-K3<span class="dag">†</span></th><th>GLM-5.2</th><th>GPT-5.6 Terra</th><th>Kimi-K3</th><th>GLM-5.2</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Meta-Harness</td><td>58.25</td><td>64.25</td><td class="b">59.75</td><td>60.00</td><td>63.00</td><td>59.00</td></tr>
+        <tr><td>&nbsp;&nbsp;+ plugin library</td><td>58.25</td><td>65.50</td><td>55.25</td><td>58.00</td><td>64.00</td><td>56.00</td></tr>
+        <tr><td>&nbsp;&nbsp;+ plugin library w/o initial plugins</td><td>61.00</td><td>64.75</td><td>56.25</td><td>62.00</td><td>62.00</td><td>58.00</td></tr>
+        <tr class="ours"><td>PluginRSI</td><td>58.00</td><td>66.75</td><td>59.50</td><td class="b">64.00</td><td class="b">69.00</td><td class="b">64.00</td></tr>
+        <tr><td>&nbsp;&nbsp;w/o initial plugins</td><td class="b">62.25</td><td class="b">67.00</td><td>57.75</td><td>62.00</td><td>67.00</td><td>63.00</td></tr>
+        <tr><td>&nbsp;&nbsp;w/o plugin mutation</td><td>52.25</td><td>58.50</td><td>46.25</td><td>49.00</td><td>57.00</td><td>50.00</td></tr>
+        <tr><td>&nbsp;&nbsp;w/o harness recomposition</td><td>57.25</td><td>62.50</td><td>59.00</td><td>57.00</td><td>59.00</td><td>60.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="narrow"><p class="cap">SWE-bench Verified resolve rates (%). PluginRSI stays strong even without the 75 seed plugins.</p></div>
+</section>
+
+<!-- ================= PLUGINS ================= -->
+<section id="plugins" class="wrap">
+  <div class="narrow">
+    <h2>Discovered plugins</h2>
+    <p>What plugin mutation finds, one example per category. Scores are resolved tasks on each candidate's screening minibatch.</p>
+
+    <div class="ex">
+      <h4>Repair-scope control</h4>
+      <div class="meta">Role · coder · <span class="mono">10/20 → 13/20</span></div>
+      <div class="ba"><span class="t">Before</span>Work in short evidence loops… make the smallest plausible edit and add or update a focused regression test.</div>
+      <div class="ba after"><span class="t">After</span>For a partial batch write, validation failure, transaction, cache update, or state reset, put the guard, rollback scope, or cleanup at the smallest sequence of persistent mutations that needs it.</div>
+    </div>
+    <div class="ex">
+      <h4>Semantic source preservation</h4>
+      <div class="meta">Skill · debugging · <span class="mono">10/20 → 13/20</span></div>
+      <div class="ba"><span class="t">Before</span>Make the smallest implementation change that enforces the stated invariant; preserve unrelated APIs, ordering, types…</div>
+      <div class="ba after"><span class="t">After</span>Do not replace an invalid positional access with a fallback to a different input merely because it avoids the exception; decide whether the correct absent-source result is empty, a documented default, or an explicitly defined alternative.</div>
+    </div>
+    <div class="ex">
+      <h4>Incremental evidence retrieval</h4>
+      <div class="meta">Memory · experience bank · <span class="mono">10/19 → 14/19</span></div>
+      <div class="ba"><span class="t">Before</span>Store every tool output and retrieve the top-k by lexical overlap, often re-surfacing evidence already in context.</div>
+      <div class="ba after"><span class="t">After</span>Deduplicate stored outputs, return only entries not yet delivered, and summarize recent unseen evidence with guidance for the next verification step.</div>
+    </div>
+    <div class="ex">
+      <h4>Failure-aware terminal feedback</h4>
+      <div class="meta">Tool · terminal · <span class="mono">10/20 → 14/20</span></div>
+      <div class="ba"><span class="t">Before</span>Execute the command, convert output to text, truncate, return.</div>
+      <div class="ba after"><span class="t">After</span>Inspect the full output for execution and test failures, including ones masked by a zero exit status, append recovery guidance, and flag when the same focused test fails with the same diagnostic again.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REUSE ================= -->
+<section id="reuse" class="wrap">
+  <div class="narrow">
+    <h2>Accumulation and reuse</h2>
+    <p>Over 15 steps the library grows from 75 to 132 plugins. Final candidates reach about 1,300 lines of code, compared with about 400 for Meta-Harness, while the workflow stays under 300 — the added complexity lives in reusable plugins rather than in the glue.</p>
+    <p>The evolved library also speeds up later searches. Starting again from the initial harness but with the evolved library reaches 69% held-out after two steps, versus 65% without it, close to the 70% reached by continuing from the evolved harness itself.</p>
+    <div class="hbars" id="hbars2">
+      <div class="cap" style="margin:0 0 10px">Held-out resolve rate (%) when optimizing again</div>
+      <div class="hrow"><span>Initial harness, 2 steps</span><div class="track"><div class="fillb" data-v="65"></div></div><span class="val">65</span></div>
+      <div class="hrow ours"><span>+ evolved library, 2 steps</span><div class="track"><div class="fillb" data-v="69"></div></div><span class="val">69</span></div>
+      <div class="hrow"><span>Evolved harness, 3 steps</span><div class="track"><div class="fillb" data-v="70"></div></div><span class="val">70</span></div>
+    </div>
+    <figure class="fig figrow"><img src="static/images/reuse.svg" alt="Held-out resolve rate when re-optimizing with and without the evolved plugin library" loading="lazy"><img src="static/images/accumulation.svg" alt="Number of plugins in the library over optimization steps" loading="lazy"><img src="static/images/size.svg" alt="Candidate implementation size over optimization steps" loading="lazy"></figure>
+    <p class="cap">Left: re-optimizing with the evolved library converges faster on held-out tasks. Middle and right: library size and candidate implementation size during optimization.</p>
+  </div>
+</section>
+
+<!-- ================= BIBTEX ================= -->
+<section id="bibtex" class="wrap">
+  <div class="narrow">
+    <h2>BibTeX</h2>
+<pre class="bib" id="bib"><button class="copy" id="copyBtn">Copy</button>@article{shi2026pluginrsi,
+  title   = {PluginRSI: Recursive Improvement of Agent Harnesses with Reusable Plugins},
+  author  = {Shi, Yaorui and Miao, Yuchun and Chen, Yuxin and Zhang, Jiayuan and
+             Sun, Yueqing and Song, Xierui and Wang, Xiang and Zhang, An},
+  journal = {arXiv preprint arXiv:2609.32423},
+  year    = {2026}
+}</pre>
+  </div>
+</section>
+
+<footer class="wrap">
+  Layout inspired by <a href="https://yoonholee.com/meta-harness/">Meta-Harness</a> and the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> / <a href="https://nerfies.github.io">Nerfies</a>.
+  Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+</footer>
+
+<script>
+(function(){
+/* ---------------------------------------------------------
+   Demo data. Replace GROWTH / FEAT / SCRIPT with logs from a
+   real run to make the replay exact.
+   --------------------------------------------------------- */
+const CATS = ['role','tool','skill','memory'];
+const CAT_LABEL = {role:'Roles', tool:'Tools', skill:'Skills', memory:'Memory'};
+const SEED = {role:20, tool:16, skill:31, memory:8};      // Table 9
+const GROWTH = [7,6,5,5,4,4,4,4,3,3,3,3,2,2,2];          // 75 -> 132
+const N = 8;
+const H0 = [['coder','role/coder'],['terminal','tool/terminal'],['debugging','skill/debugging'],['experience','memory/experience_bank']];
+// ★ mutations from Appendix K (Table 11)
+const FEAT = {
+  1:{alias:'terminal',   mech:'Failure-aware terminal feedback', before:10, after:14, total:20},
+  2:{alias:'experience', mech:'Incremental evidence retrieval',  before:10, after:14, total:19},
+  3:{alias:'debugging',  mech:'Semantic source preservation',    before:10, after:13, total:20},
+  4:{alias:'coder',      mech:'Repair-scope control',            before:10, after:13, total:20},
+  6:{alias:'debugging',  mech:'Public-path checks',              before:10, after:14, total:20},
+  7:{alias:'experience', mech:'Test-outcome classification',     before:10, after:12, total:20},
+  9:{alias:'debugging',  mech:'Precedence & representation checks', before:10, after:13, total:20},
+  11:{alias:'coder',     mech:'Discriminative checks',           before:10, after:13, total:20}
+};
+const SCRIPT = [
+  {ok:true,  ops:[{up:'terminal'}]},
+  {ok:true,  ops:[{up:'experience'},{add:['search','tool/text_search']}]},
+  {ok:true,  ops:[{up:'debugging'},{add:['reproduce','skill/reproduction']}]},
+  {ok:true,  ops:[{up:'coder'},{add:['localizer','role/fault_localizer']}]},
+  {ok:false, ops:[{add:['tests','tool/test_runner']},{up:'search'}]},
+  {ok:true,  ops:[{up:'debugging'},{add:['tests','tool/test_runner']}]},
+  {ok:true,  ops:[{up:'experience'},{add:['failures','memory/failure_signatures']}]},
+  {ok:true,  ops:[{add:['verifier','role/verifier']},{up:'localizer'}]},
+  {ok:false, ops:[{up:'debugging'},{add:['tracing','skill/call_chain_tracing']}]},
+  {ok:true,  ops:[{add:['tracing','skill/call_chain_tracing']},{add:['git','tool/git_inspect']}]},
+  {ok:true,  ops:[{up:'coder'},{up:'tests'}]},
+  {ok:false, ops:[{add:['ranker','role/patch_ranker']}]},
+  {ok:true,  ops:[{add:['done','skill/completion_checks']},{up:'terminal'}]},
+  {ok:true,  ops:[{add:['lessons','memory/lesson_candidates']},{up:'verifier'}]},
+  {ok:true,  ops:[{up:'tests'},{up:'search'}]}
+];
+const T = SCRIPT.length;
+
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+const v = n => 'v' + String(n).padStart(4,'0');
+const sub = n => String(n).split('').map(d=>'₀₁₂₃₄₅₆₇₈₉'[d]).join('');
+
+function build(){
+  const r = rng(7);
+  const pick = arr => arr[Math.floor(r()*arr.length)];
+  let harness = H0.map(([alias,ref])=>{const [kind,name]=ref.split('/');return {alias,kind,name,ver:1};});
+  const libVer = {}; harness.forEach(p=>libVer[p.name]=1);
+  const tiles = {}; CATS.forEach(c=>{tiles[c]=Array(SEED[c]).fill(0);});
+  let accepted = 0;
+  const snap = (t, extra) => Object.assign({
+    t, harness: harness.map(h=>Object.assign({},h)),
+    tiles: Object.fromEntries(CATS.map(c=>[c,tiles[c].slice()])), wfVer: accepted
+  }, extra);
+  const states = [snap(0,{branches:[],changed:[],ok:null,opsText:[]})];
+  for(let t=1;t<=T;t++){
+    const g = GROWTH[t-1], sc = SCRIPT[t-1], feat = FEAT[t];
+    const targets = [];
+    if(feat) targets.push({alias:feat.alias, feat});
+    sc.ops.forEach(op=>{ if(op.up && !targets.some(x=>x.alias===op.up)) targets.push({alias:op.up}); });
+    while(targets.length<g) targets.push({alias:pick(harness).alias});
+    let branches = targets.map(tg=>{
+      const p = harness.find(h=>h.alias===tg.alias);
+      libVer[p.name] = (libVer[p.name]||1)+1;
+      return {kind:p.kind, name:p.name, from:p.ver, to:libVer[p.name],
+        before: tg.feat?tg.feat.before:10, after: tg.feat?tg.feat.after:11+Math.floor(r()*3),
+        total: tg.feat?tg.feat.total:20, ok:true, mech: tg.feat?tg.feat.mech:null};
+    });
+    for(let k=0;k<N-g;k++){
+      const p = pick(harness);
+      branches.push({kind:p.kind, name:p.name, from:p.ver, to:null, before:10, after:8+Math.floor(r()*3), total:20, ok:false, mech:null});
+    }
+    for(let i=branches.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[branches[i],branches[j]]=[branches[j],branches[i]];}
+    branches.forEach(b=>{ if(b.ok) tiles[b.kind].push(t); });
+    const opsText = [], changed = [];
+    sc.ops.forEach(op=>{
+      if(op.up){ const h = harness.find(x=>x.alias===op.up); opsText.push('↑ '+h.name+' '+v(libVer[h.name])); }
+      if(op.add){ opsText.push('+ '+op.add[1].split('/')[1]); }
+    });
+    if(sc.ok){
+      sc.ops.forEach(op=>{
+        if(op.up){ const h = harness.find(x=>x.alias===op.up); h.ver = libVer[h.name]; changed.push(h.alias); }
+        if(op.add){ const [alias,ref]=op.add; const [kind,name]=ref.split('/'); if(!libVer[name]) libVer[name]=1; harness.push({alias,kind,name,ver:libVer[name]}); changed.push(alias); }
+      });
+      accepted++;
+    }
+    states.push(snap(t,{branches, changed, ok:sc.ok, opsText}));
+  }
+  return states;
+}
+const S = build();
+
+const $ = id => document.getElementById(id);
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const countTiles = st => CATS.reduce((a,c)=>a+st.tiles[c].length,0);
+let cur = 0, playing = false, runToken = 0, started = false;
+
+const tl = $('timeline');
+for(let t=1;t<=T;t++){
+  const d = document.createElement('div'); d.className='tdot'; d.title='Iteration '+t;
+  d.addEventListener('click',()=>{stop(); show(t);});
+  tl.appendChild(d);
+}
+function paintTimeline(t){
+  [...tl.children].forEach((d,i)=>{ d.classList.toggle('cur', i+1===t); d.classList.toggle('done', i+1<t); });
+}
+
+function renderLib(st, t, hideNew){
+  const box = $('lib'); box.innerHTML='';
+  CATS.forEach(c=>{
+    const arr = st.tiles[c];
+    const evolved = arr.filter(x=>x>0).length;
+    const wrap = document.createElement('div'); wrap.className='libcat';
+    wrap.innerHTML = `<div class="libcat-head"><span>${CAT_LABEL[c]}</span><span class="cnt">${arr.length}${evolved?` <b>+${evolved}</b>`:''}</span></div>`;
+    const g = document.createElement('div'); g.className='tiles'; g.dataset.cat=c;
+    arr.forEach(it=>{
+      const s=document.createElement('span');
+      const isNew = t>0 && it===t;
+      s.className='tile'+(it>0&&!isNew?' evolved':'')+(isNew?' new':'')+(isNew&&hideNew?' hidden':'');
+      g.appendChild(s);
+    });
+    wrap.appendChild(g); box.appendChild(wrap);
+  });
+  $('libTotal').textContent = hideNew && t>0 ? countTiles(S[t-1]) : countTiles(st);
+}
+
+function branchHTML(b){
+  const ver = b.ok ? `${v(b.from)} → ${v(b.to)}` : `${v(b.from)} · discarded`;
+  return `<div class="branch ${b.ok?'ok':'no'}">
+    <span class="ref"><span class="nm">${b.kind}/${b.name}</span>${b.mech?`<span class="mech">★ ${b.mech}</span>`:`<span class="v">${ver}</span>`}</span>
+    <span><div class="bar"><div class="base" style="left:${b.before/b.total*100}%"></div><div class="fill"></div></div><div class="bar-l">${b.before} → ${b.after} / ${b.total}</div></span>
+    <span class="mark">${b.ok?'✓':'✕'}</span></div>`;
+}
+function renderBranches(st, revealAll){
+  const box=$('branches');
+  if(st.t===0){ box.innerHTML='<div class="empty">The search starts from H₀ — a coder role, a terminal tool, a debugging skill and an experience-bank memory — drawn from a library of 75 seed plugins.</div>'; return; }
+  box.innerHTML = st.branches.map(branchHTML).join('');
+  if(revealAll) [...box.children].forEach((row,i)=>revealRow(row, st.branches[i], true));
+}
+function revealRow(row,b,instant){
+  row.classList.add('shown');
+  const f=row.querySelector('.fill');
+  if(instant) f.style.transition='none';
+  f.style.width = (b.after/b.total*100)+'%';
+  if(instant){ void f.offsetWidth; f.style.transition=''; }
+}
+
+function renderHarness(st, highlight){
+  const order = h => CATS.indexOf(h.kind);
+  const list = st.harness.slice().sort((a,b)=>order(a)-order(b));
+  $('slots').innerHTML = list.map(h=>{
+    const chg = highlight && st.changed.includes(h.alias);
+    return `<div class="slot${chg?' chg':''}${chg&&h.ver===1?' enter':''}" title="${h.kind}/${h.name}@${v(h.ver)}"><span class="kd">${h.kind}</span><span class="al">${h.name}</span><span class="vv">${v(h.ver)}</span></div>`;
+  }).join('');
+  $('harCount').textContent = st.harness.length+' plugins';
+  $('wfName').textContent = 'workflow W'+sub(st.wfVer);
+}
+function renderVerdict(st, pending){
+  const el=$('verdict');
+  if(st.t===0){ el.innerHTML='Press <b>Play</b> to run 15 iterations.'; return; }
+  if(pending){ el.innerHTML=''; return; }
+  el.innerHTML = (st.ok
+    ? `<b class="ok">Accepted.</b> The recomposed harness scores higher on the held-in set.`
+    : `<b>Rejected.</b> No held-in gain; the incumbent is kept, but this round's plugins stay in the library.`)
+    + `<span class="ops">${st.opsText.join('  ')}</span>`;
+}
+function setStage(s){ $('st1').classList.toggle('on', s===1); $('st2').classList.toggle('on', s===2); }
+function setLabel(t){
+  $('iterLabel').innerHTML = t===0 ? 'Initial harness <small>H₀</small>'
+    : `Iteration ${t} <small>of ${T} · ${S[t].branches.filter(b=>b.ok).length}/${N} mutations kept</small>`;
+}
+
+function show(t){
+  runToken++; cur=t; const st=S[t];
+  setLabel(t); setStage(0);
+  renderLib(st,t,false); renderBranches(st,true); renderHarness(st,true); renderVerdict(st,false);
+  paintTimeline(t);
+}
+const wait = ms => new Promise(r=>setTimeout(r, reduce?Math.min(ms,80):ms));
+
+async function animate(t){
+  const tok = ++runToken; cur=t;
+  const st=S[t], prev=S[t-1];
+  setLabel(t); paintTimeline(t);
+  renderLib(st,t,true); renderBranches(st,false); renderHarness(prev,false); renderVerdict(st,true);
+  setStage(1);
+  const rows=[...$('branches').children];
+  for(let i=0;i<rows.length;i++){
+    await wait(220); if(tok!==runToken) return;
+    revealRow(rows[i], st.branches[i], false);
+  }
+  await wait(600); if(tok!==runToken) return;
+  const pending = {}; CATS.forEach(c=>pending[c]=[...document.querySelectorAll(`.tiles[data-cat="${c}"] .tile.hidden`)]);
+  let libCount = countTiles(prev);
+  for(let i=0;i<rows.length;i++){
+    const b=st.branches[i]; if(!b.ok) continue;
+    const tile = pending[b.kind].shift(); if(!tile) continue;
+    fly(rows[i].querySelector('.mark'), tile);
+    await wait(160); if(tok!==runToken) return;
+    libCount++; $('libTotal').textContent = libCount;
+  }
+  await wait(700); if(tok!==runToken) return;
+  setStage(2);
+  renderHarness(st,true); renderVerdict(st,false);
+  await wait(2100); if(tok!==runToken) return;
+  setStage(0);
+}
+function fly(fromEl, tile){
+  if(reduce || !fromEl){ tile.classList.remove('hidden'); return; }
+  const a=fromEl.getBoundingClientRect(), b=tile.getBoundingClientRect();
+  const d=document.createElement('div'); d.className='fly';
+  d.style.left=b.left+'px'; d.style.top=b.top+'px';
+  document.body.appendChild(d);
+  const dx=a.left-b.left, dy=a.top-b.top;
+  d.animate([
+    {transform:`translate(${dx}px,${dy}px)`, opacity:.6},
+    {transform:'translate(0,0)', opacity:1}
+  ],{duration:560, easing:'cubic-bezier(.4,0,.2,1)'}).onfinish=()=>{ d.remove(); tile.classList.remove('hidden'); };
+}
+
+async function play(){
+  playing=true; $('bPlay').textContent='❚❚ Pause';
+  if(cur>=T) cur=0;
+  while(playing && cur<T){
+    const tok=runToken+1;
+    await animate(cur+1);
+    if(!playing || runToken!==tok) break;
+  }
+  if(cur>=T && playing){ playing=false; $('bPlay').textContent='↻ Replay'; }
+}
+function stop(){ playing=false; runToken++; $('bPlay').textContent = cur>=T ? '↻ Replay' : '▶ Play'; setStage(0); }
+
+$('bPlay').addEventListener('click',()=>{ started=true; if(playing){ stop(); show(cur); } else play(); });
+$('bNext').addEventListener('click',()=>{ started=true; stop(); if(cur<T) animate(cur+1); });
+$('bPrev').addEventListener('click',()=>{ started=true; stop(); show(Math.max(0,cur-1)); });
+document.addEventListener('keydown',e=>{
+  const box=$('demoBox').getBoundingClientRect(); if(box.bottom<0||box.top>innerHeight) return;
+  if(e.key==='ArrowRight'){ started=true; stop(); if(cur<T) animate(cur+1); }
+  if(e.key==='ArrowLeft'){ started=true; stop(); show(Math.max(0,cur-1)); }
+});
+
+show(0);
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting && !started){ started=true; setTimeout(play, 600); io.disconnect(); } }); },{threshold:.45});
+  io.observe($('demoBox'));
+}
+
+document.querySelectorAll('.hbars').forEach(box=>{
+  const fills=[...box.querySelectorAll('.fillb')];
+  const go=()=>fills.forEach(f=>f.style.width=(+f.dataset.v)+'%');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ go(); io.disconnect(); } },{threshold:.4});
+    io.observe(box);
+  } else go();
+});
+
+$('copyBtn').addEventListener('click',()=>{
+  const txt=$('bib').innerText.replace(/^Copy\s*/,'');
+  const done=()=>{ $('copyBtn').textContent='Copied'; setTimeout(()=>$('copyBtn').textContent='Copy',1400); };
+  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(done).catch(done); else done();
+});
+})();
+</script>
+</body>
+</html>
